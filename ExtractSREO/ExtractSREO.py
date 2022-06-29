@@ -105,7 +105,7 @@ def main():
             createData(columnOrHeader, 'testingData.csv', int(int(numRepeats) / 5))
             print()
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
-        columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
+        columnOrHeader = input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
 
 if __name__ == "__main__":
     main()
