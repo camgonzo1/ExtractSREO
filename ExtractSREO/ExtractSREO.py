@@ -36,12 +36,10 @@ def extractSREO(curFilePath):
         tables = camelot.read_pdf(curFilePath, flavor='stream')
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = tables[0].df
-    print(sreoData)
-    sreoData.mask(inplace=True)
+    sreoData.mask(sreoData == '', inplace=True)
     sreoData.dropna(axis=ROW, how='all', inplace=True)
     sreoData.dropna(axis=COLUMN, how='all', inplace=True)
     sreoData = sreoData.reset_index(drop=True).rename_axis(None, axis=COLUMN)
-    print(sreoData)
 
     # Reformat DataFrame to Apply Header
     index = getHeaderIndex(sreoData)
@@ -83,7 +81,7 @@ def fillTemplate(sreoDataFrame):
 
 #################### For Testing ############################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
-CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.pdf"
+CUR_FILE = 'SREOs/2022 Lawrence S Connor REO Schedule.pdf'
 def main():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
