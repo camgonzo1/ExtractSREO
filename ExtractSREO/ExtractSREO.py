@@ -15,7 +15,7 @@ modelName = None
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
 def extractSREO(curFilePath):
-    #Determines File Type
+    #Determines File Type   
     splitPath = curFilePath.split(".")
     fileType = splitPath[len(splitPath) - 1]
     # Reads Data into Pandas DataFrame
