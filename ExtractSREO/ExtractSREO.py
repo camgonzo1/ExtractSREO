@@ -1,15 +1,21 @@
+from fileinput import filename
 from lib2to3.pytree import convert
 from re import L
 import string
 from numpy import dtype
 import pandas as pd
+import tabula
+import camelot
 from prepareData import *
 from trainModel import *
-ROW, SUFFIX, COLUMN = 0, 1, 1
-PERMITTED_FORMATS = ["csv", "xlsx"]
+
+ROW, COLUMN = 0, 1
+PERMITTED_FORMATS = ["csv", "xlsx", "pdf"]
+HEADER_MODEL = 'headerTest'
 DATA_ANALYSIS, HEADER_ANALYSIS  = 1, 2
 NO_PRINT, PRINT = 0, 1
 modelName = None
+
 # extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
@@ -17,7 +23,9 @@ modelName = None
 def extractSREO(curFilePath):
     #Determines File Type
     splitPath = curFilePath.split(".")
+    fileName = splitPath[len(splitPath) - 2]
     fileType = splitPath[len(splitPath) - 1]
+
     # Reads Data into Pandas DataFrame
     if fileType not in PERMITTED_FORMATS:
         raise TypeError("Please input compatible file type!")
@@ -25,16 +33,29 @@ def extractSREO(curFilePath):
         sreoData = pd.read_csv(curFilePath, header=None)
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
+    elif fileType == "pdf":
+        tables = camelot.read_pdf(curFilePath, flavor='stream')
+        tables.export(curFilePath, f='csv', compress=True)
+        sreoData = tables[0].df
+        #df = tabula.read_pdf(curFilePath, pages='all')[0]
+        #abula.convert_into(fileName + ".pdf", fileName + ".csv", output_format="csv", pages='all')
+        #print(df)
+    print(sreoData)
+    sreoData.mask()
     sreoData.dropna(axis=ROW, how='all', inplace=True)
     sreoData.dropna(axis=COLUMN, how='all', inplace=True)
     sreoData = sreoData.reset_index(drop=True).rename_axis(None, axis=COLUMN)
+    print(sreoData)
+
     # Reformat DataFrame to Apply Header
     index = getHeaderIndex(sreoData)
     if index == -1:
         raise IndexError("No header row found in " + curFilePath + "! Please try again or enter file in different compatible format.")
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
+
     return sreoData
+
 # Name: getHeaderIndex()
 # Parameters: searchData (pandas DataFrame) --> conatins unfiltered data from an SREO
 # Return: i (int) --> the index of the header row
@@ -43,10 +64,10 @@ def extractSREO(curFilePath):
 def getHeaderIndex(searchData):
     for i in range(len(searchData.index)):
         rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
-        input = testInput(modelName, HEADER_ANALYSIS, rowString, NO_PRINT)
-        if  input == "Valid":
+        if testInput(modelName, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
             return i
     return -1
+
 # Name: fillTemplate()
 # Parameters: sreoDataFrame (pandas DataFrame) --> conatins semi-filtered data from an SREO
 # Return: sreoTemplate.to_excel() (.xlsx) --> contains the populated SREO standard template
@@ -55,15 +76,18 @@ def getHeaderIndex(searchData):
 #              notification to the abstraction team. 
 def fillTemplate(sreoDataFrame):
     sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
-    for column in sreoDataFrame:
-        relevantCategory = "replace with comment" #checkRelevantData(sreoDataFrame[column][0])
-        if relevantCategory != "No Match":
+    for dataColumn in sreoDataFrame:
+        relevantCategory = testInput(modelName, DATA_ANALYSIS, sreoDataFrame[dataColumn][0], NO_PRINT)
+        if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
+
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
+
+
 #################### For Testing ############################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
-CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
+CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.pdf"
 def main():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
@@ -86,6 +110,6 @@ def main():
             print()
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
         columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
+
 if __name__ == "__main__":
     main()
-
