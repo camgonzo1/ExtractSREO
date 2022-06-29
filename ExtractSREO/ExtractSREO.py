@@ -4,7 +4,6 @@ from re import L
 import string
 from numpy import dtype
 import pandas as pd
-import tabula
 import camelot
 from prepareData import *
 from trainModel import *
@@ -23,7 +22,6 @@ modelName = None
 def extractSREO(curFilePath):
     #Determines File Type
     splitPath = curFilePath.split(".")
-    fileName = splitPath[len(splitPath) - 2]
     fileType = splitPath[len(splitPath) - 1]
 
     # Reads Data into Pandas DataFrame
@@ -37,9 +35,6 @@ def extractSREO(curFilePath):
         tables = camelot.read_pdf(curFilePath, flavor='stream')
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = tables[0].df
-        #df = tabula.read_pdf(curFilePath, pages='all')[0]
-        #abula.convert_into(fileName + ".pdf", fileName + ".csv", output_format="csv", pages='all')
-        #print(df)
     print(sreoData)
     sreoData.mask()
     sreoData.dropna(axis=ROW, how='all', inplace=True)
