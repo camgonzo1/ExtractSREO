@@ -1,3 +1,4 @@
+from cmath import nan
 from fileinput import filename
 from lib2to3.pytree import convert
 from re import L
@@ -10,7 +11,7 @@ from trainModel import *
 
 ROW, COLUMN = 0, 1
 PERMITTED_FORMATS = ["csv", "xlsx", "pdf"]
-HEADER_MODEL = 'headerTest'
+HEADER_MODEL, DATA_MODEL = 'headerTest', ''
 DATA_ANALYSIS, HEADER_ANALYSIS  = 1, 2
 NO_PRINT, PRINT = 0, 1
 modelName = None
@@ -36,7 +37,7 @@ def extractSREO(curFilePath):
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = tables[0].df
     print(sreoData)
-    sreoData.mask()
+    sreoData.mask(inplace=True)
     sreoData.dropna(axis=ROW, how='all', inplace=True)
     sreoData.dropna(axis=COLUMN, how='all', inplace=True)
     sreoData = sreoData.reset_index(drop=True).rename_axis(None, axis=COLUMN)
