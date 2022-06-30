@@ -154,3 +154,4 @@ cython_debug/
 *.pt
 *.csv
 *.pdf
+.vs/ExtractSREO/v17/.suo
