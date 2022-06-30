@@ -74,7 +74,7 @@ def getHeaderIndex(searchData):
 # Description: Takes in a nonstandardized SREO and analyzes using a NLP model to restrusture 
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
-def fillTemplate(Frame):
+def fillTemplate(sreoDataFrame):
     sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
     for dataColumn in sreoDataFrame.columns:
         myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn]).apply(str).str.cat(sep=' ')
@@ -98,7 +98,6 @@ def standardizeSREO(sreoFilePath):
 #################### For Testing ############################
 
 def testConfidence(data):
-
     for column in data.columns:
         myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
         if str(column[0]) == "":
@@ -135,4 +134,3 @@ def main():
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     main()
-    #standardizesreo
