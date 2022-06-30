@@ -22,7 +22,9 @@ modelName = None
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
 def extractSREO(curFilePath):
-    #Determines File Type   
+    #Determines File Type 
+    path = curFilePath.split("/")
+    print(path[len(path) - 1]) 
     splitPath = curFilePath.split(".")
     fileType = splitPath[len(splitPath) - 1]
 
@@ -59,7 +61,7 @@ def extractSREO(curFilePath):
 def getHeaderIndex(searchData):
     for i in range(len(searchData.index)):
         rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
-        if testInput(HEADER_MODEL, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
+        if testInput(modelName, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
             return i
     return -1
 
@@ -92,7 +94,7 @@ def standardizeSREO(sreoFilePath):
 
 #################### For Testing ############################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
-CUR_FILE = 'NorthBridge.pdf'
+CUR_FILE = 'SREOs/Wells SREO.pdf'
 def main():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
@@ -101,7 +103,9 @@ def main():
             modelName = input("Model Name: ")
             if input("Test All Files (Y/N): ") == 'Y':
                 for file in FILES:
+                    print('------------------------------------------------------------')
                     print(extractSREO(file))
+                    print('------------------------------------------------------------')
             elif input("Test Current File (Y/N): ") == 'Y':
                 print(extractSREO(CUR_FILE))
         elif columnOrHeader == "3":
