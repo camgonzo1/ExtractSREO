@@ -16,8 +16,10 @@ HEADER_MODEL, DATA_MODEL = 'headerTest', ''
 DATA_ANALYSIS, HEADER_ANALYSIS  = 1, 2
 NO_PRINT, PRINT = 0, 1
 modelName = None
+totalCorrect = 0
+totalNum = 0
 
-# extractSREO()
+# Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
@@ -96,15 +98,19 @@ def standardizeSREO(sreoFilePath):
 #################### For Testing ############################
 
 def testConfidence(data):
+    global totalCorrect
+    global totalNum
     compare = pd.read_excel("Header Data/DataGroups.xlsx")
     correct = 0
     for column in data.columns:
         myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
         guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
-        if guess in compare.columns:
-            if str(column[0]) in compare[guess].apply(str).str.cat(sep=' '):
+        if guess[0] in compare.columns:
+            if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
                 correct += 1
-        print(str(column[0]) + ' --> ' + guess)
+        print(str(column[0]) + ' --> ' + guess[0] + ' ' + str(guess[1]))
+    totalCorrect += correct
+    totalNum += getNumLabels()
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
     print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
 
@@ -124,6 +130,7 @@ def main():
                     print(data)
                     testConfidence(data)
                     print('------------------------------------------------------------')
+                print("Total Accuracy of Trained Categories = " + str("{:.2%}".format(totalCorrect/totalNum)))
             elif input("Test Current File (Y/N): ") == 'Y':
                 print('------------------------------------------------------------')
                 data = extractSREO(CUR_FILE)
