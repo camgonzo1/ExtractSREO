@@ -1,6 +1,7 @@
 from cmath import nan
 from fileinput import filename
 from lib2to3.pytree import convert
+import os
 from re import L
 import string
 from numpy import dtype
@@ -33,9 +34,9 @@ def extractSREO(curFilePath):
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
     elif fileType == "pdf":
-        tables = camelot.read_pdf(curFilePath, flavor='stream', pages="all", edge_tol=500, row_tol=7)
+        tables = camelot.read_pdf(curFilePath, pages='all',flavor='stream', edge_tol=500, row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
-        sreoData = tables[0].df
+        sreoData = (tables[0].df).replace('\n', '', regex=True)
     sreoData.mask(sreoData == '', inplace=True)
     sreoData.dropna(axis=ROW, how='all', inplace=True)
     sreoData.dropna(axis=COLUMN, how='all', inplace=True)
@@ -78,6 +79,15 @@ def fillTemplate(sreoDataFrame):
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
 
+# Name: standardizeSREO()
+# Parameters: sreoFilePath (string) --> conatins the current path to the desired file for importation
+# Return: fillTemplate(extractSREO(sreoFilePath)) (.xlsx) --> contains the populated SREO standard template
+# Description: Takes in a file path, pulls and analyzes data and restrustures
+#              data in a standardized model which it exports in a .xlsx format fllowing a 
+#              notification to the abstraction team. 
+def standardizeSREO(sreoFilePath):
+    return fillTemplate(extractSREO(sreoFilePath))
+
 
 #################### For Testing ############################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
@@ -105,5 +115,7 @@ def main():
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
         columnOrHeader = input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
 
+
 if __name__ == "__main__":
+    print(os.listdir())
     main()
