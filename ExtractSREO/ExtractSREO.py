@@ -80,7 +80,7 @@ def getHeaderIndex(searchData):
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
 def fillTemplate(sreoDataFrame):
-    sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
+    sreoTemplate = pd.DataFrame(columns=['Property Name','Street Address','City','State','Property Type','Units','Square Footage','Occupancy', 'Year Acquired', 'Lender', 'Maturity', 'OG Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Vaue', 'LTV', 'Amort Start', 'Rate Type', 'All-In', 'Spread', 'Index'])
     for dataColumn in sreoDataFrame.columns:
         # old
         #myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn].apply(str).str.cat(sep=' ')
