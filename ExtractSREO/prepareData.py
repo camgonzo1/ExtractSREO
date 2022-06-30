@@ -4,6 +4,12 @@ import random
 from numpy import dtype
 import pandas as pd
 
+with open('Training Data/addresses.txt') as f: streets = f.readlines()	
+streets = streets[0].split('/')
+with open('Training Data/cities.txt') as f: cities = f.readlines()	
+cities = cities[0].split('/')
+
+
 #Takes inputted columnOrHeader value and calls corresponding functions, randomizes column function calls
 def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
@@ -14,7 +20,7 @@ def createData(columnOrHeader, fileName, numRepeats):
 			elif(rand == 1): trainingData = createCities(trainingData, 1)
 			elif(rand == 2): trainingData = createStates(trainingData, 1)
 			elif(rand == 3): trainingData = createUnits(trainingData, 1)
-			elif(rand == 4): trainingData = createLoanTypes(trainingData, 1)
+			elif(rand == 4): trainingData = createRateTypes(trainingData, 1)
 			elif(rand == 5): trainingData = createAcquisitionDate(trainingData, 1)
 			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="")
 	elif(columnOrHeader == '2'):
@@ -24,10 +30,6 @@ def createData(columnOrHeader, fileName, numRepeats):
 
 #Creates randomized Address column values numRepeats times and adds them to trainingData
 def createAddresses(trainingData, numRepeats):
-	with open('Training Data/addresses.txt') as f:
-		streets = f.readlines()	
-	f.close()
-	streets = streets[0].split('/')
 	ends = ["Road", "Rd.", "rd.", "Boulevard", "blvd.", "Street", "St.", "Way", "Circle", "Ave.", "Avenue", "Drive", "Dr."];
 	addressHeaders = ["Property Location", "Location", "Address", "Street Location", "Street Address", "Property Address", "Street", "Full Property Address", "Property Street Address City State Zip"];
 	exportString = ""
@@ -46,10 +48,6 @@ def createAddresses(trainingData, numRepeats):
 		
 #Creates randomized Cities column values numRepeats times and adds them to trainingData
 def createCities(trainingData, numRepeats):
-	with open('Training Data/addresses.txt') as f:
-		cities = f.readlines()	
-	f.close()
-	cities = cities[0].split('/')	
 	cityHeaders = ["City", "Town"];
 	exportString = ""
 	for i in range(numRepeats):
@@ -90,17 +88,16 @@ def createUnits(trainingData, numRepeats):
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
-def createLoanTypes(trainingData, numRepeats):
-	loanTypeHeaders = ["Loan Type", "Type of Loan", "Fixed or Floating", "Type"]
-	loanTypes = ["Fixed", "Floating", "Other"]
+def createRateTypes(trainingData, numRepeats):
+	rateTypeHeaders = ["Loan Type", "Type of Loan", "Fixed or Floating", "Type", "Rate Type", "Type of Rate", "Interest Rate Type", "Type of Interest Rate"]
+	rateTypes = ["Fixed", "Floating", "Other"]
 	for i in range(numRepeats):
 		exportString = ""
 		numVals = random.randint(1, 25)
-		if random.randint(0, 2) == 1: exportString = loanTypeHeaders[random.randint(0,len(loanTypeHeaders) - 1)] + " "
+		if random.randint(0, 2) == 1: exportString = rateTypeHeaders[random.randint(0,len(rateTypeHeaders) - 1)] + " "
 		for j in range(numVals):
-			exportString += loanTypes[random.randint(0, len(loanTypes) - 1)]
-		#print("Loan Type " + exportString)
-		df2 = pd.DataFrame({ 'label' : "Loan Type", 'text' : exportString }, index=[1])
+			exportString += rateTypes[random.randint(0, len(rateTypes) - 1)] + " "
+		df2 = pd.DataFrame({ 'label' : "Rate Type", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
@@ -114,7 +111,6 @@ def createAcquisitionDate(trainingData, numRepeats):
 		for j in range(numVals):
 			if(yearOrDate == 1): exportString += str(random.randint(1950, 2030)) + " "
 			else: exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2030)) + " "
-		#print("Units " + exportString)
 		df2 = pd.DataFrame({ 'label' : "Acquisition Date", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
@@ -139,6 +135,5 @@ def createHeaders(trainingData, numRepeats):
 				else: exportString += "nan "
 			df2 = pd.DataFrame({'label' : "Invalid", 'text' : exportString }, index = [1])
 		trainingData = pd.concat([trainingData, df2], ignore_index = True)
-		#print(exportString)
 	print()
 	return trainingData
