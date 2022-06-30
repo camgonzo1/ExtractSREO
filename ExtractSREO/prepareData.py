@@ -105,7 +105,7 @@ def createRateTypes(trainingData, numRepeats):
 	return trainingData
 
 def createAcquisitionDate(trainingData, numRepeats):
-	unitsHeaders = ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated"];
+	unitsHeaders = ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)"];
 	for i in range(numRepeats):
 		exportString = ""
 		numVals = random.randint(1, 25)

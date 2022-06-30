@@ -20,7 +20,7 @@ vocab = None
 text_pipeline = None
 label_pipeline = None
 model = None
-COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type"}
+COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date"}
 HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 
 # Gets Number of Labels
