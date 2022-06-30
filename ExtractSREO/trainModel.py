@@ -20,7 +20,7 @@ vocab = None
 text_pipeline = None
 label_pipeline = None
 model = None
-COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Loan Type"}
+COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type"}
 HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 
 # Gets Number of Labels
@@ -31,7 +31,7 @@ def getNumLabels():
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
     if label == "Acquisiton Date": return 6
-    elif label == "Loan Type": return 5
+    elif label == "Rate Type": return 5
     elif label == "Address": return 4
     elif label == "State": return 3
     elif label == "City": return 2
@@ -221,14 +221,14 @@ def loadModel(modelName):
     text_pipeline = lambda x: vocab(tokenizer(x))
     label_pipeline = lambda x: int(x)
 
-def outputConfidence(modelName, columnOrHeader, input, print):
+def outputConfidence(modelName, columnOrHeader, textInput, print):
     loadModel(modelName)
     #Set of numerical labels and their text values
     if columnOrHeader == 1:
         labels = COLUMN_LABELS
     else:
         labels = HEADER_LABELS
-    output = predict(input, text_pipeline)
+    output = predict(textInput, text_pipeline)
     probs = torch.nn.functional.softmax(output, dim=1).tolist()
     maxVal = 0
     maxIndex = -1
@@ -237,8 +237,8 @@ def outputConfidence(modelName, columnOrHeader, input, print):
             maxVal = probs[0][i]
             maxIndex = i
     if maxVal > .9:
-        return labels[maxIndex]
-    else: return "N/A"
+        return labels[maxIndex], maxVal
+    else: return "N//A", maxVal
 
     ######################################################### Testing Below #########################################################
 def testInput(modelName, columnOrHeader, testString, printConfirm):
@@ -252,7 +252,7 @@ def testInput(modelName, columnOrHeader, testString, printConfirm):
     probs = torch.nn.functional.softmax(output, dim=1).tolist()
     #Some test text to see how well the model performs
     if(printConfirm == 1): 
-        print("[N/A, Units, City, State, Address, Loan Type, Acquisition Date]")
+        print("[N/A, Units, City, State, Address, Rate Type, Acquisition Date]")
         probsString = ""
         for i in range(len(probs[0])):
             probsString += labels[i] + " " + str(float(probs[0][i])) + " | "  
