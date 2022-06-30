@@ -115,7 +115,7 @@ CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 # Name: testConfidence()
 # Parameters: data (pandas DataFrame) --> conatins data from SREO file
 # Return: None --> prints to screen and updates global variables directly
-# Description: This function test how well the data AI program is categorizing the 
+# Description: This function test how well the data AI program would be categorizing into the template
 def testConfidence(data):
     global totalCorrect
     global totalNum
@@ -134,10 +134,10 @@ def testConfidence(data):
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
     print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
 
-# Name: testConfidence()
-# Parameters: data (pandas DataFrame) --> conatins data from SREO file
+# Name: runTests()
+# Parameters:None
 # Return: None --> prints to screen and updates global variables directly
-# Description: 
+# Description: This function allows the user to create models and test said models against SREOs
 def runTests():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
