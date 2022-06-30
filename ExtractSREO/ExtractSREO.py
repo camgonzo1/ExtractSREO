@@ -1,21 +1,25 @@
+# File Name: ExtractSREO.py
+# Authors: Ryan Dunn and Cam Gonzalez
+# Description: This file executes the SREO importation, information extraction, and notificication for 
+#              the LoanBoss online application on the back end.
+import camelot
 from cmath import nan
 from fileinput import filename
 from lib2to3.pytree import convert
+from numpy import dtype
 import os
+import pandas as pd
+from prepareData import *
 from re import L
 import string
-from numpy import dtype
-import pandas as pd
-import camelot
-from prepareData import *
 from trainModel import *
 
-ROW, COLUMN = 0, 1
+ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
-HEADER_MODEL, DATA_MODEL = 'headerTest', ''
-DATA_ANALYSIS, HEADER_ANALYSIS  = 1, 2
+HEADER_MODEL, DATA_MODEL = 'headerTest', '' # Trained AI Models for Data Interpretation
+DATA_ANALYSIS, HEADER_ANALYSIS = 1, 2 
 NO_PRINT, PRINT = 0, 1
-modelName = None
+modelName = None # For testing
 totalCorrect, totalNum = 0, 0
 
 # Name: extractSREO()
@@ -23,7 +27,7 @@ totalCorrect, totalNum = 0, 0
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
 def extractSREO(curFilePath):
-    #Determines File Type 
+    # Determines File Type 
     path = curFilePath.split("/")
     print(path[len(path) - 1]) 
     splitPath = curFilePath.split(".")
@@ -36,10 +40,12 @@ def extractSREO(curFilePath):
         sreoData = pd.read_csv(curFilePath, header=None)
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
-    elif fileType == "pdf":
+    elif fileType == "pdf": # still in trial stage (unreliable)
         tables = camelot.read_pdf(curFilePath, flavor='stream', row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = tables[0].df
+
+    # Removes Uneccessary Information from DataFrame and Formats Correctly
     sreoData.replace('\n', '', regex=True, inplace=True)
     sreoData.mask(sreoData == '', inplace=True)
     sreoData.dropna(axis=ROW, how='all', inplace=True)
@@ -80,7 +86,6 @@ def fillTemplate(sreoDataFrame):
         relevantCategory = testInput(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
-    print(sreoTemplate)
 
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
@@ -89,20 +94,27 @@ def fillTemplate(sreoDataFrame):
 # Parameters: sreoFilePath (string) --> conatins the current path to the desired file for importation
 # Return: fillTemplate(extractSREO(sreoFilePath)) (.xlsx) --> contains the populated SREO standard template
 # Description: Takes in a file path, pulls and analyzes data and restrustures
-#              data in a standardized model which it exports in a .xlsx format fllowing a 
+#              data in a standardized model which it exports in a .xlsx format following a 
 #              notification to the abstraction team. 
 def standardizeSREO(sreoFilePath):
     return fillTemplate(extractSREO(sreoFilePath))
 
-#################### For Testing ############################
+######################## For Testing #################################
+FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
+CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 
+# Name: testConfidence()
+# Parameters: data (pandas DataFrame) --> conatins data from SREO file
+# Return: None --> prints to screen and updates global variables directly
+# Description: 
 def testConfidence(data):
     global totalCorrect
     global totalNum
     compare = pd.read_excel("Header Data/DataGroups.xlsx")
     correct = 0
     for column in data.columns:
-        myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
+        #myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
+        myString = str(column[0]) + " " + ((data[column]).apply(str)[:3]).str.cat(sep=' ')
         guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if guess[0] in compare.columns:
             if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
@@ -113,10 +125,11 @@ def testConfidence(data):
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
     print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
 
-
-FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
-CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
-def main():
+# Name: testConfidence()
+# Parameters: data (pandas DataFrame) --> conatins data from SREO file
+# Return: None --> prints to screen and updates global variables directly
+# Description: 
+def runTests():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
     while(int(columnOrHeader) != 5):
@@ -149,4 +162,4 @@ def main():
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    main()
+    runTests()
