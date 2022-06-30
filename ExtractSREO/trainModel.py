@@ -214,7 +214,7 @@ def loadModel(modelName):
 def outputConfidence(modelName, columnOrHeader, input):
     loadModel(modelName)
     #Set of numerical labels and their text values
-    if columnOrHeader == "1":
+    if columnOrHeader == 1:
         labels = {0: "N/A",
               1: "Units",
               2: "City",
@@ -238,7 +238,7 @@ def outputConfidence(modelName, columnOrHeader, input):
 def testInput(modelName, columnOrHeader, testString, printConfirm):
     loadModel(modelName)
     #Set of numerical labels and their text values
-    if columnOrHeader == "1":
+    if columnOrHeader == 1:
         labels = {0: "N/A",
               1: "Units",
               2: "City",
