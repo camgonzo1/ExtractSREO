@@ -18,13 +18,14 @@ def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
 	if(columnOrHeader == '1'):
 		for i in range(numRepeats):
-			rand = random.randint(0,6)
+			rand = random.randint(0,7)
 			if(rand == 0): trainingData = createAddresses(trainingData, 1)
 			elif(rand == 1): trainingData = createCities(trainingData, 1)
 			elif(rand == 2): trainingData = createStates(trainingData, 1)
 			elif(rand == 3): trainingData = createUnits(trainingData, 1)
 			elif(rand == 4): trainingData = createRateTypes(trainingData, 1)
 			elif(rand == 5): trainingData = createAcquisitionDate(trainingData, 1)
+			elif(rand == 6): trainingData = createMaturityDate(trainingData, 1)
 			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="")
 	elif(columnOrHeader == '2'):
 		trainingData = createHeaders(trainingData,numRepeats)
@@ -37,10 +38,10 @@ def createAddresses(trainingData, numRepeats):
 	addressHeaders = ["Property Location", "Location", "Address", "Street Location", "Street Address", "Property Address", "Street", "Full Property Address", "Property Street Address City State Zip"];
 	exportString = ""
 	for i in range(numRepeats):
-		numVals = random.randint(1, 25)
+		#numVals = random.randint(1, 25)
 		addEnd = random.randint(0, 5)
 		if random.randint(0, 2) == 1: exportString = addressHeaders[random.randint(0,8)] + " "
-		for j in range(numVals):
+		for j in range(3):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += str(random.randint(1,10000)) + " "
 			exportString += streets[random.randint(0, len(streets) - 1)] + " "
@@ -55,9 +56,9 @@ def createCities(trainingData, numRepeats):
 	cityHeaders = ["City", "Town"];
 	exportString = ""
 	for i in range(numRepeats):
-		numVals = random.randint(1, 25)
+		#numVals = random.randint(1, 25)
 		if random.randint(0, 2) == 1: exportString = cityHeaders[random.randint(0,1)] + " "
-		for j in range(numVals):
+		for j in range(3):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += cities[random.randint(0, len(cities) - 1)] + " "
 		#print("City " + exportString)
@@ -70,9 +71,9 @@ def createStates(trainingData, numRepeats):
 	states = ["AL", "AK", "AZ", "AR", "CA", "CZ", "CO", "CT", "DE", "DC", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "WA", "WV", "WI", "WY", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "Wisconsin", "Wyoming"];
 	exportString = ""
 	for i in range(numRepeats):
-		numVals = random.randint(1, 25)
+		#numVals = random.randint(1, 25)
 		if random.randint(0, 2) == 1: exportString = "State "
-		for j in range(numVals):
+		for j in range(3):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += states[random.randint(0,len(states) - 1)] + " "
 		#print("State " + exportString)
@@ -85,9 +86,9 @@ def createUnits(trainingData, numRepeats):
 	unitsHeaders = ["Units", "#units", "# of Units", "Number of Units", "Unit Count"];
 	for i in range(numRepeats):
 		exportString = ""
-		numVals = random.randint(1, 25)
+		#numVals = random.randint(1, 25)
 		if random.randint(0, 2) == 1: exportString = unitsHeaders[random.randint(0,len(unitsHeaders) - 1)] + " "
-		for j in range(numVals):
+		for j in range(3):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += str(random.randint(1, 1000)) + " "
 		#print("Units " + exportString)
@@ -100,9 +101,9 @@ def createRateTypes(trainingData, numRepeats):
 	rateTypes = ["Fixed", "Floating", "Other"]
 	for i in range(numRepeats):
 		exportString = ""
-		numVals = random.randint(1, 25)
+		#numVals = random.randint(1, 25)
 		if random.randint(0, 2) == 1: exportString = rateTypeHeaders[random.randint(0,len(rateTypeHeaders) - 1)] + " "
-		for j in range(numVals):
+		for j in range(3):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += rateTypes[random.randint(0, len(rateTypes) - 1)] + " "
 		df2 = pd.DataFrame({ 'label' : "Rate Type", 'text' : exportString }, index=[1])
@@ -113,14 +114,27 @@ def createAcquisitionDate(trainingData, numRepeats):
 	ADHeaders = ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)"];
 	for i in range(numRepeats):
 		exportString = ""
-		numVals = random.randint(1, 25)
+		#numVals = random.randint(1, 25)
 		if random.randint(0, 2) == 1: exportString = ADHeaders[random.randint(0,4)] + " "
 		yearOrDate = random.randint(0, 2)
-		for j in range(numVals):
+		for j in range(3):
 			if random.randint(0,10) == 0: exportString += "nan "
 			if(yearOrDate == 1): exportString += str(random.randint(1950, 2030)) + " "
-			else: exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2030)) + " "
+			else: exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
 		df2 = pd.DataFrame({ 'label' : "Acquisition Date", 'text' : exportString }, index=[1])
+		trainingData = pd.concat([trainingData, df2],ignore_index = True)
+	return trainingData
+
+def createMaturityDate(trainingData, numRepeats):
+	MDHeaders = ["Maturity Date", "Maturity", "Loan Matures", "Matures", "Date of Maturity", "Date Matures", "Maturation Date"]
+	for i in range(numRepeats):
+		exportString = ""
+		#numVals = random.randint(1, 25)
+		if random.randint(0,2) == 1: exportString = MDHeaders[random.randint(0,4)] + " "
+		for j in range(3):
+			if random.randint(0, 10) == 0: exportString += "nan "
+			exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
+		df2 = pd.DataFrame({ 'label' : "Maturity Date", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
