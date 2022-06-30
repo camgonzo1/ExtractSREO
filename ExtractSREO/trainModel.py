@@ -10,6 +10,7 @@ from torch import nn
 import torch.nn.functional as F
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines whether the user is using CPU or GPU processing
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
 emsize = 128
@@ -236,7 +237,7 @@ def outputConfidence(modelName, columnOrHeader, textInput, print):
         if maxVal < probs[0][i]:
             maxVal = probs[0][i]
             maxIndex = i
-    if maxVal > .9:
+    if maxVal > .99:
         return labels[maxIndex]
     else: return "N//A"
 
