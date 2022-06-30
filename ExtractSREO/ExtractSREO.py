@@ -19,7 +19,7 @@ modelName = None
 totalCorrect = 0
 totalNum = 0
 
-# extractSREO()
+# Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
