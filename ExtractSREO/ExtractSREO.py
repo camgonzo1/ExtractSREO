@@ -71,7 +71,7 @@ def getHeaderIndex(searchData):
 # Description: Takes in a nonstandardized SREO and analyzes using a NLP model to restrusture 
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
-def fillTemplate(sreoDataFrame):
+def fillTemplate(Frame):
     sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
     for dataColumn in sreoDataFrame:
         relevantCategory = testInput(modelName, DATA_ANALYSIS, sreoDataFrame[dataColumn][0], NO_PRINT)
@@ -103,6 +103,7 @@ def main():
             modelName = input("Model Name: ")
             if input("Test All Files (Y/N): ") == 'Y':
                 for file in FILES:
+                    extractColumns("")
                     print('------------------------------------------------------------')
                     print(extractSREO(file))
                     print('------------------------------------------------------------')
@@ -115,11 +116,9 @@ def main():
         else:
             numRepeats = input("Number of Repeats: ")
             createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
-            createData(columnOrHeader, 'testingData.csv', int(int(numRepeats) / 5))
             print()
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
         columnOrHeader = input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
-
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
