@@ -82,7 +82,16 @@ def getHeaderIndex(searchData):
 def fillTemplate(sreoDataFrame):
     sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
     for dataColumn in sreoDataFrame.columns:
-        myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn]).apply(str).str.cat(sep=' ')
+        # old
+        #myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn].apply(str).str.cat(sep=' ')
+
+        #new
+        data = sreoDataFrame[dataColumn].dropna()
+        if len(data) > 3:
+            myString = str(dataColumn[0]) + " " + (data.apply(str)[:3]).str.cat(sep=' ')
+        else :
+            myString = str(dataColumn[0]) + " " + data.apply(str).str.cat(sep=' ')
+
         relevantCategory = testInput(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
@@ -106,7 +115,7 @@ CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 # Name: testConfidence()
 # Parameters: data (pandas DataFrame) --> conatins data from SREO file
 # Return: None --> prints to screen and updates global variables directly
-# Description: 
+# Description: This function test how well the data AI program is categorizing the 
 def testConfidence(data):
     global totalCorrect
     global totalNum
