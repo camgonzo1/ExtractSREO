@@ -22,19 +22,21 @@ modelName = None
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
 def extractSREO(curFilePath):
-    #Determines File Type   
+    #Determines File Type 
+    path = curFilePath.split("/")
+    print(path[len(path) - 1]) 
     splitPath = curFilePath.split(".")
     fileType = splitPath[len(splitPath) - 1]
 
     # Reads Data into Pandas DataFrame
     if fileType not in PERMITTED_FORMATS:
-        raise TypeError("Please input compatible file type!")
+        raise TypeError("Error: Please input compatible file type!")
     elif fileType == "csv":
         sreoData = pd.read_csv(curFilePath, header=None)
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
     elif fileType == "pdf":
-        tables = camelot.read_pdf(curFilePath, pages='all', flavor='stream', row_tol=7)
+        tables = camelot.read_pdf(curFilePath, flavor='stream', row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = (tables[0].df).replace('\n', '', regex=True)
     sreoData.mask(sreoData == '', inplace=True)
@@ -45,7 +47,7 @@ def extractSREO(curFilePath):
     # Reformat DataFrame to Apply Header
     index = getHeaderIndex(sreoData)
     if index == -1:
-        raise IndexError("No header row found in " + curFilePath + "! Please try again or enter file in different compatible format.")
+        raise IndexError("Error Downloading File: Please retry download or use different file format!")
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
 
@@ -75,6 +77,7 @@ def fillTemplate(sreoDataFrame):
         relevantCategory = testInput(modelName, DATA_ANALYSIS, sreoDataFrame[dataColumn][0], NO_PRINT)
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
+    print(sreoTemplate)
 
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
@@ -100,7 +103,9 @@ def main():
             modelName = input("Model Name: ")
             if input("Test All Files (Y/N): ") == 'Y':
                 for file in FILES:
+                    print('------------------------------------------------------------')
                     print(extractSREO(file))
+                    print('------------------------------------------------------------')
             elif input("Test Current File (Y/N): ") == 'Y':
                 print(extractSREO(CUR_FILE))
         elif columnOrHeader == "3":
@@ -119,3 +124,4 @@ def main():
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     main()
+    #standardizesreo
