@@ -114,7 +114,7 @@ def testConfidence(data):
     correct = 0
     for column in data.columns:
         #myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
-        myString = str(column[0]) + " " + ((data[column]).apply(str)[:3]).str.cat(sep=' ')
+        myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:3]).str.cat(sep=' ')
         guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if guess[0] in compare.columns:
             if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
