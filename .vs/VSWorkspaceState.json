@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\ExtractSREO"
+    "\\ExtractSREO",
+    "\\ExtractSREO\\SREOs"
   ],
-  "SelectedNode": "\\ExtractSREO.sln",
+  "SelectedNode": "\\ExtractSREO\\ExtractSREO.py",
   "PreviewInSolutionExplorer": false
 }
