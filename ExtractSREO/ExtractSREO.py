@@ -108,7 +108,7 @@ def testConfidence(data):
         if guess[0] in compare.columns:
             if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
                 correct += 1
-        print(str(column[0]) + ' --> ' + guess[0] + ' at confidence level ' + str(guess[1]))
+        print(str(column[0]) + ' --> ' + guess[0] + ' ' + str(guess[1]))
     totalCorrect += correct
     totalNum += getNumLabels()
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
