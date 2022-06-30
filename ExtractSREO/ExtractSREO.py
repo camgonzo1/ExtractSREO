@@ -91,7 +91,7 @@ def standardizeSREO(sreoFilePath):
 
 #################### For Testing ############################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
-CUR_FILE = 'NorthBridge.pdf'
+CUR_FILE = 'SREOs/Wells SREO.pdf'
 def main():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
@@ -106,7 +106,7 @@ def main():
         elif columnOrHeader == "3":
             columnOrHeader = input("1 for Column model, 2 for Header model: ")
             modelName = input("Model Name: ")
-            testInput(modelName, columnOrHeader, input("Input test string: "), 1)
+            print(outputConfidence(modelName, columnOrHeader, input("Input test string: ")))
         else:
             numRepeats = input("Number of Repeats: ")
             createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
