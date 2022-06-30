@@ -1,8 +1,11 @@
 from lib2to3.pytree import convert
 from re import L
+import os
 import random
 from numpy import dtype
 import pandas as pd
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 with open('Training Data/addresses.txt') as f: streets = f.readlines()	
 streets = streets[0].split('/')
