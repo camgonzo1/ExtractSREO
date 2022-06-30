@@ -28,13 +28,13 @@ def extractSREO(curFilePath):
 
     # Reads Data into Pandas DataFrame
     if fileType not in PERMITTED_FORMATS:
-        raise TypeError("Please input compatible file type!")
+        raise TypeError("Error: Please input compatible file type!")
     elif fileType == "csv":
         sreoData = pd.read_csv(curFilePath, header=None)
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
     elif fileType == "pdf":
-        tables = camelot.read_pdf(curFilePath, pages='all', flavor='stream', row_tol=7)
+        tables = camelot.read_pdf(curFilePath, flavor='stream', row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = (tables[0].df).replace('\n', '', regex=True)
     sreoData.mask(sreoData == '', inplace=True)
@@ -45,7 +45,7 @@ def extractSREO(curFilePath):
     # Reformat DataFrame to Apply Header
     index = getHeaderIndex(sreoData)
     if index == -1:
-        raise IndexError("No header row found in " + curFilePath + "! Please try again or enter file in different compatible format.")
+        raise IndexError("Error Downloading File: Please retry download or use different file format!")
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
 
@@ -59,7 +59,7 @@ def extractSREO(curFilePath):
 def getHeaderIndex(searchData):
     for i in range(len(searchData.index)):
         rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
-        if testInput(modelName, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
+        if testInput(HEADER_MODEL, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
             return i
     return -1
 
@@ -75,6 +75,7 @@ def fillTemplate(sreoDataFrame):
         relevantCategory = testInput(modelName, DATA_ANALYSIS, sreoDataFrame[dataColumn][0], NO_PRINT)
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
+    print(sreoTemplate)
 
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
@@ -119,3 +120,4 @@ def main():
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     main()
+    #standardizesreo
