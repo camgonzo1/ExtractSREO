@@ -121,7 +121,7 @@ def main():
         elif columnOrHeader == "3":
             columnOrHeader = input("1 for Column model, 2 for Header model: ")
             modelName = input("Model Name: ")
-            testInput(modelName, columnOrHeader, input("Input test string: "), 1)
+            print(outputConfidence(modelName, columnOrHeader, input("Input test string: ")))
         else:
             numRepeats = input("Number of Repeats: ")
             createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
