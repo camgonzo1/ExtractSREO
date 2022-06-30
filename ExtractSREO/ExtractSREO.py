@@ -100,6 +100,8 @@ def standardizeSREO(sreoFilePath):
 def testConfidence(data):
     for column in data.columns:
         myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
+        if str(column[0]) == "City":
+            print(myString)
         print(str(column[0]) + ' --> ' + outputConfidence(modelName, DATA_ANALYSIS, myString))
 
 
