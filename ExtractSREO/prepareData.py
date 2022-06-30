@@ -93,7 +93,7 @@ def createHeaders(trainingData, numRepeats):
 		rand = random.randint(0,1)
 		numVals = random.randint(15, 25)
 		exportString = ""
-		if(rand == 0):
+		if rand == 0:
 			for j in range(numVals):
 				exportString += headers[random.randint(0, 91)] + " "
 			df2 = pd.DataFrame({ 'label' : "Valid", 'text' : exportString }, index = [1])

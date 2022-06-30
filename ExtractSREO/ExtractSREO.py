@@ -33,7 +33,7 @@ def extractSREO(curFilePath):
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
     elif fileType == "pdf":
-        tables = camelot.read_pdf(curFilePath, flavor='stream')
+        tables = camelot.read_pdf(curFilePath, flavor='stream', pages="all", edge_tol=500, row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = tables[0].df
     sreoData.mask(sreoData == '', inplace=True)
@@ -81,7 +81,7 @@ def fillTemplate(sreoDataFrame):
 
 #################### For Testing ############################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
-CUR_FILE = 'SREOs/2022 Lawrence S Connor REO Schedule.pdf'
+CUR_FILE = 'NorthBridge.pdf'
 def main():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
