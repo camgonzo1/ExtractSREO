@@ -34,7 +34,7 @@ def extractSREO(curFilePath):
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
     elif fileType == "pdf":
-        tables = camelot.read_pdf(curFilePath, pages='all',flavor='stream', edge_tol=500, row_tol=7)
+        tables = camelot.read_pdf(curFilePath, pages='all', flavor='stream', row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
         sreoData = (tables[0].df).replace('\n', '', regex=True)
     sreoData.mask(sreoData == '', inplace=True)
@@ -117,5 +117,5 @@ def main():
 
 
 if __name__ == "__main__":
-    print(os.listdir())
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     main()
