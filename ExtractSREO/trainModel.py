@@ -218,7 +218,7 @@ def loadModel(modelName):
 def outputConfidence(modelName, columnOrHeader, input, print):
     loadModel(modelName)
     #Set of numerical labels and their text values
-    if columnOrHeader == "1":
+    if columnOrHeader == 1:
         labels = COLUMN_LABELS
     else:
         labels = HEADER_LABELS
@@ -230,7 +230,7 @@ def outputConfidence(modelName, columnOrHeader, input, print):
         if maxVal < probs[0][i]:
             maxVal = probs[0][i]
             maxIndex = i
-    print(maxVal)
+    #print(maxVal)
     if maxVal > .9:
         return labels[maxIndex]
     else: return "N/A"
@@ -239,7 +239,7 @@ def outputConfidence(modelName, columnOrHeader, input, print):
 def testInput(modelName, columnOrHeader, testString, printConfirm):
     loadModel(modelName)
     #Set of numerical labels and their text values
-    if columnOrHeader == "1":
+    if columnOrHeader == 1:
         labels = COLUMN_LABELS
     else:
         labels = HEADER_LABELS

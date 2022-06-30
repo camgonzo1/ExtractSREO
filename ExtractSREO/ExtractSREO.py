@@ -100,7 +100,7 @@ def standardizeSREO(sreoFilePath):
 def testConfidence(data):
     for column in data.columns:
         myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
-        print(str(column[0]) + ' --> ' + outputConfidence(modelName, DATA_ANALYSIS, myString))
+        print(str(column[0]) + ' --> ' + outputConfidence(modelName, DATA_ANALYSIS, myString, PRINT))
 
 
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
