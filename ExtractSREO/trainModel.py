@@ -211,7 +211,28 @@ def loadModel(modelName):
     text_pipeline = lambda x: vocab(tokenizer(x))
     label_pipeline = lambda x: int(x)
 
-
+def outputConfidence(modelName, columnOrHeader, input):
+    loadModel(modelName)
+    #Set of numerical labels and their text values
+    if columnOrHeader == "1":
+        labels = {0: "N/A",
+              1: "Units",
+              2: "City",
+              3: "State",
+              4: "Address"}
+    else:
+        labels = {0: "N/A", 1: "Invalid", 2: "Valid"}
+    output = predict(input, text_pipeline)
+    probs = torch.nn.functional.softmax(output, dim=1).tolist()
+    maxVal = 0
+    maxIndex = -1
+    for i in range(len(probs[0])):
+        if maxVal < probs[0][i]:
+            maxVal = probs[0][i]
+            maxIndex = i
+    if maxVal > .8:
+        return labels[i]
+    else: return "N/A"
 
     ######################################################### Testing Below #########################################################
 def testInput(modelName, columnOrHeader, testString, printConfirm):
