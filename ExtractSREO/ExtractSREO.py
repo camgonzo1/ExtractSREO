@@ -16,8 +16,7 @@ HEADER_MODEL, DATA_MODEL = 'headerTest', ''
 DATA_ANALYSIS, HEADER_ANALYSIS  = 1, 2
 NO_PRINT, PRINT = 0, 1
 modelName = None
-totalCorrect = 0
-totalNum = 0
+totalCorrect, totalNum = 0, 0
 
 # Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
