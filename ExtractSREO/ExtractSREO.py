@@ -11,7 +11,7 @@ from prepareData import *
 from trainModel import *
 
 ROW, COLUMN = 0, 1
-PERMITTED_FORMATS = ["csv", "xlsx", "pdf"]
+PERMITTED_FORMATS = ["csv", "xlsx"]
 HEADER_MODEL, DATA_MODEL = 'headerTest', ''
 DATA_ANALYSIS, HEADER_ANALYSIS  = 1, 2
 NO_PRINT, PRINT = 0, 1
@@ -38,7 +38,8 @@ def extractSREO(curFilePath):
     elif fileType == "pdf":
         tables = camelot.read_pdf(curFilePath, flavor='stream', row_tol=7)
         tables.export(curFilePath, f='csv', compress=True)
-        sreoData = (tables[0].df).replace('\n', '', regex=True)
+        sreoData = tables[0].df
+    sreoData.replace('\n', '', regex=True, inplace=True)
     sreoData.mask(sreoData == '', inplace=True)
     sreoData.dropna(axis=ROW, how='all', inplace=True)
     sreoData.dropna(axis=COLUMN, how='all', inplace=True)
@@ -51,6 +52,8 @@ def extractSREO(curFilePath):
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
 
+    print(sreoData)
+    testConfidence(sreoData)
     return sreoData
 
 # Name: getHeaderIndex()
@@ -61,7 +64,7 @@ def extractSREO(curFilePath):
 def getHeaderIndex(searchData):
     for i in range(len(searchData.index)):
         rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
-        if testInput(modelName, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
+        if testInput(HEADER_MODEL, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
             return i
     return -1
 
@@ -73,8 +76,9 @@ def getHeaderIndex(searchData):
 #              notification to the abstraction team. 
 def fillTemplate(Frame):
     sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
-    for dataColumn in sreoDataFrame:
-        relevantCategory = testInput(modelName, DATA_ANALYSIS, sreoDataFrame[dataColumn][0], NO_PRINT)
+    for dataColumn in sreoDataFrame.columns:
+        myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn]).apply(str).str.cat(sep=' ')
+        relevantCategory = testInput(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
     print(sreoTemplate)
@@ -91,10 +95,16 @@ def fillTemplate(Frame):
 def standardizeSREO(sreoFilePath):
     return fillTemplate(extractSREO(sreoFilePath))
 
-
 #################### For Testing ############################
-FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx"]
-CUR_FILE = 'SREOs/Wells SREO.pdf'
+
+def testConfidence(data):
+    for column in data.columns:
+        myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
+        print(str(column[0]) + ' --> ' + outputConfidence(modelName, DATA_ANALYSIS, myString))
+
+
+FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
+CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 def main():
     global modelName
     columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
@@ -105,10 +115,10 @@ def main():
                 for file in FILES:
                     extractColumns("")
                     print('------------------------------------------------------------')
-                    print(extractSREO(file))
+                    extractSREO(file)
                     print('------------------------------------------------------------')
             elif input("Test Current File (Y/N): ") == 'Y':
-                print(extractSREO(CUR_FILE))
+                extractSREO(CUR_FILE)
         elif columnOrHeader == "3":
             columnOrHeader = input("1 for Column model, 2 for Header model: ")
             modelName = input("Model Name: ")
