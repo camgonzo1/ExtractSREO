@@ -102,9 +102,8 @@ def testConfidence(data):
         myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
         guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if guess in compare.columns:
-            if column[0] in compare[guess].apply(str).str.cat(sep=' '):
+            if str(column[0]) in compare[guess].apply(str).str.cat(sep=' '):
                 correct += 1
-                print("Correct Below")
         print(str(column[0]) + ' --> ' + guess)
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
     print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
