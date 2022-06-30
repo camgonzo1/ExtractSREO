@@ -24,7 +24,9 @@ def createData(columnOrHeader, fileName, numRepeats):
 			elif(rand == 2): trainingData = createStates(trainingData, 1)
 			elif(rand == 3): trainingData = createUnits(trainingData, 1)
 			elif(rand == 4): trainingData = createRateTypes(trainingData, 1)
-			elif(rand == 5): trainingData = createAcquisitionDate(trainingData, 1)
+			elif(rand == 5): 
+				trainingData = createAcquisitionDate(trainingData, 1)
+				trainingData = createAcquisitionDate(trainingData, 1)
 			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="")
 	elif(columnOrHeader == '2'):
 		trainingData = createHeaders(trainingData,numRepeats)
@@ -105,11 +107,11 @@ def createRateTypes(trainingData, numRepeats):
 	return trainingData
 
 def createAcquisitionDate(trainingData, numRepeats):
-	unitsHeaders = ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)"];
+	ADHeaders = ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)"];
 	for i in range(numRepeats):
 		exportString = ""
 		numVals = random.randint(1, 25)
-		if random.randint(0, 2) == 1: exportString = unitsHeaders[random.randint(0,4)] + " "
+		if random.randint(0, 2) == 1: exportString = ADHeaders[random.randint(0,4)] + " "
 		yearOrDate = random.randint(0, 2)
 		for j in range(numVals):
 			if(yearOrDate == 1): exportString += str(random.randint(1950, 2030)) + " "

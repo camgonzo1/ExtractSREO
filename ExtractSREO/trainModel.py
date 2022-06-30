@@ -30,7 +30,7 @@ def getNumLabels():
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
-    if label == "Acquisiton Date": return 6
+    if label == "Acquisition Date": return 6
     elif label == "Rate Type": return 5
     elif label == "Address": return 4
     elif label == "State": return 3
