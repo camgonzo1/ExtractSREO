@@ -9,12 +9,13 @@ def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
 	if(columnOrHeader == '1'):
 		for i in range(numRepeats):
-			rand = random.randint(0,5)
+			rand = random.randint(0,6)
 			if(rand == 0): trainingData = createAddresses(trainingData, 1)
 			elif(rand == 1): trainingData = createCities(trainingData, 1)
 			elif(rand == 2): trainingData = createStates(trainingData, 1)
 			elif(rand == 3): trainingData = createUnits(trainingData, 1)
 			elif(rand == 4): trainingData = createLoanTypes(trainingData, 1)
+			elif(rand == 5): trainingData = createAcquisitionDate(trainingData, 1)
 			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="")
 	elif(columnOrHeader == '2'):
 		trainingData = createHeaders(trainingData,numRepeats)
@@ -111,8 +112,8 @@ def createAcquisitionDate(trainingData, numRepeats):
 		if random.randint(0, 2) == 1: exportString = unitsHeaders[random.randint(0,4)] + " "
 		yearOrDate = random.randint(0, 2)
 		for j in range(numVals):
-			if(yearOrDate == 1): exportString += random.randint(1950, 2030) + " "
-			else: exportString += random.randint(1, 13) + "/" + random.randint(1, 32) + "/" + random.randint(1950, 2030) + " "
+			if(yearOrDate == 1): exportString += str(random.randint(1950, 2030)) + " "
+			else: exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2030)) + " "
 		#print("Units " + exportString)
 		df2 = pd.DataFrame({ 'label' : "Acquisition Date", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
