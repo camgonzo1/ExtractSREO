@@ -52,8 +52,6 @@ def extractSREO(curFilePath):
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
 
-    print(sreoData)
-    testConfidence(sreoData)
     return sreoData
 
 # Name: getHeaderIndex()
@@ -74,7 +72,7 @@ def getHeaderIndex(searchData):
 # Description: Takes in a nonstandardized SREO and analyzes using a NLP model to restrusture 
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
-def fillTemplate(Frame):
+def fillTemplate(sreoDataFrame):
     sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
     for dataColumn in sreoDataFrame.columns:
         myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn]).apply(str).str.cat(sep=' ')
@@ -98,10 +96,18 @@ def standardizeSREO(sreoFilePath):
 #################### For Testing ############################
 
 def testConfidence(data):
+    compare = pd.read_excel("Header Data/DataGroups.xlsx")
+    correct = 0
     for column in data.columns:
         myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
-        label, confidenceVal = outputConfidence(modelName, DATA_ANALYSIS, myString, PRINT)
-        print(str(column[0]) + ' --> ' + label + " " + str(confidenceVal))
+        guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
+        if guess in compare.columns:
+            if column[0] in compare[guess].apply(str).str.cat(sep=' '):
+                correct += 1
+                print("Correct Below")
+        print(str(column[0]) + ' --> ' + guess)
+    print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
+    print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
 
 
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
@@ -115,10 +121,16 @@ def main():
             if input("Test All Files (Y/N): ") == 'Y':
                 for file in FILES:
                     print('------------------------------------------------------------')
-                    extractSREO(file)
+                    data = extractSREO(file)
+                    print(data)
+                    testConfidence(data)
                     print('------------------------------------------------------------')
             elif input("Test Current File (Y/N): ") == 'Y':
-                extractSREO(CUR_FILE)
+                print('------------------------------------------------------------')
+                data = extractSREO(CUR_FILE)
+                print(data)
+                testConfidence(data)
+                print('------------------------------------------------------------')
         elif columnOrHeader == "3":
             columnOrHeader = input("1 for Column model, 2 for Header model: ")
             modelName = input("Model Name: ")
@@ -133,4 +145,3 @@ def main():
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     main()
-    #standardizesreo

@@ -1,4 +1,5 @@
 from collections import Counter
+from tkinter.tix import COLUMN
 import pandas as pd
 import numpy as np
 import time
@@ -21,6 +22,11 @@ label_pipeline = None
 model = None
 COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type"}
 HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
+
+# Gets Number of Labels
+def getNumLabels():
+     return len(COLUMN_LABELS) - 1
+
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
@@ -230,7 +236,6 @@ def outputConfidence(modelName, columnOrHeader, textInput, print):
         if maxVal < probs[0][i]:
             maxVal = probs[0][i]
             maxIndex = i
-    #print(maxVal)
     if maxVal > .9:
         return labels[maxIndex], maxVal
     else: return "N//A", maxVal
