@@ -150,12 +150,11 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-*.csv
-*.pt
-*.csv
+ExtractSREO/*.csv
+ExtractSREO/Model/*
+ExtractSREO/SREOs/*
 *.pdf
 .vs/ExtractSREO/v17/.suo
 *.vsidx
 .vs/ExtractSREO/FileContentIndex/470bf528-a548-405d-9009-e982a6e07239.vsidx
 ExtractSREO/Model/model.pt
-ExtractSREO/Model/*

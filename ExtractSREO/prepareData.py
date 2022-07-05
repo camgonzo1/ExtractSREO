@@ -11,6 +11,8 @@ with open('Training Data/addresses.txt') as f: streets = f.readlines()
 streets = streets[0].split('/')
 with open('Training Data/cities.txt') as f: cities = f.readlines()	
 cities = cities[0].split('/')
+with open('Training Data/asset types.txt') as f: propertyTypes = f.readlines()	
+propertyTypes = propertyTypes[0].split('/')
 
 
 #Takes inputted columnOrHeader value and calls corresponding functions, randomizes column function calls
@@ -94,7 +96,7 @@ def createAllInRate(trainingData, numRepeats):
 			else:
 				exportString += str(float(random.randint(0,500)/100)) + "%" + " "
 		#print("All-In Rate " + exportString)
-		df2 = pd.DataFrame({ 'label' : "All-In", 'text' : exportString}, index=[1])
+		df2 = pd.DataFrame({ 'label' : "All-In Rate", 'text' : exportString}, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
@@ -114,7 +116,7 @@ def createLender(trainingData, numRepeats):
 	return trainingData
 
 def createSpread(trainingData, numRepeats):
-	spreadHeaders = ["Spread, Credit Spread"]
+	spreadHeaders = ["Spread", "Credit Spread"]
 	exportString = ""
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
@@ -212,7 +214,7 @@ def createMaturityDate(trainingData, numRepeats):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			if(random.randint(0,2) == 1): exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
 			else: exportString += str(random.randint(1, 13)) + "-" + str(random.randint(1, 32)) + "-" + str(random.randint(1950, 2050)) + " 00:00:00 "
-		df2 = pd.DataFrame({ 'label' : "Maturity", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Maturity Date", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
@@ -241,7 +243,7 @@ def createSqFootage(trainingData, numRepeats):
 			if(random.randint(0, 10) == 0): exportString += "nan "
 			else: 
 				exportString += str(random.randint(1, 100000)) + ends[random.randint(0, len(ends) - 1)] + " "
-		df2 = pd.DataFrame({ 'label' : "Square Footage", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Square Feet", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
@@ -366,13 +368,12 @@ def createAmortStartDate(trainingData, numRepeats):
 			else:
 				if(random.randint(0,2) == 1): exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
 				else: exportString += str(random.randint(1, 13)) + "-" + str(random.randint(1, 32)) + "-" + str(random.randint(1950, 2050)) + " 00:00:00 "
-		df2 = pd.DataFrame({ 'label' : "Amort Start", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Amort Start Date", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
 def createPropertyType(trainingData, numRepeats):
 	propertyTypeHeaders = ["Property Type", "Type of Property", "Type", "Asset Type"]
-	propertyTypes = ["Condo", "Data Center", "Flex", "Hotel", "Industrial", "Medical", "Mixed-Use", "Multifamily", "Office", "Other", "Residential", "Retail", "Senior Living", "Student Housing"]
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString = propertyTypeHeaders[random.randint(0,len(propertyTypeHeaders) - 1)] + " "
