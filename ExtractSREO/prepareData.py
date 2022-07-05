@@ -91,7 +91,7 @@ def createAllInRate(trainingData, numRepeats):
 			else:
 				exportString += str(float(random.randint(0,500)/100)) + "%" + " "
 		#print("All-In Rate " + exportString)
-		df2 = pd.DataFrame({ 'label' : "Lender", 'text' : exportString}, index=[1])
+		df2 = pd.DataFrame({ 'label' : "All-In Rate", 'text' : exportString}, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
