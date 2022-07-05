@@ -80,9 +80,18 @@ def getHeaderIndex(searchData):
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
 def fillTemplate(sreoDataFrame):
-    sreoTemplate = pd.DataFrame(columns=['1','2','3','4','5','6','7','8'])
+    sreoTemplate = pd.DataFrame(columns=['Property Name','Street Address','City','State','Property Type','Units','Square Footage','Occupancy', 'Year Acquired', 'Lender', 'Maturity', 'OG Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Vaue', 'LTV', 'Amort Start', 'Rate Type', 'All-In', 'Spread', 'Index'])
     for dataColumn in sreoDataFrame.columns:
-        myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn]).apply(str).str.cat(sep=' ')
+        # old
+        #myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn].apply(str).str.cat(sep=' ')
+
+        #new
+        data = sreoDataFrame[dataColumn].dropna()
+        if len(data) > 3:
+            myString = str(dataColumn[0]) + " " + (data.apply(str)[:3]).str.cat(sep=' ')
+        else :
+            myString = str(dataColumn[0]) + " " + data.apply(str).str.cat(sep=' ')
+
         relevantCategory = testInput(modelName, DATA_ANALYSIS, myString, NO_PRINT)
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
@@ -95,7 +104,7 @@ def fillTemplate(sreoDataFrame):
 # Return: fillTemplate(extractSREO(sreoFilePath)) (.xlsx) --> contains the populated SREO standard template
 # Description: Takes in a file path, pulls and analyzes data and restrustures
 #              data in a standardized model which it exports in a .xlsx format following a 
-#              notification to the abstraction team. 
+#              notification to the abstraction team.
 def standardizeSREO(sreoFilePath):
     return fillTemplate(extractSREO(sreoFilePath))
 
@@ -106,7 +115,7 @@ CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 # Name: testConfidence()
 # Parameters: data (pandas DataFrame) --> conatins data from SREO file
 # Return: None --> prints to screen and updates global variables directly
-# Description: 
+# Description: This function test how well the data AI program would be categorizing into the template
 def testConfidence(data):
     global totalCorrect
     global totalNum
@@ -137,10 +146,10 @@ def testConfidence(data):
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
     print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
 
-# Name: testConfidence()
-# Parameters: data (pandas DataFrame) --> conatins data from SREO file
+# Name: runTests()
+# Parameters:None
 # Return: None --> prints to screen and updates global variables directly
-# Description: 
+# Description: This function allows the user to create models and test said models against SREOs
 def runTests():
     global modelName
     columnOrHeader = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
