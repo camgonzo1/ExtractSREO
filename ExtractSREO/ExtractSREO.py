@@ -178,8 +178,9 @@ def runTests():
             modelName = input("Model Name: ")
             print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
         else:
-            numRepeats = input("Number of Repeats: ")
-            createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
+            if(input("Create new dataset (Y/N) ") == "Y"): 
+                numRepeats = input("Number of Repeats: ")
+                createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
             print()
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
         columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))

@@ -19,8 +19,8 @@ def createData(columnOrHeader, fileName, numRepeats):
 	if(columnOrHeader == 1):
 		for i in range(numRepeats):
 			rand = random.randint(1,21)
-			if(rand % 10 == 0): trainingData = createAddresses(trainingData, 1)
-			if(rand % 11 == 0): trainingData = createPropertyName(trainingData, 1)
+			if(random.randint(0,10) == 0): trainingData = createAddresses(trainingData, 1)
+			if(random.randint(0,10) == 0): trainingData = createPropertyName(trainingData, 1)
 			if(rand == 1): trainingData = createCities(trainingData, 1)
 			elif(rand == 2): trainingData = createStates(trainingData, 1)
 			elif(rand == 3): trainingData = createUnits(trainingData, 1)
