@@ -94,7 +94,7 @@ def createAllInRate(trainingData, numRepeats):
 			else:
 				exportString += str(float(random.randint(0,500)/100)) + "%" + " "
 		#print("All-In Rate " + exportString)
-		df2 = pd.DataFrame({ 'label' : "All-In Rate", 'text' : exportString}, index=[1])
+		df2 = pd.DataFrame({ 'label' : "All-In", 'text' : exportString}, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
@@ -212,7 +212,7 @@ def createMaturityDate(trainingData, numRepeats):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			if(random.randint(0,2) == 1): exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
 			else: exportString += str(random.randint(1, 13)) + "-" + str(random.randint(1, 32)) + "-" + str(random.randint(1950, 2050)) + " 00:00:00 "
-		df2 = pd.DataFrame({ 'label' : "Maturity Date", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Maturity", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
@@ -241,7 +241,7 @@ def createSqFootage(trainingData, numRepeats):
 			if(random.randint(0, 10) == 0): exportString += "nan "
 			else: 
 				exportString += str(random.randint(1, 100000)) + ends[random.randint(0, len(ends) - 1)] + " "
-		df2 = pd.DataFrame({ 'label' : "Square Feet", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Square Footage", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
@@ -262,7 +262,7 @@ def createOccupancy(trainingData, numRepeats):
 	return trainingData
 
 def createLoanAmount(trainingData, numRepeats):
-	loanAmountHeaders = ["Loan Amount", "Orig. Loan Amount", "Original Loan Amount"]
+	loanAmountHeaders = ["Loan Amount", "Orig. Loan Amount", "Original Loan Amount", "OG Loan Amount"]
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString += loanAmountHeaders[random.randint(0,len(loanAmountHeaders) - 1)] + " "
@@ -274,7 +274,7 @@ def createLoanAmount(trainingData, numRepeats):
 				else: exportString += "{:,}".format(random.randint(0, 100000000))
 				if random.randint(0, 2) == 0: exportString += "." + str(random.randint(0, 10000))
 				exportString += " "
-		df2 = pd.DataFrame({ 'label' : "Loan Amount", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "OG Loan Amount", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
@@ -366,7 +366,7 @@ def createAmortStartDate(trainingData, numRepeats):
 			else:
 				if(random.randint(0,2) == 1): exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
 				else: exportString += str(random.randint(1, 13)) + "-" + str(random.randint(1, 32)) + "-" + str(random.randint(1950, 2050)) + " 00:00:00 "
-		df2 = pd.DataFrame({ 'label' : "Amort Start Date", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Amort Start", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
