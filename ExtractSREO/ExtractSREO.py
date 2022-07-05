@@ -80,7 +80,7 @@ def getHeaderIndex(searchData):
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
 def fillTemplate(sreoDataFrame):
-    sreoTemplate = pd.DataFrame(columns=['Property Name','Street Address','City','State','Property Type','Units','Square Footage','Occupancy', 'Year Acquired', 'Lender', 'Maturity', 'OG Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Vaue', 'LTV', 'Amort Start', 'Rate Type', 'All-In', 'Spread', 'Index'])
+    sreoTemplate = pd.DataFrame(columns=['Property Name','Street Address','City','State','Property Type','Units','Square Footage','Occupancy', 'Acquisition Date', 'Lender', 'Maturity', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Vaue', 'LTV', 'Amort Start', 'Rate Type', 'All-In', 'Spread', 'Index'])
     for dataColumn in sreoDataFrame.columns:
         # old
         #myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn].apply(str).str.cat(sep=' ')
@@ -96,6 +96,8 @@ def fillTemplate(sreoDataFrame):
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
 
+    # For Testing
+    print(sreoTemplate)
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
 
@@ -176,8 +178,9 @@ def runTests():
             modelName = input("Model Name: ")
             print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
         else:
-            numRepeats = input("Number of Repeats: ")
-            createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
+            if(input("Create new dataset (Y/N) ") == "Y"): 
+                numRepeats = input("Number of Repeats: ")
+                createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
             print()
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
         columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
