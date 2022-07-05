@@ -20,7 +20,7 @@ def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
 	if(columnOrHeader == 1):
 		for i in range(numRepeats):
-			rand = random.randint(1,21)
+			rand = random.randint(1,22)
 			if(random.randint(0,10) == 0): trainingData = createAddresses(trainingData, 1)
 			if(random.randint(0,10) == 0): trainingData = createPropertyName(trainingData, 1)
 			if(rand == 1): trainingData = createCities(trainingData, 1)
@@ -58,7 +58,7 @@ def createAddresses(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = addressHeaders[random.randint(0,8)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += str(random.randint(1,10000)) + " "
 			exportString += streets[random.randint(0, len(streets) - 1)] + " "
@@ -75,7 +75,7 @@ def createCities(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = cityHeaders[random.randint(0,1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += cities[random.randint(0, len(cities) - 1)] + " "
 		#print("City " + exportString)
@@ -89,7 +89,7 @@ def createAllInRate(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = allInRateHeaders[random.randint(0,len(allInRateHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			if random.randint(0,1) == 0:
 				exportString += str(float(random.randint(0,500)/10000)) + " "
@@ -107,7 +107,7 @@ def createLender(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = lenderHeaders[random.randint(0,len(lenderHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += lenderValues[random.randint(0, len(lenderValues) - 1)] + " "
 		#print("Lender " + exportString)
@@ -121,7 +121,7 @@ def createSpread(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = spreadHeaders[random.randint(0,len(spreadHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += str(random.randint(0, 25) * 10) + " BPs" + " "
 		#print("Spread " + exportString)
@@ -136,7 +136,7 @@ def createIndex(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = indexHeaders[random.randint(0,len(indexHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += indexValues[random.randint(0,len(indexValues) - 1)] + " "
 		#print("Index " + exportString)
@@ -151,7 +151,7 @@ def createStates(trainingData, numRepeats):
 	for i in range(numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = "State "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += states[random.randint(0,len(states) - 1)] + " "
 		#print("State " + exportString)
@@ -166,7 +166,7 @@ def createUnits(trainingData, numRepeats):
 		exportString = ""
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = unitsHeaders[random.randint(0,len(unitsHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += str(random.randint(1, 1000)) + " "
 		#print("Units " + exportString)
@@ -181,7 +181,7 @@ def createRateTypes(trainingData, numRepeats):
 		exportString = ""
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = rateTypeHeaders[random.randint(0,len(rateTypeHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			exportString += rateTypes[random.randint(0, len(rateTypes) - 1)] + " "
 		df2 = pd.DataFrame({ 'label' : "Rate Type", 'text' : exportString }, index=[1])
@@ -195,7 +195,7 @@ def createAcquisitionDate(trainingData, numRepeats):
 		#numVals = random.randint(1, 25)
 		if(random.randint(0, 10)) != 0: exportString = ADHeaders[random.randint(0,4)] + " "
 		yearOrDate = random.randint(0, 3)
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0,10) == 0: exportString += "nan "
 			if yearOrDate == 1: exportString += str(random.randint(1950, 2030)) + " "
 			elif yearOrDate == 2: exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
@@ -210,7 +210,7 @@ def createMaturityDate(trainingData, numRepeats):
 		exportString = ""
 		#numVals = random.randint(1, 25)
 		if random.randint(0, 10) != 0: exportString = MDHeaders[random.randint(0,4)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			if(random.randint(0,2) == 1): exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
 			else: exportString += str(random.randint(1, 13)) + "-" + str(random.randint(1, 32)) + "-" + str(random.randint(1950, 2050)) + " 00:00:00 "
@@ -223,7 +223,7 @@ def createPropertyName(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString = propertyNameHeaders[random.randint(0, len(propertyNameHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if random.randint(0, 2) == 0: exportString += str(random.randint(1, 10000))
@@ -239,7 +239,7 @@ def createSqFootage(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString = sqFootageHeaders[random.randint(0, len(sqFootageHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if(random.randint(0, 10) == 0): exportString += "nan "
 			else: 
 				exportString += str(random.randint(1, 100000)) + ends[random.randint(0, len(ends) - 1)] + " "
@@ -252,7 +252,7 @@ def createOccupancy(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString = occupancyHeaders[random.randint(0, len(occupancyHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if(random.randint(0, 10) == 0): exportString += "nan "
 			else: 
 				exportString += str(random.randint(1, 100))
@@ -268,7 +268,7 @@ def createLoanAmount(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString += loanAmountHeaders[random.randint(0,len(loanAmountHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if random.randint(0, 2) == 0: exportString += "$"
@@ -285,7 +285,7 @@ def createDebtService(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString += debtServiceHeaders[random.randint(0,len(debtServiceHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if random.randint(0, 2) == 0: exportString += "$"
@@ -302,7 +302,7 @@ def createNOI(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString += NOIHeaders[random.randint(0,len(NOIHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if random.randint(0, 2) == 0: exportString += "$"
@@ -319,7 +319,7 @@ def createDSCR(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString += DSCRHeaders[random.randint(0,len(DSCRHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				exportString += str(random.randint(0,10)) + "." + str(random.randint(1,10000))
@@ -332,7 +332,7 @@ def createMV(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0,10) != 0: exportString += MVHeaders[random.randint(0,len(MVHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if random.randint(0, 2) == 0: exportString += "$"
@@ -349,10 +349,14 @@ def createLTV(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0,10) != 0: exportString += LTVHeaders[random.randint(0,len(LTVHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
-				exportString += str(random.randint(0, 10)) + "." + str(random.randint(0, 1000000)) + " "
+				exportString += str(random.randint(0, 10)) + "."
+				if random.randint(0, 2) == 0: exportString += str(random.randint(0, 1000000))
+				else: exportString += str(random.randint(0, 100))
+				if random.randint(0, 2) == 0: exportString += "% "
+				else: exportString += " "
 		df2 = pd.DataFrame({ 'label' : "LTV", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2], ignore_index=True)
 	return trainingData
@@ -363,7 +367,7 @@ def createAmortStartDate(trainingData, numRepeats):
 		exportString = ""
 		#numVals = random.randint(1, 25)
 		if random.randint(0, 10) != 0: exportString = ADHeaders[random.randint(0,len(ADHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if(random.randint(0,2) == 1): exportString += str(random.randint(1, 13)) + "/" + str(random.randint(1, 32)) + "/" + str(random.randint(1950, 2050)) + " "
@@ -377,7 +381,7 @@ def createPropertyType(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString = propertyTypeHeaders[random.randint(0,len(propertyTypeHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				exportString += propertyTypes[random.randint(0,len(propertyTypes) - 1)] + " "
@@ -390,7 +394,7 @@ def createCurrentBalance(trainingData, numRepeats):
 	for i in range(numRepeats):
 		exportString = ""
 		if random.randint(0, 10) != 0: exportString = balanceHeaders[random.randint(0, len(balanceHeaders) - 1)] + " "
-		for j in range(3):
+		for j in range(2):
 			if random.randint(0, 10) == 0: exportString += "nan "
 			else:
 				if random.randint(0, 2) == 0: exportString += "$"
