@@ -158,3 +158,4 @@ cython_debug/
 *.vsidx
 .vs/ExtractSREO/FileContentIndex/470bf528-a548-405d-9009-e982a6e07239.vsidx
 ExtractSREO/Model/model.pt
+ExtractSREO/Model/*
