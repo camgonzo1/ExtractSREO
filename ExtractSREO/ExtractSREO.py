@@ -104,7 +104,7 @@ def fillTemplate(sreoDataFrame):
 # Return: fillTemplate(extractSREO(sreoFilePath)) (.xlsx) --> contains the populated SREO standard template
 # Description: Takes in a file path, pulls and analyzes data and restrustures
 #              data in a standardized model which it exports in a .xlsx format following a 
-#              notification to the abstraction team. 
+#              notification to the abstraction team.
 def standardizeSREO(sreoFilePath):
     return fillTemplate(extractSREO(sreoFilePath))
 
