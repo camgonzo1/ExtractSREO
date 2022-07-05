@@ -274,7 +274,7 @@ def createLoanAmount(trainingData, numRepeats):
 				else: exportString += "{:,}".format(random.randint(0, 100000000))
 				if random.randint(0, 2) == 0: exportString += "." + str(random.randint(0, 10000))
 				exportString += " "
-		df2 = pd.DataFrame({ 'label' : "OG Loan Amount", 'text' : exportString }, index=[1])
+		df2 = pd.DataFrame({ 'label' : "Loan Amount", 'text' : exportString }, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index=True)
 	return trainingData
 
