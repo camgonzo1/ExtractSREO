@@ -13,7 +13,6 @@ with open('Training Data/cities.txt') as f: cities = f.readlines()
 cities = cities[0].split('/')
 
 
-
 #Takes inputted columnOrHeader value and calls corresponding functions, randomizes column function calls
 def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
