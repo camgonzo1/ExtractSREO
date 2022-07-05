@@ -21,7 +21,7 @@ vocab = None
 text_pipeline = None
 label_pipeline = None
 model = None
-COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Street Address", 5: "Rate Type", 6: "Acquisition Date", 7: "Maturity Date"}
+COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Street Address", 5: "Rate Type", 6: "Year Acquired", 7: "Maturity"}
 HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 
 # Gets Number of Labels
@@ -30,8 +30,8 @@ def getNumLabels():
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
-    if label == "Maturity Date": return 7
-    elif label == "Acquisition Date": return 6
+    if label == "Maturity": return 7
+    elif label == "Year Acquired": return 6
     elif label == "Rate Type": return 5
     elif label == "Street Address": return 4
     elif label == "State": return 3
