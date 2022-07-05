@@ -96,6 +96,8 @@ def fillTemplate(sreoDataFrame):
         if relevantCategory != "N/A":
             sreoTemplate.insert(column=relevantCategory)
 
+    # For Testing
+    print(sreoTemplate)
     # Notify Abstraction Here
     return sreoTemplate.to_excel()
 
