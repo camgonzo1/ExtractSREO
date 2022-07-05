@@ -15,8 +15,8 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines w
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
 emsize = 512
 EPOCHS = 5
-LR = 4 #The learning rate of the model
-BATCH_SIZE = 16 #Number of data points in each batch
+LR = 5 #The learning rate of the model
+BATCH_SIZE = 32 #Number of data points in each batch
 vocab = None
 text_pipeline = None
 label_pipeline = None
@@ -129,8 +129,8 @@ def train(dataloader, model, optimizer, criterion, epoch):
     for idx, (label, text, offsets) in enumerate(dataloader):
         optimizer.zero_grad()
         predicted_label = model(text, offsets)
-        #loss = criterion(predicted_label, label)
-        #loss.backward()
+        loss = criterion(predicted_label, label)
+        loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 0.1)
         optimizer.step()
         total_acc += (predicted_label.argmax(1) == label).sum().item()
@@ -149,7 +149,7 @@ def evaluate(dataloader, model, optimizer, criterion):
     with torch.no_grad():
         for idx, (label, text, offsets) in enumerate(dataloader):
             predicted_label = model(text, offsets)
-            #loss = criterion(predicted_label, label)
+            loss = criterion(predicted_label, label)
             total_acc += (predicted_label.argmax(1) == label).sum().item()
             total_count += label.size(0)
     return total_acc/total_count
