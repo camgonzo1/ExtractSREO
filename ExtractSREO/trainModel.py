@@ -129,8 +129,8 @@ def train(dataloader, model, optimizer, criterion, epoch):
     for idx, (label, text, offsets) in enumerate(dataloader):
         optimizer.zero_grad()
         predicted_label = model(text, offsets)
-        #loss = criterion(predicted_label, label)
-        #loss.backward()
+        loss = criterion(predicted_label, label)
+        loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 0.1)
         optimizer.step()
         total_acc += (predicted_label.argmax(1) == label).sum().item()
@@ -149,7 +149,7 @@ def evaluate(dataloader, model, optimizer, criterion):
     with torch.no_grad():
         for idx, (label, text, offsets) in enumerate(dataloader):
             predicted_label = model(text, offsets)
-            #loss = criterion(predicted_label, label)
+            loss = criterion(predicted_label, label)
             total_acc += (predicted_label.argmax(1) == label).sum().item()
             total_count += label.size(0)
     return total_acc/total_count
