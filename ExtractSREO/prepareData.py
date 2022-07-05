@@ -13,6 +13,7 @@ with open('Training Data/cities.txt') as f: cities = f.readlines()
 cities = cities[0].split('/')
 
 
+
 #Takes inputted columnOrHeader value and calls corresponding functions, randomizes column function calls
 def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
@@ -34,6 +35,10 @@ def createData(columnOrHeader, fileName, numRepeats):
 			elif(rand == 11): trainingData = createNOI(trainingData, 1)
 			elif(rand == 12): trainingData = createDSCR(trainingData, 1)
 			elif(rand == 13): trainingData = createMV(trainingData, 1)
+			# elif (rand == __): trainData = createSpread(trainingData, 1)
+			# elif (rand == __): trainData = createIndex(trainingData, 1)
+			# elif (rand == __): trainData = createLender(trainingData, 1)
+			# elif (rand == __): trainData = createAllInRate(trainingData, 1)
 			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="")
 	elif(columnOrHeader == 2):
 		trainingData = createHeaders(trainingData,numRepeats)
@@ -70,6 +75,67 @@ def createCities(trainingData, numRepeats):
 			exportString += cities[random.randint(0, len(cities) - 1)] + " "
 		#print("City " + exportString)
 		df2 = pd.DataFrame({ 'label' : "City", 'text' : exportString}, index=[1])
+		trainingData = pd.concat([trainingData, df2],ignore_index = True)
+	return trainingData
+
+def createAllInRate(trainingData, numRepeats):
+	allInRateHeaders = ["All-In", "All-In Rate", "Rate", "All In", "All In Rate", "All-in"]
+	exportString = ""
+	for i in range(numRepeats):
+		#numVals = random.randint(1, 25)
+		if(random.randint(0, 10)) != 0: exportString = allInRateHeaders[random.randint(0,len(allInRateHeaders) - 1)] + " "
+		for j in range(3):
+			if random.randint(0,10) == 0: exportString += "nan "
+			if random.randint(0,1) == 0:
+				exportString += str(float(random.randint(0,500)/10000)) + " "
+			else:
+				exportString += str(float(random.randint(0,500)/100)) + "%" + " "
+		#print("All-In Rate " + exportString)
+		df2 = pd.DataFrame({ 'label' : "Lender", 'text' : exportString}, index=[1])
+		trainingData = pd.concat([trainingData, df2],ignore_index = True)
+	return trainingData
+
+def createLender(trainingData, numRepeats):
+	lenderHeaders = ["Lender", "Mortgage Holder", "Mortgage Lender"]
+	lenderValues = open('Training Data/lender.txt').readlines()
+	exportString = ""
+	for i in range(numRepeats):
+		#numVals = random.randint(1, 25)
+		if(random.randint(0, 10)) != 0: exportString = lenderHeaders[random.randint(0,len(lenderHeaders) - 1)] + " "
+		for j in range(3):
+			if random.randint(0,10) == 0: exportString += "nan "
+			exportString += lenderValues[random.randint(0, len(lenderValues) - 1)] + " "
+		#print("Lender " + exportString)
+		df2 = pd.DataFrame({ 'label' : "Lender", 'text' : exportString}, index=[1])
+		trainingData = pd.concat([trainingData, df2],ignore_index = True)
+	return trainingData
+
+def createSpread(trainingData, numRepeats):
+	spreadHeaders = ["Spread, Credit Spread"]
+	exportString = ""
+	for i in range(numRepeats):
+		#numVals = random.randint(1, 25)
+		if(random.randint(0, 10)) != 0: exportString = spreadHeaders[random.randint(0,len(spreadHeaders) - 1)] + " "
+		for j in range(3):
+			if random.randint(0,10) == 0: exportString += "nan "
+			exportString += str(random.randint(0, 25) * 10) + " BPs" + " "
+		#print("Spread " + exportString)
+		df2 = pd.DataFrame({ 'label' : "Spread", 'text' : exportString}, index=[1])
+		trainingData = pd.concat([trainingData, df2],ignore_index = True)
+	return trainingData
+
+def createIndex(trainingData, numRepeats):
+	indexHeaders = ["Index", "Interest Rate Index", "Rate Index"]
+	indexValues = ["Libor", "LIBOR", "Libor", "LIBOR", "Libor", "LIBOR", "ICE LIBOR", "BBA LIBOR", "Bond Buyers", "FNMA", "Call Money"]
+	exportString = ""
+	for i in range(numRepeats):
+		#numVals = random.randint(1, 25)
+		if(random.randint(0, 10)) != 0: exportString = indexHeaders[random.randint(0,len(indexHeaders) - 1)] + " "
+		for j in range(3):
+			if random.randint(0,10) == 0: exportString += "nan "
+			exportString += indexValues[random.randint(0,len(indexValues) - 1)] + " "
+		#print("Index " + exportString)
+		df2 = pd.DataFrame({ 'label' : "Index", 'text' : exportString}, index=[1])
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
