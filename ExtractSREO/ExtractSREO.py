@@ -112,14 +112,26 @@ def testConfidence(data):
     global totalNum
     compare = pd.read_excel("Header Data/DataGroups.xlsx")
     correct = 0
+    COLUMN_LABELS = {1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
+                     7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount",
+                     12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value"}
+    confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
     for column in data.columns:
         #myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
         myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:3]).str.cat(sep=' ')
         guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
+        labelIndex = get_column_label(guess[0])
+        if confidences[labelIndex - 1] < guess[1]:
+            confidences[labelIndex - 1] = guess[1]
+            columnHeaders[labelIndex - 1] = str(column[0])
         if guess[0] in compare.columns:
             if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
                 correct += 1
         print(str(column[0]) + ' --> ' + guess[0] + ' ' + str(guess[1]))
+    print("----------------- Highest Values --------------------")
+    for i in range(len(COLUMN_LABELS)):
+        print(columnHeaders[i] + " --> " + COLUMN_LABELS[i + 1] + " " + str(confidences[i]))
     totalCorrect += correct
     totalNum += getNumLabels()
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
@@ -131,15 +143,15 @@ def testConfidence(data):
 # Description: 
 def runTests():
     global modelName
-    columnOrHeader = input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
+    columnOrHeader = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
     while(int(columnOrHeader) != 5):
-        if columnOrHeader == "4":
+        if columnOrHeader == 4:
             modelName = input("Model Name: ")
             if input("Test All Files (Y/N): ") == 'Y':
                 for file in FILES:
                     print('------------------------------------------------------------')
                     data = extractSREO(file)
-                    print(data)
+                    print(data.to_string())
                     testConfidence(data)
                     print('------------------------------------------------------------')
                 print("Total Accuracy of Trained Categories = " + str("{:.2%}".format(totalCorrect/totalNum)))
@@ -149,8 +161,8 @@ def runTests():
                 print(data)
                 testConfidence(data)
                 print('------------------------------------------------------------')
-        elif columnOrHeader == "3":
-            columnOrHeader = input("1 for Column model, 2 for Header model: ")
+        elif columnOrHeader == 3:
+            columnOrHeader = int(input("1 for Column model, 2 for Header model: "))
             modelName = input("Model Name: ")
             print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
         else:
@@ -158,7 +170,7 @@ def runTests():
             createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
             print()
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
-        columnOrHeader = input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: ")
+        columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
