@@ -15,15 +15,16 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines w
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
 emsize = 512
 EPOCHS = 5
-LR = 5 #The learning rate of the model
-BATCH_SIZE = 16 #Number of data points in each batch
+LR = 3 #The learning rate of the model
+BATCH_SIZE = 32 #Number of data points in each batch
 vocab = None
 text_pipeline = None
 label_pipeline = None
 model = None
-COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 
-                 6: "Acquisition Date", 7: "Maturity Date", 8: "Property Name", 9: "Square Feet",
-                 10: "Occupancy", 11: "Loan Amount", 12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value"}
+COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
+                 7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount", 
+                 12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
+                 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
 HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 
 # Gets Number of Labels
@@ -33,7 +34,15 @@ def getNumLabels():
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
-    if label == "Market Value": return 15
+    if label == "Index": return 23
+    elif label == "Spread": return 22
+    elif label == "Lender": return 21
+    elif label == "All-In Rate": return 20
+    elif label == "Current Balance": return 19
+    elif label == "Property Type": return 18
+    elif label == "Amort Start Date": return 17
+    elif label == "LTV": return 16
+    elif label == "Market Value": return 15
     elif label == "DSCR": return 14
     elif label == "NOI": return 13
     elif label == "Debt Service": return 12

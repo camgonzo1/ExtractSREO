@@ -123,9 +123,10 @@ def testConfidence(data):
     correct = 0
     COLUMN_LABELS = {1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
                      7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount",
-                     12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value"}
-    confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+                     12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
+                     18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
+    confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
     for column in data.columns:
         #myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
         myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:3]).str.cat(sep=' ')
