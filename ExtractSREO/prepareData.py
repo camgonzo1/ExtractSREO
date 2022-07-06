@@ -466,20 +466,14 @@ def populateNecessaryFiles():
 	
 	return
 
-FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", "Holladay - Book of Values.csv", 
-			 "James Kandasamy & Shanti James - RE Schedule 9.1.21.csv", "LaSalle - Fund VII Debt Summary - 1Q20 (2).csv", "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "Rookwood - Loan Expiration dates.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
-			 "SimpsonHousingLLLP-DebtSummary-2021-09-07.csv", "SP Inc., SP II and SP III - RE Schedule 11.20.2019.csv", "SREO Export Template v2 - final.csv", "Stoneweg.csv", "TCG - 2022 Fund XI REO Schedule.csv", "TKC.csv"]
-
 def trainOnCSV():
 	csvTrainingData = pd.DataFrame(columns=['label','text'])
 	for file in os.listdir("SREOs/CSVs/"):
 		curCSV = pd.read_csv("SREOs/CSVs/" + file, header=None)
 		answerRow = ((curCSV.iloc[0])).apply(str)
 		for i in range(len(answerRow)):
-			print("Before: "+ answerRow[i])
 			if answerRow[i] == "nan":
 				answerRow[i] = "N/A"
-			print("After:" + answerRow[i])
 		curCSV.replace('\n', '', regex=True, inplace=True)
 		curCSV.mask(curCSV == '', inplace=True)
 		curCSV.dropna(axis=0, how="all", inplace=True)

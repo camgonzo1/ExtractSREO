@@ -183,7 +183,7 @@ def runTests():
                 numRepeats = input("Number of Repeats: ")
                 createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
                 trainModel(columnOrHeader, "trainingData.csv")
-            elif(input("1 to generate data 2 to use existing files: ") == "2"):
+            elif(input("1 to use generated data 2 to use existing files: ") == "2"):
                 trainOnCSV()
                 trainModel(columnOrHeader, "extractedTrainingData.csv")
             else: trainModel(columnOrHeader, "trainingData.csv")
