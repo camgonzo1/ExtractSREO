@@ -15,7 +15,6 @@ cities = cities[0].split('/')
 with open('Training Data/asset types.txt') as f: propertyTypes = f.readlines()	
 propertyTypes = propertyTypes[0].split('/')
 
-
 #Takes inputted columnOrHeader value and calls corresponding functions, randomizes column function calls
 def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])

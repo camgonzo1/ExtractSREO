@@ -15,7 +15,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines w
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
 emsize = 512
 EPOCHS = 5
-LR = 5 #The learning rate of the model
+LR = 1 #The learning rate of the model
 BATCH_SIZE = 32 #Number of data points in each batch
 vocab = None
 text_pipeline = None
@@ -34,30 +34,7 @@ def getNumLabels():
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
-    if label == "Index": return 23
-    elif label == "Spread": return 22
-    elif label == "Lender": return 21
-    elif label == "All-In Rate": return 20
-    elif label == "Current Balance": return 19
-    elif label == "Property Type": return 18
-    elif label == "Amort Start Date": return 17
-    elif label == "LTV": return 16
-    elif label == "Market Value": return 15
-    elif label == "DSCR": return 14
-    elif label == "NOI": return 13
-    elif label == "Debt Service": return 12
-    elif label == "Loan Amount": return 11
-    elif label == "Occupancy": return 10
-    elif label == "Square Feet": return 9
-    elif label == "Property Name": return 8
-    elif label == "Maturity Date": return 7
-    elif label == "Acquisition Date": return 6
-    elif label == "Rate Type": return 5
-    elif label == "Address": return 4
-    elif label == "State": return 3
-    elif label == "City": return 2
-    elif label == "Units": return 1
-    else: return 0
+    return list(COLUMN_LABELS.values()).index(label)
 
 def get_header_label(label):
     if label == "Valid": return 2
@@ -263,7 +240,7 @@ def outputConfidence(modelName, columnOrHeader, textInput, print):
             maxIndex = i
     if maxVal > .9:
         return labels[maxIndex], maxVal
-    else: return "N//A", maxVal
+    else: return "N/A", maxVal
 
     ######################################################### Testing Below #########################################################
 def testInput(modelName, columnOrHeader, testString, print):
