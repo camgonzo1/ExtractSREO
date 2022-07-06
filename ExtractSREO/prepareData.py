@@ -463,7 +463,17 @@ def createData(columnOrHeader, fileName, numRepeats):
 	trainingData.to_csv(fileName, index=False)
 
 def populateNecessaryFiles():
-	
+	# Address File
+	with open('Training Data/addresses.txt') as f: streets = f.readlines()
+	streets = streets[0].split('/')
+	with open("Training Data/address.txt", "x") as updateFile:
+		for addy in streets:
+			updateFile.write(addy)
+	with open('Training Data/cities.txt') as f: cities = f.readlines()	
+	cities = cities[0].split('/')
+	with open('Training Data/asset types.txt') as f: propertyTypes = f.readlines()	
+	propertyTypes = propertyTypes[0].split('/')
+
 	return
 
 FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", "Holladay - Book of Values.csv", 
