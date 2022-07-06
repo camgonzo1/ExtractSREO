@@ -452,6 +452,7 @@ def generateAndRandomize(trainingData, COLUMNS, dictIndex, numRepeats):
 
 def createData(columnOrHeader, fileName, numRepeats):
 	trainingData = pd.DataFrame(columns=['label','text'])
+	populateNecessaryFiles()
 	if(columnOrHeader == 1):
 		for i in range(numRepeats):
 			generateAndRandomize(trainingData, True, random.randint(1, len(COLUMN_DATA)), numRepeats)
@@ -461,7 +462,9 @@ def createData(columnOrHeader, fileName, numRepeats):
 	print()
 	trainingData.to_csv(fileName, index=False)
 
-
+def populateNecessaryFiles():
+	
+	return
 
 FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", "Holladay - Book of Values.csv", 
 			 "James Kandasamy & Shanti James - RE Schedule 9.1.21.csv", "LaSalle - Fund VII Debt Summary - 1Q20 (2).csv", "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "Rookwood - Loan Expiration dates.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
@@ -495,6 +498,3 @@ def trainOnCSV(csvTrainingData):
 				count += 1
 
 	csvTrainingData.to_csv("extractedTrainingData.csv", index=False)
-
-if __name__ == "__main__":
-	trainOnCSV()
