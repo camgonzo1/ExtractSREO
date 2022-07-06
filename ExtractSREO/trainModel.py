@@ -138,7 +138,7 @@ def predict(text, text_pipeline):
         output = model(text, torch.tensor([0]))
         return output
     
-def trainModel(columnOrHeader, trainingFilePath, testingFilePath):
+def trainModel(columnOrHeader, trainingFilePath):
     newModel = input("Create new model? (y/n): ")
     if(newModel == "y"):
         modelName = input("New Model Name: ")

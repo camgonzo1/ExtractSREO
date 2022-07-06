@@ -182,8 +182,11 @@ def runTests():
             if(input("Create new dataset (Y/N) ") == "Y"): 
                 numRepeats = input("Number of Repeats: ")
                 createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
-            print()
-            trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
+                trainModel(columnOrHeader, "trainingData.csv")
+            elif(input("1 to generate data 2 to use existing files: ") == "2"):
+                trainOnCSV()
+                trainModel(columnOrHeader, "extractedTrainingData.csv")
+            else: trainModel(columnOrHeader, "trainingData.csv")
         columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
 
 
