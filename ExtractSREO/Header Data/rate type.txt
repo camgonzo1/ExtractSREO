@@ -1,0 +1,4 @@
+Rate Type
+Loan Type
+Fixed or Floating
+Type

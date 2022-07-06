@@ -2,6 +2,7 @@ from lib2to3.pytree import convert
 from re import L
 import os
 import random
+from tkinter.tix import COLUMN
 from numpy import dtype
 import pandas as pd
 
@@ -144,20 +145,6 @@ def createIndex(trainingData, numRepeats):
 		trainingData = pd.concat([trainingData, df2],ignore_index = True)
 	return trainingData
 
-#Creates randomized States column values numRepeats times and adds them to trainingData
-def createStates(trainingData, numRepeats):
-	states = ["AL", "AK", "AZ", "AR", "CA", "CZ", "CO", "CT", "DE", "DC", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "WA", "WV", "WI", "WY", "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Islands", "Virginia", "Washington", "Wisconsin", "Wyoming"];
-	exportString = ""
-	for i in range(numRepeats):
-		#numVals = random.randint(1, 25)
-		if(random.randint(0, 10)) != 0: exportString = "State "
-		for j in range(2):
-			if random.randint(0,10) == 0: exportString += "nan "
-			exportString += states[random.randint(0,len(states) - 1)] + " "
-		#print("State " + exportString)
-		df2 = pd.DataFrame({ 'label' : "State", 'text' : exportString }, index=[1])
-		trainingData = pd.concat([trainingData, df2],ignore_index = True)
-	return trainingData
 
 #Creates randomized Units column values numRepeats times and adds them to trainingData
 def createUnits(trainingData, numRepeats):
@@ -430,3 +417,85 @@ def createHeaders(trainingData, numRepeats):
 		trainingData = pd.concat([trainingData, df2], ignore_index = True)
 	print()
 	return trainingData
+
+#################################################################################################################################################################
+
+COLUMN_DATA = {1: ("Units", 'units.txt'), 2: ("City", 'city.txt'), 3: ('State', 'state.txt'), 4: ("Address", 'address.txt'), 5: ("Rate Type", 'rate type.txt'), 6: ("Acquisition Date", 'acquisition date.txt'),
+                 7: ("Maturity Date",'maturity date.txt'), 8: ("Property Name", 'property name.txt'), 9: ("Square Feet", 'square feet.txt'), 10: ("Occupancy", 'occupancy.txt'), 11: ("Loan Amount", 'loan amount.txt'), 
+                 12: ("Debt Service", 'debt service.txt'), 13: ('NOI', 'noi.txt'), 14: ("DSCR", 'dscr.txt'), 15: ("Market Value", 'market value.txt'), 16: ("LTV", 'ltv.txt'), 17: ("Amort Start Date", 'amort start date.txt'), 
+                 18: ("Property Type", "property type.txt"), 19: ("Current Balance", 'current balance.txt'), 20: ("All-In Rate", 'all in rate.txt'), 21: ("Lender", "lender.txt"), 22: ("Spread", 'spread.txt'), 23: ("Index", 'index.txt')}
+HEADER_DATA = {1: ("Invalid", 'invalidHeaderNames.txt'), 2: ("Valid", 'validHeaderNames.txt')}
+DATA_GROUP, FILE, HEADER_KEY = 0, 1, 2
+
+def generateAndRandomize(trainingData, COLUMNS, dictIndex, numRepeats):
+	# Determines SREO Header or SREO Data Training
+	if COLUMNS:
+		category = COLUMN_DATA[dictIndex]
+		iterations = 2
+	else:
+		category = HEADER_DATA[dictIndex]
+		iterations = random.randint(15, 25)
+
+	# Executes Data Fabrication
+	with open("Header data/" + category[FILE], "r") as headerFile:
+		dataHeaders = headerFile.read().splitlines()
+	with open("Training Data/" + category[FILE], "r") as trainingFile:
+		dataValues = trainingFile.read().splitlines()
+	exportString = ''
+	for i in range(numRepeats):
+		if(random.randint(0, 9)) != 0: exportString = dataHeaders[random.randint(0,len(dataHeaders) - 1)] + " "
+		for j in range(iterations):
+			if random.randint(0,9) == 0: exportString += "nan "
+			exportString += dataValues[random.randint(0, len(dataValues) - 1)] + " "
+		df2 = pd.DataFrame({'label' : category[DATA_GROUP], 'text' : exportString}, index=[1])
+		trainingData = pd.concat([trainingData, df2],ignore_index = True)
+	return trainingData
+
+def createData(columnOrHeader, fileName, numRepeats):
+	trainingData = pd.DataFrame(columns=['label','text'])
+	if(columnOrHeader == 1):
+		for i in range(numRepeats):
+			generateAndRandomize(trainingData, True, random.randint(1, len(COLUMN_DATA)), numRepeats)
+			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="") # Loading Bar For Visuals
+	elif(columnOrHeader == 2):
+		generateAndRandomize(trainingData, False, HEADER_KEY, numRepeats)
+	print()
+	trainingData.to_csv(fileName, index=False)
+
+
+
+FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", "Holladay - Book of Values.csv", 
+			 "James Kandasamy & Shanti James - RE Schedule 9.1.21.csv", "LaSalle - Fund VII Debt Summary - 1Q20 (2).csv", "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "Rookwood - Loan Expiration dates.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
+			 "SimpsonHousingLLLP-DebtSummary-2021-09-07.csv", "SP Inc., SP II and SP III - RE Schedule 11.20.2019.csv", "SREO Export Template v2 - final.csv", "Stoneweg.csv", "TCG - 2022 Fund XI REO Schedule.csv", "TKC.csv"]
+
+def trainOnCSV(csvTrainingData):
+	csvTrainingData = pd.DataFrame(columns=['label','text'])
+	for file in FILE_LIST:
+		curCSV = pd.read_csv("SREOs/CSVs/" + file, header=None)
+		answerRow = ((curCSV.iloc[0])).apply(str)
+		for i in range(len(answerRow)):
+			print("Before: "+ answerRow[i])
+			if answerRow[i] == "nan":
+				answerRow[i] = "N/A"
+			print("After:" + answerRow[i])
+		curCSV.replace('\n', '', regex=True, inplace=True)
+		curCSV.mask(curCSV == '', inplace=True)
+		curCSV.dropna(axis=0, how="all", inplace=True)
+		curCSV.dropna(axis=1, how="all", inplace=True)
+		curCSV = curCSV.reset_index(drop=True).rename_axis(None, axis=1)
+		curCSV.columns = [curCSV.iloc[1]]
+		curCSV = curCSV[2:].reset_index(drop=True).rename_axis(None, axis=1)
+
+
+		for row in range(int(len(curCSV.index)/2)):
+			index, count, exportString = row*2, 0, ''
+			for col in curCSV.columns:
+				exportString = str(col[0]) + " " + str(curCSV.loc[:,col][index]) + " " + str(curCSV.loc[:,col][index + 1])
+				df2 = pd.DataFrame({'label' : str(answerRow[count]), 'text' : exportString}, index=[1])
+				csvTrainingData = pd.concat([csvTrainingData, df2],ignore_index = True)
+				count += 1
+
+	csvTrainingData.to_csv("extractedTrainingData.csv", index=False)
+
+if __name__ == "__main__":
+	trainOnCSV()

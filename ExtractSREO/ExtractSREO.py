@@ -2,6 +2,7 @@
 # Authors: Ryan Dunn and Cam Gonzalez
 # Description: This file executes the SREO importation, information extraction, and notificication for 
 #              the LoanBoss online application on the back end.
+import csv
 import camelot
 from cmath import nan
 from fileinput import filename
@@ -185,6 +186,9 @@ def runTests():
             trainModel(columnOrHeader, "trainingData.csv", "testingData.csv")
         columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
 
+
+
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     runTests()
+    
