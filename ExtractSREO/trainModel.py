@@ -11,11 +11,13 @@ import torch.nn.functional as F
 from torchtext.data.utils import get_tokenizer
 from torchtext.vocab import build_vocab_from_iterator
 
+print (torch.__version__)
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines whether the user is using CPU or GPU processing
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
 emsize = 512
 EPOCHS = 5
-LR = 5 #The learning rate of the model
+LR = 1 #The learning rate of the model
 BATCH_SIZE = 32 #Number of data points in each batch
 vocab = None
 text_pipeline = None
@@ -34,30 +36,7 @@ def getNumLabels():
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
-    if label == "Index": return 23
-    elif label == "Spread": return 22
-    elif label == "Lender": return 21
-    elif label == "All-In Rate": return 20
-    elif label == "Current Balance": return 19
-    elif label == "Property Type": return 18
-    elif label == "Amort Start Date": return 17
-    elif label == "LTV": return 16
-    elif label == "Market Value": return 15
-    elif label == "DSCR": return 14
-    elif label == "NOI": return 13
-    elif label == "Debt Service": return 12
-    elif label == "Loan Amount": return 11
-    elif label == "Occupancy": return 10
-    elif label == "Square Feet": return 9
-    elif label == "Property Name": return 8
-    elif label == "Maturity Date": return 7
-    elif label == "Acquisition Date": return 6
-    elif label == "Rate Type": return 5
-    elif label == "Address": return 4
-    elif label == "State": return 3
-    elif label == "City": return 2
-    elif label == "Units": return 1
-    else: return 0
+    return list(COLUMN_LABELS.values()).index(label)
 
 def get_header_label(label):
     if label == "Valid": return 2
@@ -86,13 +65,11 @@ def yield_tokens(data_iter):
 class TextClassificationModel(nn.Module):
     #Initializes the model
     def __init__(self, vocab_size, embed_dim, num_class):
-        super().__init__()
+        super(TextClassificationModel, self).__init__()
         self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=True) #The model's embedding bag
-        self.fc1 = nn.Linear(512, 256)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 64)
-        self.fc4 = nn.Linear(64, 16)
-        self.fc5 = nn.Linear(16, num_class)
+        self.fc1 = nn.Linear(128, 64) #fc1-3 are the 3 linear layers of the model
+        self.fc2 = nn.Linear(64, 16)
+        self.fc3 = nn.Linear(16, num_class)
         self.init_weights()
 
     #Assigns inital weights for the layers and embedding bag
@@ -105,19 +82,13 @@ class TextClassificationModel(nn.Module):
         self.fc2.bias.data.zero_()
         self.fc3.weight.data.uniform_(-initrange,initrange)
         self.fc3.bias.data.zero_()
-        self.fc4.weight.data.uniform_(-initrange,initrange)
-        self.fc4.bias.data.zero_()
-        self.fc5.weight.data.uniform_(-initrange,initrange)
-        self.fc5.bias.data.zero_()
 
     #Applies the model to inputted text to achieve a result
     def forward(self, text, offsets):
         embedded = self.embedding(text, offsets)
         x = F.relu(self.fc1(embedded))
         x = F.relu(self.fc2(x))
-        x = F.relu(self.fc3(x))
-        x = F.relu(self.fc4(x))
-        x = self.fc5(x)
+        x = self.fc3(x)
         return x
 
 #Trains the model given a dataloader, optimizer, and criterion
@@ -171,10 +142,14 @@ def trainModel(columnOrHeader, trainingFilePath, testingFilePath):
     #Imports the .csv files used for training and testing
     trainingFile = pd.read_csv(trainingFilePath)
     trainingFile.dropna(axis = 0, how = 'any', inplace = True)
-    if columnOrHeader == 2:
+    testingFile = pd.read_csv(testingFilePath)
+    testingFile.dropna(axis = 0, how = 'any', inplace = True)
+    if columnOrHeader == "2":
         trainingFile['labelNum'] = trainingFile['label'].apply(get_header_label)
+        testingFile['labelNum'] = testingFile['label'].apply(get_header_label)
     else:
         trainingFile['labelNum'] = trainingFile['label'].apply(get_column_label)
+        testingFile['labelNum'] = testingFile['label'].apply(get_column_label)
     
     # For testing
     print('--------Training Data---------')
@@ -263,7 +238,7 @@ def outputConfidence(modelName, columnOrHeader, textInput, print):
             maxIndex = i
     if maxVal > .9:
         return labels[maxIndex], maxVal
-    else: return "N//A", maxVal
+    else: return "N/A", maxVal
 
     ######################################################### Testing Below #########################################################
 def testInput(modelName, columnOrHeader, testString, print):
