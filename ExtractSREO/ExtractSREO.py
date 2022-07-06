@@ -180,7 +180,7 @@ def runTests():
             print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
         else:
             if(input("Create new dataset (Y/N) ") == "Y"): 
-                numRepeats = input("Number of Repeats: ")
+                numRepeats = input("Number of Repeats per Category: ")
                 createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
                 trainModel(columnOrHeader, "trainingData.csv")
             elif(input("1 to generate data 2 to use existing files: ") == "2"):
