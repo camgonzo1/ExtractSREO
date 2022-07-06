@@ -505,7 +505,7 @@ def trainOnCSV():
 				df2 = pd.DataFrame({'label' : str(answerRow[count]), 'text' : exportString.strip('"')}, index=[1])
 				csvTrainingData = pd.concat([csvTrainingData, df2],ignore_index = True)
 				count += 1
-	print("I'm Done")
+	print("Done Training")
 	csvTrainingData.to_csv("extractedTrainingData.csv", index=False)
 
 if __name__ == "__main__":
