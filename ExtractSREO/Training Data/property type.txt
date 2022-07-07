@@ -1,0 +1,28 @@
+Multifamily
+Multifamily (conventional)
+Land
+Retail
+MF
+MF (Conventional)
+Seniors
+Industrial
+Mixed Use
+Personal Residence
+MHC
+RV
+Residential Rental
+MF (Sect 8 and
+or LIHTC)
+MF (Conventional)
+Student Housing
+Office
+HV
+Condo
+Data Center
+Flex
+Hotel
+Industrial
+Medical
+Mixed-Use
+Other
+Senior Living

@@ -23,6 +23,7 @@ NO_PRINT, PRINT = 0, 1
 modelName = None # For testing
 totalCorrect, totalNum = 0, 0
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
@@ -59,7 +60,6 @@ def extractSREO(curFilePath):
         raise IndexError("Error Downloading File: Please retry download or use different file format!")
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
-
     return sreoData
 
 # Name: getHeaderIndex()
@@ -181,7 +181,7 @@ def runTests():
             print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
         else:
             if(input("Create new dataset (Y/N) ") == "Y"): 
-                numRepeats = input("Number of Repeats: ")
+                numRepeats = input("Number of Repeats per Category: ")
                 createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
                 trainModel(columnOrHeader, "trainingData.csv")
             elif(input("1 to use generated data 2 to use existing files: ") == "2"):
