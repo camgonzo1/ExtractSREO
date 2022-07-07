@@ -463,12 +463,27 @@ def createData(columnOrHeader, fileName, numRepeats):
 	trainingData.to_csv(fileName, index=False)
 
 def populateNecessaryFiles():
-	
+	# Address File
+	with open('Training Data/addresses.txt') as f: streets = f.readlines()
+	streets = streets[0].split('/')
+	with open("Training Data/address.txt", "x") as updateFile:
+		for addy in streets:
+			updateFile.write(addy)
+	with open('Training Data/cities.txt') as f: cities = f.readlines()	
+	cities = cities[0].split('/')
+	with open('Training Data/asset types.txt') as f: propertyTypes = f.readlines()	
+	propertyTypes = propertyTypes[0].split('/')
+
 	return
+
+FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", 
+			 "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
+			 "SimpsonHousingLLLP-DebtSummary-2021-09-07.csv", "SP Inc., SP II and SP III - RE Schedule 11.20.2019.csv", "SREO Export Template v2 - final.csv", "Stoneweg.csv", "TCG - 2022 Fund XI REO Schedule.csv"]
 
 def trainOnCSV():
 	csvTrainingData = pd.DataFrame(columns=['label','text'])
-	for file in os.listdir("SREOs/CSVs/"):
+	#for file in os.listdir("SREOs/CSVs/"):
+	for file in FILE_LIST:
 		curCSV = pd.read_csv("SREOs/CSVs/" + file, header=None)
 		answerRow = ((curCSV.iloc[0])).apply(str)
 		for i in range(len(answerRow)):
@@ -487,8 +502,11 @@ def trainOnCSV():
 			index, count, exportString = row*2, 0, ''
 			for col in curCSV.columns:
 				exportString = str(col[0]) + " " + str(curCSV.loc[:,col][index]) + " " + str(curCSV.loc[:,col][index + 1])
-				df2 = pd.DataFrame({'label' : str(answerRow[count]), 'text' : exportString}, index=[1])
+				df2 = pd.DataFrame({'label' : str(answerRow[count]), 'text' : exportString.strip('"')}, index=[1])
 				csvTrainingData = pd.concat([csvTrainingData, df2],ignore_index = True)
 				count += 1
-
+	print("Done Training")
 	csvTrainingData.to_csv("extractedTrainingData.csv", index=False)
+
+if __name__ == "__main__":
+	trainOnCSV()
