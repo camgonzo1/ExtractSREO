@@ -155,6 +155,7 @@ def testConfidence(data):
 # Return: None --> prints to screen and updates global variables directly
 # Description: This function allows the user to create models and test said models against SREOs
 def runTests():
+    import userInterface
     global modelName
     columnOrHeader = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
     while(int(columnOrHeader) != 5):
