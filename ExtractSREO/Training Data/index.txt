@@ -22,13 +22,3 @@ BBA Libor
 Bond Buyers
 FNMA
 Call Money
-nan
-nan
-nan
-nan
-nan
-nan
-nan
-nan
-nan
-nan

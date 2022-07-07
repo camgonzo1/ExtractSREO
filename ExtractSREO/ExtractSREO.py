@@ -23,6 +23,7 @@ NO_PRINT, PRINT = 0, 1
 modelName = None # For testing
 totalCorrect, totalNum = 0, 0
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
