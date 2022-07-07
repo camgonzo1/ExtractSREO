@@ -59,7 +59,6 @@ def extractSREO(curFilePath):
         raise IndexError("Error Downloading File: Please retry download or use different file format!")
     sreoData.columns = [sreoData.iloc[index]]
     sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
-
     return sreoData
 
 # Name: getHeaderIndex()

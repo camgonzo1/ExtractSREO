@@ -23,9 +23,12 @@ def createData(columnOrHeader, fileName, numRepeats):
 			print("Files populated!")
 		print("|-----------------------|")
 		print("|", end="")
-		for i in range(len(COLUMN_DATA)):
-			trainingData = generateAndRandomize(trainingData, True, i + 1, numRepeats)
-			print("X", end="") # Loading Bar For Visuals
+		for i in range(numRepeats):
+			trainingData = generateAndRandomize(trainingData, True, random.randint(1, len(COLUMN_DATA)), 1)
+			if (numRepeats - (i + 1)) % numRepeats / 23 == 0: print("X", end="") # Loading Bar For Visuals
+		#for i in range(len(COLUMN_DATA)):
+			#trainingData = generateAndRandomize(trainingData, True, i + 1, numRepeats)
+			#print("X", end="") # Loading Bar For Visuals
 	elif(columnOrHeader == 2):
 		trainingData = generateAndRandomize(trainingData, False, HEADER_KEY, numRepeats)
 	print("|")
