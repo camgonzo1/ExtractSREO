@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>5314aa81-57d7-415e-a77b-aa6ecb834c67</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ExtractSREO.py</StartupFile>
+    <StartupFile>userInterface.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,7 @@
     <Compile Include="ExtractSREO.py" />
     <Compile Include="prepareData.py" />
     <Compile Include="trainModel.py" />
+    <Compile Include="userInterface.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
