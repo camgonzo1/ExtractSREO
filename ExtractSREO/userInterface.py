@@ -1,3 +1,4 @@
+from pickle import TRUE
 from PyQt5 import QtCore, QtGui, QtWidgets
 import ExtractSREO as ExtractSREO
 from prepareData import *
@@ -34,19 +35,21 @@ class chooseModelWindow(QtWidgets.QWidget):
 	def createNewModel(self):
 		self.popup = newModelPopup()
 		self.popup.show()
-		self.popup.closeWindows.connect(lambda:self.close())
 
 	def useOldModel(self):
 		global modelName
 		fileName = filedialog.askopenfilename()
 		modelName = fileName.split(".")[0]
-		ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 4)
-		trainModel.trainModel(True, False, modelName, "trainingData.csv")
+		#showConsole()
+		if trainColumn: trainingData = "trainingData.csv"
+		else: trainingData = "trainingHeaderData.csv"
+		trainModel.trainModel(trainColumn, False, modelName, trainingData)
+		controller.showTrainTestWindow()
 		self.close()
 		
-
+		####################################################MAKE THESE POPUPS CLOSE CORRECTLY#######################################################
 class newModelPopup(QtWidgets.QWidget):
-	closeWindows = QtCore.pyqtSignal()
+	#closeWindows = QtCore.pyqtSignal()
 	def __init__(self):
 		super().__init__()
 		layout = QtWidgets.QVBoxLayout()
@@ -59,16 +62,16 @@ class newModelPopup(QtWidgets.QWidget):
 		layout.addLayout(self.hbox)
 		self.hbox.addWidget(self.input)
 		self.hbox.addWidget(self.createButton)
-
 		self.setLayout(layout)
 
 	def createModel(self):
 		global modelName, controller
 		modelName = "Model/" + self.input.text()
-		ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 4)
-		trainModel.trainModel(True,True,modelName,"trainingData.csv")
+		#showConsole()
+		if trainColumn: trainingData = "trainingData.csv"
+		else: trainingData = "trainingHeaderData.csv"
+		trainModel.trainModel(trainColumn,True,modelName,trainingData)
 		controller.showTrainTestWindow()
-		self.closeWindows.emit()
 		self.close()
 
 class trainTestWindow(QtWidgets.QWidget):
@@ -170,12 +173,10 @@ class trainTestWindow(QtWidgets.QWidget):
 		global trainColumn
 		if(trainColumn):
 			trainColumn = False
-			self.columnCheck.setChecked(False)
-			self.headerCheck.setChecked(True)
 		else:
 			trainColumn = True
-			self.columnCheck.setChecked(True)
-			self.headerCheck.setChecked(False)
+		self.columnCheck.setChecked(trainColumn)
+		self.headerCheck.setChecked(not trainColumn)
 
 	def chooseTestModel(self):
 		fileName = filedialog.askopenfilename()
@@ -199,6 +200,7 @@ class trainTestWindow(QtWidgets.QWidget):
 			self.testSREOs.setText("Invalid file type")
 
 	def useAllFiles(self):
+		#showConsole()
 		os.chdir(os.path.dirname(os.path.abspath(__file__)))
 		for fileName in os.listdir("SREOs/CSVs/"):
 			print(fileName)
@@ -209,7 +211,7 @@ class trainTestWindow(QtWidgets.QWidget):
 			print('------------------------------------------------------------')
 
 
-class generateDataWindow(QtWidgets.QWidget):
+class generateColumnDataWindow(QtWidgets.QWidget):
 	
 	switch_window = QtCore.pyqtSignal()
 	def changeToTrainTestWindow(self):
@@ -402,11 +404,18 @@ class generateDataWindow(QtWidgets.QWidget):
 	def train(self):
 		self.chooseModelPopup = chooseModelWindow()
 		self.chooseModelPopup.show()
+		#self.chooseModelPopup.switchWindow.connect(lambda:self.switch_window.emit())
 
 	def boxChecked(self):
 		for i in range(len(self.checkVars)):
 			for j in range(len(self.checkVars[i])):
 				self.checkValues[i][j] = self.checkVars[i][j].isChecked()
+		containsTrue = False
+		for row in self.checkValues:
+			if(True in row):
+				containsTrue = True
+				continue
+		self.generateDataButton.setDisabled(not containsTrue)
 
 	def toggleAll(self):
 		containsFalse = False
@@ -416,6 +425,7 @@ class generateDataWindow(QtWidgets.QWidget):
 			for j in range(len(self.checkVars[i])):
 				self.checkVars[i][j].setChecked(containsFalse)
 				self.checkValues[i][j] = containsFalse
+				self.generateDataButton.setDisabled(not containsFalse)
 
 	def generateColumnData(self):
 		self.numRepeats = self.numRepeatsInput.text()
@@ -456,31 +466,124 @@ class generateDataWindow(QtWidgets.QWidget):
 		print("Done")
 		trainingData.to_csv(fileName, index=False)
 		
+class generateHeaderDataWindow(QtWidgets.QWidget):
+	switch_window = QtCore.pyqtSignal()
+
+	def changeToTrainTestWindow(self):
+		self.switch_window.emit()
+
+	def __init__(self):
+		super().__init__()
+
+		self.generateValid = True
+		self.generateInvalid = True
+
+		self.verticalLayout = QtWidgets.QVBoxLayout()
+		self.verticalLayout.setContentsMargins(15, 15, 15, 15)
+		self.checksRow = QtWidgets.QHBoxLayout()
+		self.textInputRow = QtWidgets.QHBoxLayout()
+		self.bottomRows = QtWidgets.QVBoxLayout()
+
+		self.topLabel = QtWidgets.QLabel("Generate Header Data")
+		self.validCheck = QtWidgets.QCheckBox("Valid")
+		self.validCheck.setChecked(self.generateValid)
+		self.validCheck.clicked.connect(self.validChecked)
+		self.checksRow.addWidget(self.validCheck)
+		self.invalidCheck = QtWidgets.QCheckBox("Invalid")
+		self.invalidCheck.setChecked(self.generateInvalid)
+		self.invalidCheck.clicked.connect(self.invalidChecked)
+		self.checksRow.addWidget(self.invalidCheck)
+
+		self.inputLabel = QtWidgets.QLabel("Total # of data points created: ")
+		self.textInputRow.addWidget(self.inputLabel)
+		self.numRepeatsInput = QtWidgets.QLineEdit()
+		self.textInputRow.addWidget(self.numRepeatsInput)
+		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
+		self.generateDataButton.clicked.connect(self.generateData)
+		self.textInputRow.addWidget(self.generateDataButton)
+
+		self.progressBar = QtWidgets.QProgressBar()
+		palette = QtGui.QPalette()
+		brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
+		brush.setStyle(QtCore.Qt.SolidPattern)
+		palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
+		self.progressBar.setPalette(palette)
+		self.progressBar.setStyleSheet("QProgressBar { border: 2px solid grey; border-radius: 0px; text-align: center; } QProgressBar::chunk {background-color: #16aff0; width: 1px;}")
+		self.progressBar.setProperty("value", 0)
+
+		self.doneButton = QtWidgets.QPushButton("Done")
+		self.doneButton.clicked.connect(self.train)
+
+		self.verticalLayout.addWidget(self.topLabel)
+		self.verticalLayout.addLayout(self.checksRow)
+		self.verticalLayout.addLayout(self.textInputRow)
+		self.verticalLayout.addWidget(self.progressBar)
+		self.verticalLayout.addWidget(self.doneButton)
+
+		self.setLayout(self.verticalLayout)
+
+	def incrementProgressBar(self, val):
+		self.progressBar.setValue(self.progressBar.value() + val)
+
+	def validChecked(self):
+		self.generateValid = not self.generateValid
+		self.validCheck.setChecked(self.generateValid)
+
+	def invalidChecked(self):
+		self.generateInvalid = not self.generateInvalid
+		self.invalidCheck.setChecked(self.generateInvalid)
+		
+	def generateData(self):
+		fileName = "trainingHeaderData.csv"
+		trainingData = pd.DataFrame(columns=['label','text'])
+		numRepeats = int(self.numRepeatsInput.text())
+		for i in range(numRepeats):
+			if self.generateValid and self.generateInvalid:
+				rand = random.randint(0,1)
+				if rand == 0:
+					trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+				else:
+					trainingData = pd.concat([trainingData, createInvalidHeaders()], ignore_index = True)
+			elif self.generateValid:
+				trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+			elif self.generateInvalid:
+				trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+			if(i % (numRepeats / 50) == 0):
+					self.incrementProgressBar(2)
+		trainingData.to_csv(fileName,index=False)
+
+	def train(self):
+		self.chooseModelPopup = chooseModelWindow()
+		self.chooseModelPopup.show()
+		#self.chooseModelPopup.switchWindow.connect(lambda:self.switch_window.emit())
 
 class Controller:
+	
 	def __init__(self):
+		self.trainTest = trainTestWindow()
+		self.generateData = generateColumnDataWindow()
 		pass
 
 	def showTrainTestWindow(self):
-		self.trainTest = trainTestWindow()
-		self.generateData = generateDataWindow()
-		self.trainTest.switch_window.connect(self.showGenerateDataWindow)
+		self.trainTest.switch_window.connect(self.showgenerateColumnDataWindow)
 		self.generateData.close()
 		self.trainTest.show()
 
-	def showGenerateDataWindow(self):
-		self.generateData.switch_window.connect(self.showTrainTestWindow)
+	def showgenerateColumnDataWindow(self):
 		self.trainTest.close()
+		if trainColumn:
+			self.generateData = generateColumnDataWindow()
+		else:
+			self.generateData = generateHeaderDataWindow()
 		self.generateData.show()
+		self.generateData.switch_window.connect(self.showTrainTestWindow)
 
 def showConsole():
 	ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 4)
 
 if __name__ == "__main__":
 	import sys
-	ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
-	#if(input("1 for UI 2 for command prompt ") == "2"):
-		#ExtractSREO.runTests(trainColumn)
+	#ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 	app = QtWidgets.QApplication(sys.argv)
 	controller = Controller()
 	controller.showTrainTestWindow()
