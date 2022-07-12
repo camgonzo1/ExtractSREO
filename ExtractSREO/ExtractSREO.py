@@ -14,6 +14,8 @@ from prepareData import *
 from re import L
 import string
 from trainModel import *
+import warnings
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
 
 ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
@@ -137,6 +139,7 @@ def testConfidence(trainColumn, data):
 					 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
 	confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+	data = data.sort_index()
 	for column in data.columns:
 		#myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
 		myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:2]).str.cat(sep=' ')
