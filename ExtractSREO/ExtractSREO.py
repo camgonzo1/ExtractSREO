@@ -14,15 +14,11 @@ from prepareData import *
 from re import L
 import string
 from trainModel import *
-<<<<<<< HEAD
 from openpyxl import Workbook
-=======
->>>>>>> parent of 3fca60e (UI tweaks)
 
 ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
 HEADER_MODEL, DATA_MODEL = 'Model/headerTest', '' # Trained AI Models for Data Interpretation
-DATA_ANALYSIS, HEADER_ANALYSIS = 1, 2 
 NO_PRINT, PRINT = 0, 1
 modelName = None
 totalCorrect, totalNum = 0, 0
@@ -40,7 +36,7 @@ def getModelName():
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
-def extractSREO(trainColumn, curFilePath):
+def extractSREO(curFilePath):
 	# Determines File Type 
 	path = curFilePath.split("/")
 	print(path[len(path) - 1]) 
@@ -118,7 +114,7 @@ def fillTemplate(sreoDataFrame):
                  'Spread': [-1, 0],
                  'Index': [-1, 0]}
     for dataColumn in sreoDataFrame.columns:
-        guess = outputConfidence(modelName, DATA_ANALYSIS, str(dataColumn[0]), NO_PRINT)
+        guess = outputConfidence(True, modelName, str(dataColumn[0]), NO_PRINT)
         if guess[0] != "N/A" and guess[0] != "Invalid" and guess[1] > bestIndex[guess[0]][1]:
            bestIndex[guess[0]][0] = str(dataColumn[0])
            bestIndex[guess[0]][1] = guess[1]

@@ -221,10 +221,10 @@ def loadModel(modelName):
 	text_pipeline = lambda x: vocab(tokenizer(x))
 	label_pipeline = lambda x: int(x)
 
-def outputConfidence(modelName, columnOrHeader, textInput, print):
+def outputConfidence(testColumn, modelName, textInput, print):
 	loadModel(modelName)
 	#Set of numerical labels and their text values
-	if columnOrHeader == 1:
+	if testColumn:
 		labels = COLUMN_LABELS
 	else:
 		labels = HEADER_LABELS
@@ -241,10 +241,10 @@ def outputConfidence(modelName, columnOrHeader, textInput, print):
 	else: return "N/A", maxVal
 
 	######################################################### Testing Below #########################################################
-def testInput(modelName, columnOrHeader, testString, print):
+def testInput(testColumn, modelName, testString, print):
 	loadModel(modelName)
 	#Set of numerical labels and their text values
-	if columnOrHeader == 1:
+	if testColumn:
 		labels = COLUMN_LABELS
 	else:
 		labels = HEADER_LABELS

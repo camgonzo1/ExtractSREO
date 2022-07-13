@@ -164,6 +164,10 @@ class testTabUI(QtWidgets.QWidget):
 		self.modelLabel = QtWidgets.QLabel("No Model Chosen")
 		self.topRow.addWidget(self.modelLabel)
 
+		self.invalidFileTypeLabel = QtWidgets.QLabel("Invalid File Type: ")
+		self.invalidFileTypeLabel.hide()
+		self.invalidFileTypeLabelShowing = False
+
 		self.testText = QtWidgets.QLabel("Test Inputted Text")
 		self.testSREOs = QtWidgets.QLabel("Test SREOs")
 
@@ -189,9 +193,9 @@ class testTabUI(QtWidgets.QWidget):
 		self.layout.addLayout(self.textInputRow)
 		self.layout.addWidget(self.testSREOs)
 		self.layout.addLayout(self.chooseFilesRow)
+		self.layout.addWidget(self.invalidFileTypeLabel)
 
-		self.testTab.setLayout(self.layout)
-		return self.testTab
+		self.setLayout(self.layout)
 
 	def chooseTrainModel(self):
 		self.chooseModelPopup = chooseModelWindow()
@@ -241,28 +245,25 @@ class testTabUI(QtWidgets.QWidget):
 				print(file)
 				fileType = file.split(".")[1]
 				if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
-					self.invaldFileTypeLabel.hide()
-					data = ExtractSREO.extractSREO(trainColumn, file)
+					if self.invalidFileTypeLabelShowing:
+						self.invaldFileTypeLabel.hide()
+						self.invalidFileTypeLabelShowing = False
+					data = ExtractSREO.extractSREO(file)
 					ExtractSREO.testConfidence(True, data)
 					print()
 				else:
 					self.invalidFileTypeLabel.setText("Invalid File Type: " + file)
 					self.invalidFileTypeLabel.show()
+					self.invalidFileTypeLabelShowing = True
 		else:
 			fileType = fileName.split(".")[1]
+			print(fileName.split("."))
 			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
-				data = ExtractSREO.extractSREO(trainColumn, fileName)
+				data = ExtractSREO.extractSREO(fileName)
 				ExtractSREO.testConfidence(True, data)
 			else:
 				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 				self.invalidFileTypeLabel.show()
-		fileName = filedialog.askopenfilename()
-		fileType = fileName.split(".")[1]
-		if(fileType == ".csv" or fileType == ".pdf" or fileType == ".xlsx"):
-			data = ExtractSREO.extractSREO(trainColumn, fileName)
-			ExtractSREO.testConfidence(True, data)
-		else:
-			self.testSREOs.setText("Invalid file type")
 
 class extractTabUI(QtWidgets.QWidget):
 	def __init__(self):
@@ -544,6 +545,7 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 			self.numberOfDataPointsLabel.setText("Please enter a number           ")
 
 	def generateDataButtonPressed(self):
+		self.progressBar.setValue(0)
 		self.doneButton.setDisabled(True)
 		fileName = "trainingData.csv"
 		trainingData = pd.DataFrame(columns=['label','text'])
@@ -557,13 +559,16 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 			for i in range(int(self.numRepeats / 1000)):
 				for j in range(1000):
 					randVal = random.randint(0,len(trueValues) - 1)
-					row = trueValues[randVal][0]
-					col = trueValues[randVal][1]
-					if(self.checkValues[row][col]):
-						trainingData = pd.concat([trainingData, columnFunctions[row][col]()],ignore_index=True)
-						total += 1
+					trainingData = pd.concat([trainingData, generateData(trueValues[randVal])],ignore_index=True)
+					total += 1
 					if(total % (self.numRepeats / 100) == 0):
 						self.incrementProgressBar(1)
+			for i in range(self.numRepeats % 1000):
+				randVal = random.randint(0,len(trueValues) - 1)
+				trainingData = pd.concat([trainingData, generateData(trueValues[randVal])],ignore_index=True)
+				total += 1
+				if(total % (self.numRepeats / 100) == 0):
+					self.incrementProgressBar(1)
 		trainingData.to_csv(fileName, index=False)
 		self.doneButton.setDisabled(False)
 
@@ -644,11 +649,11 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 	def textInputted(self):
 		if self.numRepeatsInput.text().isnumeric():
 			self.numRepeats = int(self.numRepeatsInput.text())
-			self.numberOfDataPointsLabel.setText("Total # of data points created: ")
+			self.inputLabel.setText("Total # of data points created: ")
 			self.generateDataButton.setDisabled(False)
 		else:
 			self.generateDataButton.setDisabled(True)
-			self.numberOfDataPointsLabel.setText("Please enter a number           ")
+			self.inputLabel.setText("Please enter a number           ")
 		
 	def generateData(self):
 		self.doneButton.setDisabled(True)
@@ -665,7 +670,7 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 			elif self.generateValid:
 				trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
 			elif self.generateInvalid:
-				trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+				trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
 			if(i % (numRepeats / 100) == 0):
 					self.incrementProgressBar(1)
 		trainingData.to_csv(fileName,index=False)
