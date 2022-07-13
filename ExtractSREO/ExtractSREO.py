@@ -14,6 +14,7 @@ from prepareData import *
 from re import L
 import string
 from trainModel import *
+from openpyxl import Workbook
 
 ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
@@ -30,8 +31,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
 def extractSREO(curFilePath):
     # Determines File Type 
-    path = curFilePath.split("/")
-    print(path[len(path) - 1]) 
     splitPath = curFilePath.split(".")
     fileType = splitPath[len(splitPath) - 1]
 
@@ -39,13 +38,10 @@ def extractSREO(curFilePath):
     if fileType not in PERMITTED_FORMATS:
         raise TypeError("Error: Please input compatible file type!")
     elif fileType == "csv":
-        sreoData = pd.read_csv(curFilePath, header=None)
+        #sreoData = pd.read_csv(curFilePath, header=None)
+        sreoData = pd.read_csv(curFilePath, header=None, skiprows=1)
     elif fileType == "xlsx":
         sreoData = pd.read_excel(curFilePath, header=None)
-    elif fileType == "pdf": # still in trial stage (unreliable)
-        tables = camelot.read_pdf(curFilePath, flavor='stream', row_tol=7)
-        tables.export(curFilePath, f='csv', compress=True)
-        sreoData = tables[0].df
 
     # Removes Uneccessary Information from DataFrame and Formats Correctly
     sreoData.replace('\n', '', regex=True, inplace=True)
@@ -81,26 +77,43 @@ def getHeaderIndex(searchData):
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
 def fillTemplate(sreoDataFrame):
-    sreoTemplate = pd.DataFrame(columns=['Property Name','Street Address','City','State','Property Type','Units','Square Footage','Occupancy', 'Acquisition Date', 'Lender', 'Maturity', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Vaue', 'LTV', 'Amort Start', 'Rate Type', 'All-In', 'Spread', 'Index'])
+    sreoTemplate = pd.DataFrame(columns=['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index'])
+    bestIndex = {'Property Name': [-1, 0],
+                 'Address': [-1, 0],
+                 'City': [-1, 0],
+                 'State':[-1, 0],
+                 'Property Type': [-1, 0],
+                 'Units': [-1, 0],
+                 'Square Feet': [-1, 0],
+                 'Occupancy': [-1, 0],
+                 'Acquisition Date': [-1, 0],
+                 'Lender': [-1, 0],
+                 'Maturity Date': [-1, 0],
+                 'Loan Amount': [-1, 0],
+                 'Current Balance': [-1, 0],
+                 'Debt Service': [-1, 0],
+                 'NOI': [-1, 0],
+                 'DSCR': [-1, 0],
+                 'Market Value': [-1, 0],
+                 'LTV': [-1, 0],
+                 'Amort Start Date': [-1, 0],
+                 'Rate Type': [-1, 0],
+                 'All-In Rate': [-1, 0],
+                 'Spread': [-1, 0],
+                 'Index': [-1, 0]}
     for dataColumn in sreoDataFrame.columns:
-        # old
-        #myString = str(dataColumn[0]) + " " + (sreoDataFrame[dataColumn].apply(str).str.cat(sep=' ')
+        guess = outputConfidence(modelName, DATA_ANALYSIS, str(dataColumn[0]), NO_PRINT)
+        if guess[0] != "N/A" and guess[0] != "Invalid" and guess[1] > bestIndex[guess[0]][1]:
+           bestIndex[guess[0]][0] = str(dataColumn[0])
+           bestIndex[guess[0]][1] = guess[1]
 
-        #new
-        data = sreoDataFrame[dataColumn].dropna()
-        if len(data) > 3:
-            myString = str(dataColumn[0]) + " " + (data.apply(str)[:3]).str.cat(sep=' ')
-        else :
-            myString = str(dataColumn[0]) + " " + data.apply(str).str.cat(sep=' ')
+    for entry in bestIndex:
+        if bestIndex[entry][0] != -1:
+            sreoTemplate[entry] = sreoDataFrame[bestIndex[entry][0]]
 
-        relevantCategory = testInput(modelName, DATA_ANALYSIS, myString, NO_PRINT)
-        if relevantCategory != "N/A":
-            sreoTemplate.insert(column=relevantCategory)
-
-    # For Testing
-    print(sreoTemplate)
-    # Notify Abstraction Here
-    return sreoTemplate.to_excel()
+    Workbook().save(filename = "Standardized-" + newName + ".xlsx")
+    sreoTemplate.to_excel("Standardized-" + newName + ".xlsx", index=False)
+    return sreoTemplate
 
 # Name: standardizeSREO()
 # Parameters: sreoFilePath (string) --> conatins the current path to the desired file for importation
@@ -156,7 +169,7 @@ def testConfidence(data):
 # Description: This function allows the user to create models and test said models against SREOs
 def runTests():
     global modelName
-    columnOrHeader = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
+    columnOrHeader = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit, 6 to test CSV Folder: "))
     while(int(columnOrHeader) != 5):
         if columnOrHeader == 4:
             modelName = input("Model Name: ")
@@ -178,18 +191,45 @@ def runTests():
             columnOrHeader = int(input("1 for Column model, 2 for Header model: "))
             modelName = input("Model Name: ")
             print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
+        elif columnOrHeader == 6:
+            modelName = input("Model Name: ")
+            testOnSolvedCSV()
         else:
             if(input("Create new dataset (Y/N) ") == "Y"): 
-                numRepeats = input("Number of Repeats per Category: ")
+                numRepeats = input("Number of Repeats: ")
                 createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
                 trainModel(columnOrHeader, "trainingData.csv")
             elif(input("1 to generate data 2 to use existing files: ") == "2"):
-                trainOnCSV()
                 trainModel(columnOrHeader, "extractedTrainingData.csv")
             else: trainModel(columnOrHeader, "trainingData.csv")
-        columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
+        columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit, 6 to test CSV Folder: "))
 
-
+FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", 
+			 "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
+			 "SimpsonHousingLLLP-DebtSummary-2021-09-07.csv", "SP Inc., SP II and SP III - RE Schedule 11.20.2019.csv", "SREO Export Template v2 - final.csv", "Stoneweg.csv", "TCG - 2022 Fund XI REO Schedule.csv"]
+def testOnSolvedCSV():
+    totalCorrect = 0
+    totalNum = 0
+    for file in FILE_LIST:
+        curCSV = pd.read_csv("SREOs/CSVs/" + file, header=None)
+        answerRow = ((curCSV.iloc[0])).apply(str)
+        testFrame = standardizeSREO("SREOs/CSVs/" + file)
+        testFrame.dropna(axis=COLUMN, how='all', inplace=True)
+        correct, total = 0, 0
+        for i in range(len(answerRow)):
+            if answerRow[i] != "nan":
+                total += 1
+            if answerRow[i] in testFrame.columns:
+                correct += 1
+        totalCorrect += correct
+        totalNum += total
+        print()
+        print(file)
+        print("Required Headers Accuracy --> " + str("{:.2%}".format(correct/total)))
+        print("Total Number of Headers Accuracy --> " + str("{:.2%}".format(len(testFrame.columns)/total)))
+        print()
+    print("-----------------------------------------------------------------------------------------------")
+    print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
 
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))

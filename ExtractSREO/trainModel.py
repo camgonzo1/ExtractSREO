@@ -238,7 +238,7 @@ def outputConfidence(modelName, columnOrHeader, textInput, print):
         if maxVal < probs[0][i]:
             maxVal = probs[0][i]
             maxIndex = i
-    if maxVal > .9:
+    if maxVal > .95:
         return labels[maxIndex], maxVal
     else: return "N/A", maxVal
 
