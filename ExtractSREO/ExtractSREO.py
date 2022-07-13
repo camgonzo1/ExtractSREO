@@ -15,6 +15,8 @@ from re import L
 import string
 from trainModel import *
 from openpyxl import Workbook
+import warnings
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
 
 ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
@@ -215,13 +217,10 @@ def runTests(trainColumn):
 			else: trainModel(trainColumn, "trainingData.csv")
 		startOption = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
 
-FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", 
-			 "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
-			 "SimpsonHousingLLLP-DebtSummary-2021-09-07.csv", "SP Inc., SP II and SP III - RE Schedule 11.20.2019.csv", "SREO Export Template v2 - final.csv", "Stoneweg.csv", "TCG - 2022 Fund XI REO Schedule.csv"]
 def testOnSolvedCSV():
     totalCorrect = 0
     totalNum = 0
-    for file in FILE_LIST:
+    for file in os.listdir("SREOs/CSVs/"):
         curCSV = pd.read_csv("SREOs/CSVs/" + file, header=None)
         answerRow = ((curCSV.iloc[0])).apply(str)
         testFrame = standardizeSREO("SREOs/CSVs/" + file)

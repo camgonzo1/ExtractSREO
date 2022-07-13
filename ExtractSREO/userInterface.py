@@ -166,7 +166,6 @@ class testTabUI(QtWidgets.QWidget):
 
 		self.invalidFileTypeLabel = QtWidgets.QLabel("Invalid File Type: ")
 		self.invalidFileTypeLabel.hide()
-		self.invalidFileTypeLabelShowing = False
 
 		self.testText = QtWidgets.QLabel("Test Inputted Text")
 		self.testSREOs = QtWidgets.QLabel("Test SREOs")
@@ -215,7 +214,7 @@ class testTabUI(QtWidgets.QWidget):
 		if(fileName == ""):
 			self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 			self.invalidFileTypeLabel.show()
-		elif(fileName.split(".")[1] != "pt"):
+		elif(fileName.split(".")[len(fileName.split(".")) - 1] != "pt"):
 			self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 			self.invalidFileTypeLabel.show()
 		else:
@@ -243,21 +242,17 @@ class testTabUI(QtWidgets.QWidget):
 		if type(fileName) is tuple:
 			for file in fileName:
 				print(file)
-				fileType = file.split(".")[1]
+				fileType = file.split(".")[len(file.split(".")) - 1]
 				if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
-					if self.invalidFileTypeLabelShowing:
-						self.invaldFileTypeLabel.hide()
-						self.invalidFileTypeLabelShowing = False
+					self.invalidFileTypeLabel.hide()
 					data = ExtractSREO.extractSREO(file)
 					ExtractSREO.testConfidence(True, data)
 					print()
 				else:
 					self.invalidFileTypeLabel.setText("Invalid File Type: " + file)
 					self.invalidFileTypeLabel.show()
-					self.invalidFileTypeLabelShowing = True
 		else:
-			fileType = fileName.split(".")[1]
-			print(fileName.split("."))
+			fileType = fileName.split(".")[len(fileName.split(".")) - 1]
 			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
 				data = ExtractSREO.extractSREO(fileName)
 				ExtractSREO.testConfidence(True, data)
