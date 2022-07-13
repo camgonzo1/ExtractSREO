@@ -46,7 +46,8 @@ class chooseModelWindow(QtWidgets.QWidget):
 		trainModel.trainModel(trainColumn, False, modelName, trainingData)
 		controller.showTrainTestWindow()
 		self.close()
-
+		
+		####################################################MAKE THESE POPUPS CLOSE CORRECTLY#######################################################
 class newModelPopup(QtWidgets.QWidget):
 	#closeWindows = QtCore.pyqtSignal()
 	def __init__(self):
@@ -174,7 +175,7 @@ class testTabUI(QtWidgets.QWidget):
 		self.textInputRow.addWidget(self.testInputButton)
 		self.testInputButton.setDisabled(True)
 
-		self.singleFileButton = QtWidgets.QPushButton("Choose Individual File(s)")
+		self.singleFileButton = QtWidgets.QPushButton("Choose Individual File")
 		self.singleFileButton.clicked.connect(self.useExistingFile)
 		self.chooseFilesRow.addWidget(self.singleFileButton)
 		self.singleFileButton.setDisabled(True)
@@ -183,30 +184,21 @@ class testTabUI(QtWidgets.QWidget):
 		self.chooseFilesRow.addWidget(self.allFilesButton)
 		self.allFilesButton.setDisabled(True)
 		self.allFilesButton.clicked.connect(self.useAllFiles)
-		
-		self.invalidFileTypeLabel = QtWidgets.QLabel("Invalid File Type: ")
-		self.invalidFileTypeLabel.hide()
 
 		self.layout.addLayout(self.topRow)
 		self.layout.addWidget(self.testText)
 		self.layout.addLayout(self.textInputRow)
 		self.layout.addWidget(self.testSREOs)
 		self.layout.addLayout(self.chooseFilesRow)
-		self.layout.addWidget(self.invalidFileTypeLabel)
 
 		self.setLayout(self.layout)
 
 	def chooseTestModel(self):
 		fileName = filedialog.askopenfilename()
-		if(fileName == ""):
-			self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
-			self.invalidFileTypeLabel.show()
-		elif(fileName.split(".")[1] != "pt"):
-			self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
-			self.invalidFileTypeLabel.show()
+		modelName = fileName.split("/")[len(fileName.split("/")) - 1]
+		if(fileName.split(".")[1] != "pt"):
+			self.modelLabel.setText("Invalid Model File!")
 		else:
-			self.invalidFileTypeLabel.hide()
-			modelName = fileName.split("/")[len(fileName.split("/")) - 1]
 			ExtractSREO.setModelName(fileName.split(".")[0])
 			self.modelLabel.setText(modelName.split(".")[0] + " Selected")
 			self.testInputButton.setDisabled(False)
@@ -221,10 +213,11 @@ class testTabUI(QtWidgets.QWidget):
 			print('------------------------------------------------------------')
 			data = ExtractSREO.extractSREO("SREOs/CSVs/" + fileName)
 			print(data.to_string())
-			ExtractSREO.testConfidence(True, data)
+			ExtractSREO.testConfidence(data)
 			print('------------------------------------------------------------')
 	
 	def useExistingFile(self):
+<<<<<<< HEAD
 		fileName = filedialog.askopenfilenames()
 		if type(fileName) is tuple:
 			for file in fileName:
@@ -233,7 +226,7 @@ class testTabUI(QtWidgets.QWidget):
 				if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
 					self.invaldFileTypeLabel.hide()
 					data = ExtractSREO.extractSREO(file)
-					ExtractSREO.testConfidence(True, data)
+					ExtractSREO.testConfidence(data)
 					print()
 				else:
 					self.invalidFileTypeLabel.setText("Invalid File Type: " + file)
@@ -242,10 +235,17 @@ class testTabUI(QtWidgets.QWidget):
 			fileType = fileName.split(".")[1]
 			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
 				data = ExtractSREO.extractSREO(fileName)
-				ExtractSREO.testConfidence(True, data)
+				ExtractSREO.testConfidence(data)
 			else:
 				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 				self.invalidFileTypeLabel.show()
+		fileName = filedialog.askopenfilename()
+		fileType = fileName.split(".")[1]
+		if(fileType == ".csv" or fileType == ".pdf" or fileType == ".xlsx"):
+			data = ExtractSREO.extractSREO(trainColumn, fileName)
+			ExtractSREO.testConfidence(True, data)
+		else:
+			self.testSREOs.setText("Invalid file type")
 
 class extractTabUI(QtWidgets.QWidget):
 	def __init__(self):
@@ -311,7 +311,6 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 		self.checksGrid.setVerticalSpacing(30)
 
 		self.textInputRow = QtWidgets.QHBoxLayout()
-		self.buttonRow = QtWidgets.QHBoxLayout()
 
 		self.bottomRows = QtWidgets.QVBoxLayout()
 
@@ -441,28 +440,28 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 		self.generateNewDataLabel = QtWidgets.QLabel("Generate New Data for Training")
 		self.topBar.addWidget(self.generateNewDataLabel)
 
-		self.numberOfDataPointsLabel = QtWidgets.QLabel("Total # of data points created: ")
+		self.numberOfDataPointsLabel = QtWidgets.QLabel("# of each data point generated:")
 		self.textInputRow.addWidget(self.numberOfDataPointsLabel)
-
-		self.createNewModelWarningText = QtWidgets.QLabel("Note: In order to create a new model all data types must be selected")
 		#-------------------------------Buttons---------------------------------------
 		self.toggleAllButton = QtWidgets.QPushButton("Toggle All")
 		self.topBar.addWidget(self.toggleAllButton)
 		self.toggleAllButton.clicked.connect(self.toggleAll)
 
 		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
+
 		self.generateDataButton.clicked.connect(self.generateDataButtonPressed)
 		self.generateDataButton.setDisabled(True)
 
 		self.cancelButton = QtWidgets.QPushButton("Cancel")
 		self.cancelButton.clicked.connect(self.changeToTrainTestWindow)
 
+		self.generateDataButton.clicked.connect(self.generateColumnData)
+
 		self.doneButton = QtWidgets.QPushButton("Done")
 		self.doneButton.clicked.connect(self.train)
 		#-------------------------------Misc---------------------------------------
 		self.numRepeatsInput = QtWidgets.QLineEdit()
 		self.numRepeatsInput.setMaxLength(7)
-		self.numRepeatsInput.textEdited.connect(self.textInputted)
 		self.textInputRow.addWidget(self.numRepeatsInput)
 		self.textInputRow.addWidget(self.generateDataButton)
 
@@ -479,13 +478,10 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 		self.verticalLayout.addLayout(self.checksGrid)
 		self.bottomRows.addLayout(self.textInputRow)
 		self.bottomRows.addWidget(self.progressBar)
-		self.buttonRow.addWidget(self.cancelButton)
-		self.buttonRow.addWidget(self.doneButton)
-		self.bottomRows.addLayout(self.buttonRow)
-		self.bottomRows.addWidget(self.createNewModelWarningText,stretch=0)
+		self.bottomRows.addWidget(self.doneButton)
 		self.verticalLayout.addLayout(self.bottomRows)
 
-		self.resize(1280,640)
+		self.resize(1280,720)
 		self.setLayout(self.verticalLayout)
 
 	def train(self):
@@ -514,20 +510,18 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 				self.checkValues[i][j] = containsFalse
 				self.generateDataButton.setDisabled(not containsFalse)
 
+	def generateColumnData(self):
+		self.numRepeats = self.numRepeatsInput.text()
+		if(self.numRepeats.isnumeric()):
+			self.numRepeats = int(self.numRepeats)
+			self.generateData()
+		else:
+			self.generateNewDataLabel.setText("Please enter a number")
+
 	def incrementProgressBar(self, val):
 		self.progressBar.setValue(self.progressBar.value() + val)
 
-	def textInputted(self):
-		if self.numRepeatsInput.text().isnumeric():
-			self.numRepeats = int(self.numRepeatsInput.text())
-			self.numberOfDataPointsLabel.setText("Total # of data points created: ")
-			self.generateDataButton.setDisabled(False)
-		else:
-			self.generateDataButton.setDisabled(True)
-			self.numberOfDataPointsLabel.setText("Please enter a number           ")
-
-	def generateDataButtonPressed(self):
-		self.doneButton.setDisabled(True)
+	def generateData(self):
 		fileName = "trainingData.csv"
 		trainingData = pd.DataFrame(columns=['label','text'])
 		trueValues = []
@@ -546,7 +540,19 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 						self.incrementProgressBar(1)
 		trainingData.to_csv(fileName, index=False)
 		self.doneButton.setDisabled(False)
-
+			i = 0
+			while i < self.numRepeats:
+				randVal = random.randint(0,len(trueValues) - 1)
+				row = trueValues[randVal][0]
+				col = trueValues[randVal][1]
+				if(self.checkValues[row][col]):
+					trainingData = pd.concat([trainingData, columnFunctions[row][col]()],ignore_index=True)
+					i += 1
+				if(i % (self.numRepeats / 50) == 0):
+					self.incrementProgressBar(2)
+		print("Done")
+		trainingData.to_csv(fileName, index=False)
+		
 class generateHeaderDataWindow(QtWidgets.QWidget):
 	switch_window = QtCore.pyqtSignal()
 
@@ -563,7 +569,6 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 		self.verticalLayout.setContentsMargins(15, 15, 15, 15)
 		self.checksRow = QtWidgets.QHBoxLayout()
 		self.textInputRow = QtWidgets.QHBoxLayout()
-		self.buttonRow = QtWidgets.QHBoxLayout()
 		self.bottomRows = QtWidgets.QVBoxLayout()
 
 		self.topLabel = QtWidgets.QLabel("Generate Header Data")
@@ -579,7 +584,6 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 		self.inputLabel = QtWidgets.QLabel("Total # of data points created: ")
 		self.textInputRow.addWidget(self.inputLabel)
 		self.numRepeatsInput = QtWidgets.QLineEdit()
-		self.numRepeatsInput.textEdited.connect(self.textInputted)
 		self.textInputRow.addWidget(self.numRepeatsInput)
 		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
 		self.generateDataButton.clicked.connect(self.generateData)
@@ -594,9 +598,6 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 		self.progressBar.setStyleSheet("QProgressBar { border: 2px solid grey; border-radius: 0px; text-align: center; } QProgressBar::chunk {background-color: #16aff0; width: 1px;}")
 		self.progressBar.setProperty("value", 0)
 
-		self.cancelButton = QtWidgets.QPushButton("Cancel")
-		self.cancelButton.clicked.connect(self.changeToTrainTestWindow)
-
 		self.doneButton = QtWidgets.QPushButton("Done")
 		self.doneButton.clicked.connect(self.train)
 
@@ -604,9 +605,7 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 		self.verticalLayout.addLayout(self.checksRow)
 		self.verticalLayout.addLayout(self.textInputRow)
 		self.verticalLayout.addWidget(self.progressBar)
-		self.buttonRow.addWidget(self.cancelButton)
-		self.buttonRow.addWidget(self.doneButton)
-		self.verticalLayout.addLayout(self.buttonRow)
+		self.verticalLayout.addWidget(self.doneButton)
 
 		self.setLayout(self.verticalLayout)
 
@@ -620,18 +619,20 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 	def invalidChecked(self):
 		self.generateInvalid = not self.generateInvalid
 		self.invalidCheck.setChecked(self.generateInvalid)
+<<<<<<< HEAD
 
 	def textInputted(self):
 		if self.numRepeatsInput.text().isnumeric():
 			self.numRepeats = int(self.numRepeatsInput.text())
-			self.numberOfDataPointsLabel.setText("Total # of data points created: ")
+			self.inputLabel.setText("Total # of data points created: ")
 			self.generateDataButton.setDisabled(False)
 		else:
 			self.generateDataButton.setDisabled(True)
-			self.numberOfDataPointsLabel.setText("Please enter a number           ")
+			self.inputLabel.setText("Please enter a number           ")
+=======
+>>>>>>> parent of 3fca60e (UI tweaks)
 		
 	def generateData(self):
-		self.doneButton.setDisabled(True)
 		fileName = "trainingHeaderData.csv"
 		trainingData = pd.DataFrame(columns=['label','text'])
 		numRepeats = int(self.numRepeatsInput.text())
@@ -639,17 +640,22 @@ class generateHeaderDataWindow(QtWidgets.QWidget):
 			if self.generateValid and self.generateInvalid:
 				rand = random.randint(0,1)
 				if rand == 0:
-					trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+					trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
 				else:
-					trainingData = pd.concat([trainingData, createInvalidHeaders()], ignore_index = True)
+					trainingData = pd.concat([trainingData, createInvalidHeader()], ignore_index = True)
 			elif self.generateValid:
-				trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+				trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
 			elif self.generateInvalid:
-				trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+<<<<<<< HEAD
+				trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
 			if(i % (numRepeats / 100) == 0):
 					self.incrementProgressBar(1)
+=======
+				trainingData = pd.concat([trainingData, createValidHeaders()], ignore_index = True)
+			if(i % (numRepeats / 50) == 0):
+					self.incrementProgressBar(2)
+>>>>>>> parent of 3fca60e (UI tweaks)
 		trainingData.to_csv(fileName,index=False)
-		self.doneButton.setDisabled(False)
 
 	def train(self):
 		self.chooseModelPopup = chooseModelWindow()

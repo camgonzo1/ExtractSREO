@@ -14,17 +14,28 @@ from prepareData import *
 from re import L
 import string
 from trainModel import *
+<<<<<<< HEAD
 from openpyxl import Workbook
+=======
+>>>>>>> parent of 3fca60e (UI tweaks)
 
 ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
-HEADER_MODEL, DATA_MODEL = 'headerTest', '' # Trained AI Models for Data Interpretation
+HEADER_MODEL, DATA_MODEL = 'Model/headerTest', '' # Trained AI Models for Data Interpretation
 DATA_ANALYSIS, HEADER_ANALYSIS = 1, 2 
 NO_PRINT, PRINT = 0, 1
-modelName = None # For testing
+modelName = None
 totalCorrect, totalNum = 0, 0
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+
+def setModelName(name):
+    global modelName
+    modelName = name
+def getModelName():
+    return modelName
+
 # Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
@@ -132,6 +143,7 @@ CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 # Parameters: data (pandas DataFrame) --> conatins data from SREO file
 # Return: None --> prints to screen and updates global variables directly
 # Description: This function test how well the data AI program would be categorizing into the template
+<<<<<<< HEAD
 def testConfidence(data):
     global totalCorrect
     global totalNum
@@ -162,6 +174,38 @@ def testConfidence(data):
     totalNum += getNumLabels()
     print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
     print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
+=======
+def testConfidence(trainColumn, data):
+	global totalCorrect
+	global totalNum
+	compare = pd.read_excel("Header Data/DataGroups.xlsx")
+	correct = 0
+	COLUMN_LABELS = {1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
+					 7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount",
+					 12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
+					 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
+	confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+	for column in data.columns:
+		#myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
+		myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:2]).str.cat(sep=' ')
+		guess = outputConfidence(trainColumn, modelName, myString, NO_PRINT)
+		labelIndex = get_column_label(guess[0])
+		if confidences[labelIndex - 1] < guess[1]:
+			confidences[labelIndex - 1] = guess[1]
+			columnHeaders[labelIndex - 1] = str(column[0])
+		if guess[0] in compare.columns:
+			if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
+				correct += 1
+		print(str(column[0]) + ' --> ' + guess[0] + ' ' + str(guess[1]))
+	print("----------------- Highest Values --------------------")
+	for i in range(len(COLUMN_LABELS)):
+		print(columnHeaders[i] + " --> " + COLUMN_LABELS[i + 1] + " " + str(confidences[i]))
+	totalCorrect += correct
+	totalNum += getNumLabels()
+	print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
+	print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
+>>>>>>> parent of 3fca60e (UI tweaks)
 
 # Name: runTests()
 # Parameters:None
