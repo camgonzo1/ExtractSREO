@@ -530,27 +530,18 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 		self.doneButton.setDisabled(True)
 		fileName = "trainingData.csv"
 		trainingData = pd.DataFrame(columns=['label','text'])
-		columnFunctions = [[createAddresses, createSqFootage, createSpread, createAmortStartDate],
-						   [createPropertyName, createOccupancy, createDebtService, createMaturityDate],
-						   [createCity, createIndex, createNOI, createAcquisitionDate],
-						   [createState, createLender, createDSCR, createAllInRate],
-						   [createPropertyType, createLoanAmount, createLTV, createCurrentBalance],
-						   [createUnits, createMV, createRateTypes]]
 		trueValues = []
 		for i in range(len(self.checkValues)):
 			for j in range(len(self.checkValues[i])):
 				if(self.checkValues[i][j]):
-					trueValues.append([i,j])
+					trueValues.append((4 * i) + j)
 		if(trainColumn):
 			total = 0
 			for i in range(int(self.numRepeats / 1000)):
 				for j in range(1000):
 					randVal = random.randint(0,len(trueValues) - 1)
-					row = trueValues[randVal][0]
-					col = trueValues[randVal][1]
-					if(self.checkValues[row][col]):
-						trainingData = pd.concat([trainingData, columnFunctions[row][col]()],ignore_index=True)
-						total += 1
+					trainingData = pd.concat([trainingData, generateData(randVal)],ignore_index=True)
+					total += 1
 					if(total % (self.numRepeats / 100) == 0):
 						self.incrementProgressBar(1)
 		trainingData.to_csv(fileName, index=False)

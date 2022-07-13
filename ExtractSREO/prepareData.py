@@ -8,46 +8,35 @@ import pandas as pd
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 CATEGORY, INFO = 0, 1
-COLUMN_INFO = {  1: ("Loan Amount", ["Loan Amount", "Orig. Loan Amount", "Original Loan Amount", "OG Loan Amount"]), 
-				 2: ("Debt Service", ["Debt Service", "Debt Service Value", "Total Debt Service", "Annual Debt Service", "Debt Service Total"]),
-				 3: ("NOI", ["NOI", "Net Operating Income", "Net Income", "Current NOI", "N.O.I.", "Current N.O.I.", "Current Net Operating Income", "Net Rental Income", "NOI", "NOI (Period Ending YTD)"]),
-				 4: ("Market Value", ["Market Value", "MV", "Value", "Internal Valuation", "PWC Value", "Market Total Value", "Borrower Started Value", "Full Market Value"]), 
-				 5: ("Current Balance", ["Outstanding Loan Amount", "Principal Balance", "OPB", "Outstanding Principal Balance", "Current Balance", "Balance", "Current Debt", "Loan Balance", "Current Amount", "Outstanding", "Outstanding Loan(s)", "Outstanding Loans", "Outstanding Debt (YE)", "Outstanding Debt", "Balance of Mortgages", "Mortgage Outstanding", "Mortgage Liens as of "]),
-				 6: ("Occupancy", ["Occupancy", "Current Occupancy", "Occupancy Status", "Current Occupancy (%)", "% Occupied", "% Occupancy", "Occupancy %", "Occupancy at end of quarter", "Occ. %", "Occupancy at end of quarter", "Physical Occupancy"]),
-				 7: ("LTV", ["LTV", "Loan-To-Value", "Loan To Value"]),
-				 8: ("All-In Rate", ["All-In", "All-In Rate", "Rate", "All In", "All In Rate", "All-in", "Interest", "Interest Rate", "Current Rate"]),
-				 9: ("Acquisition Date", ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)", "Year of Initial Ownership", "Owned Since", "Acq. Date Cost"]),
-				 10: ("Maturity Date", ["Maturity Date", "Maturity", "Loan Matures", "Matures", "Date of Maturity", "Date Matures", "Maturation Date", "Loan Maturity Date", "Final Maturity", "Maturity Date(s)", "Due Date (year)", "Due Date"]),
-				 11: ("Amort Start Date", ["Amort Start Date", "Amortization Start Date", "Amort Date", "Amortization Date", "Amort Start", "Amortization Start", "Commence Date"]),
-				 12: ("DSCR", ["DSCR", "Debt Service Coverage", "Total DCR", "DCR", "Total DSCR", "Debt Coverage Ratio", "Debt Service Ratio", "Debt Coverage"]),
-				 13: ("Units", ["Units", "#units", "# of Units", "Number of Units", "Unit Count", "Multifamily Units (#)", "Multifamily Units", "SF / # of Units", "Units / Sq. Ft.", "SF/Units", "# Units / SF"]),
-				 14: ("Square Feet", ["Square Footage", "Square Feet", "Sq. Feet", "Sq. Ft.", "Feet", "Sq. Footage"]),
-				 15: ("Spread", ["Spread", "Credit Spread"]),
-				 16: ("Address", ["Property Location", "Location", "Address", "Street Location", "Street Address", "Property Address", "Street", "Full Property Address", "Property Street Address"]),
-				 17: ("City", ["City", "Town", "Property City", "Location"]),
-				 18: ("Property Type", ["Property Type", "Type of Property", "Type", "Asset Type", "Property Description", "Prop. Type", "Description", "Type of Community"]),
-				 19: ("State", ["State", "Providence", "Territory", "Location", "Property State", "ST"]),
-				 20: ("Index", ["Index", "Interest Rate Index", "Rate Index"]),
-				 21: ("Lender", ["Lender", "Mortgage Holder", "Mortgage Lender"]),
-				 22: ("Property Name", ["Property Name", "Name", "Property", "Property Number", "ID", "Property ID", "Building", "Building Number", "Building Name/Number", "Building Name", "Legal Name"]),
-				 23: ("Rate Type", ["Loan Type", "Type of Loan", "Fixed or Floating", "Type", "Rate Type", "Type of Rate", "Interest Rate Type", "Type of Interest Rate", "Fixed / Variable", "Floating (Y/N)"]),
-				 24: ("Invalid", ["Code", "Months", "Days"])}
+COLUMN_INFO = {  0: ("Loan Amount", ["Loan Amount", "Orig. Loan Amount", "Original Loan Amount", "OG Loan Amount"]), 
+				 1: ("Debt Service", ["Debt Service", "Debt Service Value", "Total Debt Service", "Annual Debt Service", "Debt Service Total"]),
+				 2: ("NOI", ["NOI", "Net Operating Income", "Net Income", "Current NOI", "N.O.I.", "Current N.O.I.", "Current Net Operating Income", "Net Rental Income", "NOI", "NOI (Period Ending YTD)"]),
+				 3: ("Market Value", ["Market Value", "MV", "Value", "Internal Valuation", "PWC Value", "Market Total Value", "Borrower Started Value", "Full Market Value"]), 
+				 4: ("Current Balance", ["Outstanding Loan Amount", "Principal Balance", "OPB", "Outstanding Principal Balance", "Current Balance", "Balance", "Current Debt", "Loan Balance", "Current Amount", "Outstanding", "Outstanding Loan(s)", "Outstanding Loans", "Outstanding Debt (YE)", "Outstanding Debt", "Balance of Mortgages", "Mortgage Outstanding", "Mortgage Liens as of "]),
+				 5: ("Occupancy", ["Occupancy", "Current Occupancy", "Occupancy Status", "Current Occupancy (%)", "% Occupied", "% Occupancy", "Occupancy %", "Occupancy at end of quarter", "Occ. %", "Occupancy at end of quarter", "Physical Occupancy"]),
+				 6: ("LTV", ["LTV", "Loan-To-Value", "Loan To Value"]),
+				 7: ("All-In Rate", ["All-In", "All-In Rate", "Rate", "All In", "All In Rate", "All-in", "Interest", "Interest Rate", "Current Rate"]),
+				 8: ("Acquisition Date", ["Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)", "Year of Initial Ownership", "Owned Since", "Acq. Date Cost"]),
+				 9: ("Maturity Date", ["Maturity Date", "Maturity", "Loan Matures", "Matures", "Date of Maturity", "Date Matures", "Maturation Date", "Loan Maturity Date", "Final Maturity", "Maturity Date(s)", "Due Date (year)", "Due Date"]),
+				 10: ("Amort Start Date", ["Amort Start Date", "Amortization Start Date", "Amort Date", "Amortization Date", "Amort Start", "Amortization Start", "Commence Date"]),
+				 11: ("DSCR", ["DSCR", "Debt Service Coverage", "Total DCR", "DCR", "Total DSCR", "Debt Coverage Ratio", "Debt Service Ratio", "Debt Coverage"]),
+				 12: ("Units", ["Units", "#units", "# of Units", "Number of Units", "Unit Count", "Multifamily Units (#)", "Multifamily Units", "SF / # of Units", "Units / Sq. Ft.", "SF/Units", "# Units / SF"]),
+				 13: ("Square Feet", ["Square Footage", "Square Feet", "Sq. Feet", "Sq. Ft.", "Feet", "Sq. Footage"]),
+				 14: ("Spread", ["Spread", "Credit Spread"]),
+				 15: ("Address", ["Property Location", "Location", "Address", "Street Location", "Street Address", "Property Address", "Street", "Full Property Address", "Property Street Address"]),
+				 16: ("City", ["City", "Town", "Property City", "Location"]),
+				 17: ("Property Type", ["Property Type", "Type of Property", "Type", "Asset Type", "Property Description", "Prop. Type", "Description", "Type of Community"]),
+				 18: ("State", ["State", "Providence", "Territory", "Location", "Property State", "ST"]),
+				 19: ("Index", ["Index", "Interest Rate Index", "Rate Index"]),
+				 20: ("Lender", ["Lender", "Mortgage Holder", "Mortgage Lender"]),
+				 21: ("Property Name", ["Property Name", "Name", "Property", "Property Number", "ID", "Property ID", "Building", "Building Number", "Building Name/Number", "Building Name", "Legal Name"]),
+				 22: ("Rate Type", ["Loan Type", "Type of Loan", "Fixed or Floating", "Type", "Rate Type", "Type of Rate", "Interest Rate Type", "Type of Interest Rate", "Fixed / Variable", "Floating (Y/N)"]),
+				 23: ("Invalid", ["Code", "Months", "Days"])}
 
-def createData(columnOrHeader, fileName, numRepeats):
-	trainingData = pd.DataFrame(columns=['label','text'])
-	if(columnOrHeader == 1):
-		for i in range(numRepeats):
-			trainingData = generateData(trainingData, COLUMN_INFO[random.randint(1, len(COLUMN_INFO))])
-			if((numRepeats - (i + 1)) % (numRepeats / 50) == 0): print("X", end="")
-	elif(columnOrHeader == 2):
-		trainingData = createHeaders(trainingData, numRepeats)
-	print()
-	trainingData.to_csv(fileName, index=False)
-
-def generateData(trainingData, headerData):
-	df2 = pd.DataFrame({ 'label' : headerData[CATEGORY], 'text' : headerData[INFO][random.randint(0, len(headerData[INFO]) - 1)]}, index=[1])
-	trainingData = pd.concat([trainingData, df2],ignore_index = True)
-	return trainingData
+def generateData(generateIndex):
+	randVal = random.randint(0,len(COLUMN_INFO[generateIndex]))
+	df2 = pd.DataFrame({ 'label' : COLUMN_INFO[generateIndex][CATEGORY], 'text' : COLUMN_INFO[generateIndex][INFO][randVal]}, index=[1])
+	return df2
 
 #Creates randomized valid or invalid header rows and adds them to trainingData
 def createHeaders(trainingData, numRepeats):
