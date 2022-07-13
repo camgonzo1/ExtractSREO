@@ -36,7 +36,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
-def extractSREO(trainColumn, curFilePath):
+def extractSREO(curFilePath):
 	# Determines File Type 
 	path = curFilePath.split("/")
 	print(path[len(path) - 1]) 

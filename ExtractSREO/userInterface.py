@@ -86,12 +86,23 @@ class trainTestWindow(QtWidgets.QWidget):
 		self.setLayout(layout)
 
 		self.tabs = QtWidgets.QTabWidget()
-		self.tabs.addTab(self.trainTabUI(),"Train")
-		self.tabs.addTab(self.testTabUI(),"Test")
+		self.trainTab = trainTabUI()
+		self.trainTab.switch_window.connect(self.changeToGenerateDataWindow)
+		self.tabs.addTab(self.trainTab,"Train")
+		self.testTab = testTabUI()
+		self.tabs.addTab(self.testTab,"Test")
+		self.extractTab = extractTabUI()
+		self.tabs.addTab(self.extractTab,"Extract")
 		layout.addWidget(self.tabs)
 
-	def trainTabUI(self):
-		self.trainTab = QtWidgets.QWidget()
+class trainTabUI(QtWidgets.QWidget):
+	switch_window = QtCore.pyqtSignal()
+
+	def changeToGenerateDataWindow(self):
+		self.switch_window.emit()
+
+	def __init__(self):
+		super().__init__()
 		self.layout = QtWidgets.QVBoxLayout()
 		self.trainText = QtWidgets.QLabel("Train Column Classification or Header Classification Model?")
 		self.checkRow = QtWidgets.QHBoxLayout()
@@ -119,11 +130,29 @@ class trainTestWindow(QtWidgets.QWidget):
 		self.layout.addLayout(self.checkRow)
 		self.layout.addLayout(self.buttonRow)
 
-		self.trainTab.setLayout(self.layout)
-		return self.trainTab
+		self.setLayout(self.layout)
 
-	def testTabUI(self):
-		self.testTab = QtWidgets.QWidget()
+	def chooseTrainModel(self):
+		self.chooseModelPopup = chooseModelWindow()
+		self.chooseModelPopup.show()
+
+	def columnOrHeaderCheck(self):
+		global trainColumn
+		if(trainColumn):
+			trainColumn = False
+		else:
+			trainColumn = True
+		self.columnCheck.setChecked(trainColumn)
+		self.headerCheck.setChecked(not trainColumn)
+
+class testTabUI(QtWidgets.QWidget):
+	switch_window = QtCore.pyqtSignal()
+
+	def changeToGenerateDataWindow(self):
+		self.switch_window.emit()
+
+	def __init__(self):
+		super().__init__()
 		self.layout = QtWidgets.QVBoxLayout()
 		self.textInputRow = QtWidgets.QHBoxLayout()
 		self.chooseFilesRow = QtWidgets.QHBoxLayout()
@@ -165,21 +194,7 @@ class trainTestWindow(QtWidgets.QWidget):
 		self.layout.addLayout(self.chooseFilesRow)
 		self.layout.addWidget(self.invalidFileTypeLabel)
 
-		self.testTab.setLayout(self.layout)
-		return self.testTab
-
-	def chooseTrainModel(self):
-		self.chooseModelPopup = chooseModelWindow()
-		self.chooseModelPopup.show()
-
-	def columnOrHeaderCheck(self):
-		global trainColumn
-		if(trainColumn):
-			trainColumn = False
-		else:
-			trainColumn = True
-		self.columnCheck.setChecked(trainColumn)
-		self.headerCheck.setChecked(not trainColumn)
+		self.setLayout(self.layout)
 
 	def chooseTestModel(self):
 		fileName = filedialog.askopenfilename()
@@ -198,6 +213,17 @@ class trainTestWindow(QtWidgets.QWidget):
 			self.singleFileButton.setDisabled(False)
 			self.allFilesButton.setDisabled(False)
 
+	def useAllFiles(self):
+		#showConsole()
+		os.chdir(os.path.dirname(os.path.abspath(__file__)))
+		for fileName in os.listdir("SREOs/CSVs/"):
+			print(fileName)
+			print('------------------------------------------------------------')
+			data = ExtractSREO.extractSREO("SREOs/CSVs/" + fileName)
+			print(data.to_string())
+			ExtractSREO.testConfidence(True, data)
+			print('------------------------------------------------------------')
+	
 	def useExistingFile(self):
 		fileName = filedialog.askopenfilenames()
 		if type(fileName) is tuple:
@@ -206,7 +232,7 @@ class trainTestWindow(QtWidgets.QWidget):
 				fileType = file.split(".")[1]
 				if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
 					self.invaldFileTypeLabel.hide()
-					data = ExtractSREO.extractSREO(trainColumn, file)
+					data = ExtractSREO.extractSREO(file)
 					ExtractSREO.testConfidence(True, data)
 					print()
 				else:
@@ -215,27 +241,55 @@ class trainTestWindow(QtWidgets.QWidget):
 		else:
 			fileType = fileName.split(".")[1]
 			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
-				data = ExtractSREO.extractSREO(trainColumn, fileName)
+				data = ExtractSREO.extractSREO(fileName)
 				ExtractSREO.testConfidence(True, data)
 			else:
 				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 				self.invalidFileTypeLabel.show()
 
-	def useAllFiles(self):
-		#showConsole()
-		os.chdir(os.path.dirname(os.path.abspath(__file__)))
-		for fileName in os.listdir("SREOs/CSVs/"):
-			print(fileName)
-			print('------------------------------------------------------------')
-			data = ExtractSREO.extractSREO(True, "SREOs/CSVs/" + fileName)
-			print(data.to_string())
-			ExtractSREO.testConfidence(True, data)
-			print('------------------------------------------------------------')
+class extractTabUI(QtWidgets.QWidget):
+	def __init__(self):
+		super().__init__()
+		self.layout = QtWidgets.QHBoxLayout()
+		self.leftColumn = QtWidgets.QVBoxLayout()
+		self.rightColumn = QtWidgets.QVBoxLayout()
+		self.backNextButtonsRow = QtWidgets.QHBoxLayout()
 
+		self.table = QtWidgets.QTableWidget()
+		self.chooseModelButton = QtWidgets.QPushButton("Choose Model")
+		self.chooseFileButton = QtWidgets.QPushButton("Choose File(s)")
+		self.chooseFileButton.clicked.connect(self.extractFile)
+		self.backButton = QtWidgets.QPushButton("Back")
+		self.backNextButtonsRow.addWidget(self.backButton)
+		self.nextButton = QtWidgets.QPushButton("Next")
+		self.backNextButtonsRow.addWidget(self.nextButton)
+
+		self.layout.addLayout(self.leftColumn)
+		self.layout.addLayout(self.rightColumn)
+		self.rightColumn.addWidget(self.table)
+		self.rightColumn.addLayout(self.backNextButtonsRow)
+		self.leftColumn.addWidget(self.chooseFileButton)
+		
+		self.setLayout(self.layout)
+
+	def extractFile(self):
+		fileName = filedialog.askopenfilename()
+		df = ExtractSREO.extractSREO(fileName)
+		print(df)
+		self.table.setColumnCount(len(df.columns))
+		self.table.setRowCount(len(df.columns[1]))
+		print(str(len(df.columns)) + " " + str(len(df.columns[1])))
+		for i in range(len(df.columns)):
+			cellIndex = 0
+			for column in df.columns:
+				item = QtWidgets.QTableWidgetItem(str(column[cellIndex]))
+				self.table.setItem(i,cellIndex,item)
+				cellIndex += 1
+			
 
 class generateColumnDataWindow(QtWidgets.QWidget):
-	
 	switch_window = QtCore.pyqtSignal()
+
 	def changeToTrainTestWindow(self):
 		self.switch_window.emit()
 
@@ -397,7 +451,7 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 		self.toggleAllButton.clicked.connect(self.toggleAll)
 
 		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
-		self.generateDataButton.clicked.connect(self.generateData)
+		self.generateDataButton.clicked.connect(self.generateDataButtonPressed)
 		self.generateDataButton.setDisabled(True)
 
 		self.cancelButton = QtWidgets.QPushButton("Cancel")
@@ -501,7 +555,7 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 						self.incrementProgressBar(1)
 		trainingData.to_csv(fileName, index=False)
 		self.doneButton.setDisabled(False)
-	
+
 class generateHeaderDataWindow(QtWidgets.QWidget):
 	switch_window = QtCore.pyqtSignal()
 
