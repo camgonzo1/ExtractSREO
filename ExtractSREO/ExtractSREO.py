@@ -40,34 +40,39 @@ def getModelName():
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
 # Return: sreoData (pandas DataFrame) --> conatins data from file
 # Description: Pulls data from csv or excel sheet and stores in pandas dataframe
-def extractSREO(curFilePath):
-    # Determines File Type 
-    splitPath = curFilePath.split(".")
-    fileType = splitPath[len(splitPath) - 1]
+def extractSREO(trainColumn, curFilePath):
+	# Determines File Type 
+	path = curFilePath.split("/")
+	print(path[len(path) - 1]) 
+	splitPath = curFilePath.split(".")
+	fileType = splitPath[len(splitPath) - 1]
 
-    # Reads Data into Pandas DataFrame
-    if fileType not in PERMITTED_FORMATS:
-        raise TypeError("Error: Please input compatible file type!")
-    elif fileType == "csv":
-        #sreoData = pd.read_csv(curFilePath, header=None)
-        sreoData = pd.read_csv(curFilePath, header=None, skiprows=1)
-    elif fileType == "xlsx":
-        sreoData = pd.read_excel(curFilePath, header=None)
+	# Reads Data into Pandas DataFrame
+	if fileType not in PERMITTED_FORMATS:
+		raise TypeError("Error: Please input compatible file type!")
+	elif fileType == "csv":
+		sreoData = pd.read_csv(curFilePath, header=None)
+	elif fileType == "xlsx":
+		sreoData = pd.read_excel(curFilePath, header=None)
+	elif fileType == "pdf": # still in trial stage (unreliable)
+		tables = camelot.read_pdf(curFilePath, flavor='stream', row_tol=7)
+		tables.export(curFilePath, f='csv', compress=True)
+		sreoData = tables[0].df
 
-    # Removes Uneccessary Information from DataFrame and Formats Correctly
-    sreoData.replace('\n', '', regex=True, inplace=True)
-    sreoData.mask(sreoData == '', inplace=True)
-    sreoData.dropna(axis=ROW, how='all', inplace=True)
-    sreoData.dropna(axis=COLUMN, how='all', inplace=True)
-    sreoData = sreoData.reset_index(drop=True).rename_axis(None, axis=COLUMN)
+	# Removes Uneccessary Information from DataFrame and Formats Correctly
+	sreoData.replace('\n', '', regex=True, inplace=True)
+	sreoData.mask(sreoData == '', inplace=True)
+	sreoData.dropna(axis=ROW, how='all', inplace=True)
+	sreoData.dropna(axis=COLUMN, how='all', inplace=True)
+	sreoData = sreoData.reset_index(drop=True).rename_axis(None, axis=COLUMN)
 
-    # Reformat DataFrame to Apply Header
-    index = getHeaderIndex(sreoData)
-    if index == -1:
-        raise IndexError("Error Downloading File: Please retry download or use different file format!")
-    sreoData.columns = [sreoData.iloc[index]]
-    sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
-    return sreoData
+	# Reformat DataFrame to Apply Header
+	index = getHeaderIndex(sreoData)
+	if index == -1:
+		raise IndexError("Error Downloading File: Please retry download or use different file format!")
+	sreoData.columns = [sreoData.iloc[index]]
+	sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
+	return sreoData
 
 # Name: getHeaderIndex()
 # Parameters: searchData (pandas DataFrame) --> conatins unfiltered data from an SREO
@@ -75,11 +80,11 @@ def extractSREO(curFilePath):
 #         -1 (int) --> Error: No header row found
 # Description: Searches Data for Header Row
 def getHeaderIndex(searchData):
-    for i in range(len(searchData.index)):
-        rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
-        if testInput(HEADER_MODEL, HEADER_ANALYSIS, rowString, NO_PRINT) == "Valid":
-            return i
-    return -1
+	for i in range(len(searchData.index)):
+		rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
+		if testInput(False, HEADER_MODEL, rowString, NO_PRINT) == "Valid":
+			return i
+	return -1
 
 # Name: fillTemplate()
 # Parameters: sreoDataFrame (pandas DataFrame) --> conatins semi-filtered data from an SREO
@@ -143,38 +148,6 @@ CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
 # Parameters: data (pandas DataFrame) --> conatins data from SREO file
 # Return: None --> prints to screen and updates global variables directly
 # Description: This function test how well the data AI program would be categorizing into the template
-<<<<<<< HEAD
-def testConfidence(data):
-    global totalCorrect
-    global totalNum
-    compare = pd.read_excel("Header Data/DataGroups.xlsx")
-    correct = 0
-    COLUMN_LABELS = {1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
-                     7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount",
-                     12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
-                     18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
-    confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
-    for column in data.columns:
-        #myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
-        myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:2]).str.cat(sep=' ')
-        guess = outputConfidence(modelName, DATA_ANALYSIS, myString, NO_PRINT)
-        labelIndex = get_column_label(guess[0])
-        if confidences[labelIndex - 1] < guess[1]:
-            confidences[labelIndex - 1] = guess[1]
-            columnHeaders[labelIndex - 1] = str(column[0])
-        if guess[0] in compare.columns:
-            if str(column[0]) in compare[guess[0]].apply(str).str.cat(sep=' '):
-                correct += 1
-        print(str(column[0]) + ' --> ' + guess[0] + ' ' + str(guess[1]))
-    print("----------------- Highest Values --------------------")
-    for i in range(len(COLUMN_LABELS)):
-        print(columnHeaders[i] + " --> " + COLUMN_LABELS[i + 1] + " " + str(confidences[i]))
-    totalCorrect += correct
-    totalNum += getNumLabels()
-    print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
-    print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
-=======
 def testConfidence(trainColumn, data):
 	global totalCorrect
 	global totalNum
@@ -205,48 +178,46 @@ def testConfidence(trainColumn, data):
 	totalNum += getNumLabels()
 	print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/getNumLabels())))
 	print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
->>>>>>> parent of 3fca60e (UI tweaks)
 
 # Name: runTests()
 # Parameters:None
 # Return: None --> prints to screen and updates global variables directly
 # Description: This function allows the user to create models and test said models against SREOs
-def runTests():
-    global modelName
-    columnOrHeader = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit, 6 to test CSV Folder: "))
-    while(int(columnOrHeader) != 5):
-        if columnOrHeader == 4:
-            modelName = input("Model Name: ")
-            if input("Test All Files (Y/N): ") == 'Y':
-                for file in FILES:
-                    print('------------------------------------------------------------')
-                    data = extractSREO(file)
-                    print(data.to_string())
-                    testConfidence(data)
-                    print('------------------------------------------------------------')
-                print("Total Accuracy of Trained Categories = " + str("{:.2%}".format(totalCorrect/totalNum)))
-            elif input("Test Current File (Y/N): ") == 'Y':
-                print('------------------------------------------------------------')
-                data = extractSREO(CUR_FILE)
-                print(data)
-                testConfidence(data)
-                print('------------------------------------------------------------')
-        elif columnOrHeader == 3:
-            columnOrHeader = int(input("1 for Column model, 2 for Header model: "))
-            modelName = input("Model Name: ")
-            print(outputConfidence(modelName, columnOrHeader, input("Input test string: "), 1))
-        elif columnOrHeader == 6:
-            modelName = input("Model Name: ")
-            testOnSolvedCSV()
-        else:
-            if(input("Create new dataset (Y/N) ") == "Y"): 
-                numRepeats = input("Number of Repeats: ")
-                createData(columnOrHeader, 'trainingData.csv', int(numRepeats))
-                trainModel(columnOrHeader, "trainingData.csv")
-            elif(input("1 to generate data 2 to use existing files: ") == "2"):
-                trainModel(columnOrHeader, "extractedTrainingData.csv")
-            else: trainModel(columnOrHeader, "trainingData.csv")
-        columnOrHeader = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit, 6 to test CSV Folder: "))
+def runTests(trainColumn):
+	global modelName
+	startOption = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
+	if startOption == 2: trainColumn = False
+	while(startOption != 5):
+		if startOption == 4:
+			modelName = "Model/" + input("Model Name: ")
+			if input("Test All Files (Y/N): ") == 'Y':
+				for file in FILES:
+					print('------------------------------------------------------------')
+					data = extractSREO(trainColumn, file)
+					print(data.to_string())
+					testConfidence(trainColumn, data)
+					print('------------------------------------------------------------')
+				print("Total Accuracy of Trained Categories = " + str("{:.2%}".format(totalCorrect/totalNum)))
+			elif input("Test Current File (Y/N): ") == 'Y':
+				print('------------------------------------------------------------')
+				data = extractSREO(trainColumn, CUR_FILE)
+				print(data)
+				testConfidence(trainColumn, data)
+				print('------------------------------------------------------------')
+		elif startOption == 3:
+			startOption = int(input("1 for Column model, 2 for Header model: "))
+			modelName = input("Model Name: ")
+			print(outputConfidence(trainColumn, modelName, startOption, input("Input test string: "), 1))
+		else:
+			if(input("Create new dataset (Y/N) ") == "Y"): 
+				numRepeats = input("Number of Repeats per Category: ")
+				createData(trainColumn, 'trainingData.csv', int(numRepeats))
+				trainModel(trainColumn, "trainingData.csv")
+			elif(input("1 to use generated data 2 to use existing files: ") == "2"):
+				#trainOnCSV()
+				trainModel(trainColumn, "extractedTrainingData.csv")
+			else: trainModel(trainColumn, "trainingData.csv")
+		startOption = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
 
 FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", 
 			 "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
@@ -275,7 +246,4 @@ def testOnSolvedCSV():
     print("-----------------------------------------------------------------------------------------------")
     print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
 
-if __name__ == "__main__":
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    runTests()
-    
+	
