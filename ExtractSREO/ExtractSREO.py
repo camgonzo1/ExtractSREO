@@ -162,7 +162,7 @@ def testConfidence(trainColumn, data):
 	columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 	for column in data.columns:
 		#myString = str(column[0]) + " " + (data[column]).apply(str).str.cat(sep=' ')
-		myString = str(column[0]) + " " + ((data[column]).dropna().apply(str)[:2]).str.cat(sep=' ')
+		myString = str(column[0])
 		guess = outputConfidence(trainColumn, modelName, myString, NO_PRINT)
 		labelIndex = get_column_label(guess[0])
 		if confidences[labelIndex - 1] < guess[1]:
