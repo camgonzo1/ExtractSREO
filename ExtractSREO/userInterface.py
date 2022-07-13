@@ -47,6 +47,68 @@ class chooseModelWindow(QtWidgets.QWidget):
 		controller.showTrainTestWindow()
 		self.close()
 
+class createBetterModelPopup(QtWidgets.QWidget):
+	def __init__(self):
+		super().__init__()
+		self.layout = QtWidgets.QVBoxLayout()
+		self.buttonRow = QtWidgets.QHBoxLayout()
+		self.topLabel = QtWidgets.QLabel("Make model with certain errors or make model better than current?")
+		self.certainErrorsButton = QtWidgets.QPushButton("Certain Errors")
+		self.certainErrorsButton.clicked.connect(self.certainErrorsButtonPressed)
+		self.betterThanCurrentButton = QtWidgets.QPushButton("Better Than Current")
+		self.betterThanCurrentButton.clicked.connect(self.betterThanCurrentButtonPressed)
+
+		self.layout.addWidget(self.topLabel)
+		self.buttonRow.addWidget(self.certainErrorsButton)
+		self.buttonRow.addWidget(self.betterThanCurrentButton)
+		self.layout.addLayout(self.buttonRow)
+		
+		self.setLayout(self.layout)
+
+	def certainErrorsButtonPressed(self):
+		newLayout = QtWidgets.QHBoxLayout()
+		self.numberOfErrorsLabel = QtWidgets.QLabel("Number of errors to beat:")
+		self.numberOfErrorsInput = QtWidgets.QLineEdit()
+		self.generateButton = QtWidgets.QPushButton("Generate")
+		self.generateButton.clicked.connect(self.generateButtonPressed)
+		newLayout.addWidget(self.numberOfErrorsLabel)
+		newLayout.addWidget(self.numberOfErrorsInput)
+		newLayout.addWidget(self.generateButton)
+
+		self.layout.addLayout(newLayout)
+
+	def generateButtonPressed(self):
+		self.goal = int(self.numberOfErrorsInput.text())
+		self.createModel()
+
+	def betterThanCurrentButtonPressed(self):
+		ExtractSREO.setModelName(filedialog.askopenfilename().split(".")[0])
+		self.goal = ExtractSREO.testOnSolvedCSV()
+		self.createModel
+
+	def createModel(self):
+		trainingData = pd.DataFrame(columns=['label','text'])
+		count = 1
+		numReps = random.randint(1, 100) * 100
+		modelName = "newTrial1-" + str(numReps)
+		ExtractSREO.setModelName(modelName)
+		for i in range(numReps):
+			randVal = random.randint(0,23)
+			trainingData = pd.concat([trainingData, generateData(randVal)],ignore_index=True)
+		trainModel.trainModel(True, True, modelName,"trainingData.csv")
+		while ExtractSREO.testOnSolvedCSV() < self.goal:
+			print("----------------------------------------------------------------------------------")
+			numReps = random.randint(10, 100) * 100
+			modelName = "newTrial" + str(count) + "-" + str(numReps)
+			ExtractSREO.setModelName(modelName)
+			for i in range(numReps):
+				randVal = random.randint(0,23)
+				trainingData = pd.concat([trainingData, generateData(randVal)],ignore_index=True)
+			trainModel.trainModel(True,True,modelName,"trainingData.csv")
+			count += 1
+		print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		print("New Best Model = " + modelName)
+
 class newModelPopup(QtWidgets.QWidget):
 	#closeWindows = QtCore.pyqtSignal()
 	def __init__(self):
@@ -123,6 +185,9 @@ class trainTabUI(QtWidgets.QWidget):
 		self.oldDatasetButton = QtWidgets.QPushButton("Use Existing Dataset")
 		self.buttonRow.addWidget(self.oldDatasetButton)
 		self.oldDatasetButton.clicked.connect(self.chooseTrainModel)
+		self.createBetterModelButton = QtWidgets.QPushButton("Experimental Data Eval")
+		self.createBetterModelButton.clicked.connect(self.createBetterModelButtonPressed)
+		self.buttonRow.addWidget(self.createBetterModelButton)
 
 		self.trainModelButton = QtWidgets.QPushButton("Train Model")
 
@@ -131,6 +196,10 @@ class trainTabUI(QtWidgets.QWidget):
 		self.layout.addLayout(self.buttonRow)
 
 		self.setLayout(self.layout)
+
+	def createBetterModelButtonPressed(self):
+		self.betterModelPopup = createBetterModelPopup()
+		self.betterModelPopup.show()
 
 	def chooseTrainModel(self):
 		self.chooseModelPopup = chooseModelWindow()
@@ -187,6 +256,11 @@ class testTabUI(QtWidgets.QWidget):
 		self.allFilesButton.setDisabled(True)
 		self.allFilesButton.clicked.connect(self.useAllFiles)
 
+		self.testOnSolvedCSVButton = QtWidgets.QPushButton("Test on Solved CSV")
+		self.chooseFilesRow.addWidget(self.testOnSolvedCSVButton)
+		self.testOnSolvedCSVButton.setDisabled(True)
+		self.testOnSolvedCSVButton.clicked.connect(ExtractSREO.testOnSolvedCSV)
+
 		self.layout.addLayout(self.topRow)
 		self.layout.addWidget(self.testText)
 		self.layout.addLayout(self.textInputRow)
@@ -195,10 +269,6 @@ class testTabUI(QtWidgets.QWidget):
 		self.layout.addWidget(self.invalidFileTypeLabel)
 
 		self.setLayout(self.layout)
-
-	def chooseTrainModel(self):
-		self.chooseModelPopup = chooseModelWindow()
-		self.chooseModelPopup.show()
 
 	def columnOrHeaderCheck(self):
 		global trainColumn
@@ -225,6 +295,7 @@ class testTabUI(QtWidgets.QWidget):
 			self.testInputButton.setDisabled(False)
 			self.singleFileButton.setDisabled(False)
 			self.allFilesButton.setDisabled(False)
+			self.testOnSolvedCSVButton.setDisabled(False)
 
 	def useAllFiles(self):
 		#showConsole()

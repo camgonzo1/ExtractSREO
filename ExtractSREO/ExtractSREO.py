@@ -90,7 +90,7 @@ def getHeaderIndex(searchData):
 # Description: Takes in a nonstandardized SREO and analyzes using a NLP model to restrusture 
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
-def fillTemplate(sreoDataFrame):
+def fillTemplate(sreoDataFrame, newName):
     sreoTemplate = pd.DataFrame(columns=['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index'])
     bestIndex = {'Property Name': [-1, 0],
                  'Address': [-1, 0],
@@ -136,7 +136,9 @@ def fillTemplate(sreoDataFrame):
 #              data in a standardized model which it exports in a .xlsx format following a 
 #              notification to the abstraction team.
 def standardizeSREO(sreoFilePath):
-    return fillTemplate(extractSREO(sreoFilePath))
+    fileName = sreoFilePath.split("/")
+    return fillTemplate(extractSREO(sreoFilePath), fileName[len(fileName) - 1].split(".")[0])
+
 
 ######################## For Testing #################################
 FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
@@ -217,28 +219,89 @@ def runTests(trainColumn):
 			else: trainModel(trainColumn, "trainingData.csv")
 		startOption = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
 
+
+COLUMN_CHECK = ['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index']
 def testOnSolvedCSV():
-    totalCorrect = 0
-    totalNum = 0
-    for file in os.listdir("SREOs/CSVs/"):
-        curCSV = pd.read_csv("SREOs/CSVs/" + file, header=None)
-        answerRow = ((curCSV.iloc[0])).apply(str)
+    totalCorrect, totalNum = 0, 0
+    missingDict, noMatchDict, unnecessaryColDict = {}, {}, {}
+    for file in os.listdir("SREOs/CSVs"):
         testFrame = standardizeSREO("SREOs/CSVs/" + file)
         testFrame.dropna(axis=COLUMN, how='all', inplace=True)
-        correct, total = 0, 0
-        for i in range(len(answerRow)):
-            if answerRow[i] != "nan":
-                total += 1
-            if answerRow[i] in testFrame.columns:
-                correct += 1
-        totalCorrect += correct
-        totalNum += total
-        print()
+
+        answerCSV = pd.read_csv("SREOs/CSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN)
+        missing = []
+        for column in answerCSV.columns:
+            if column not in COLUMN_CHECK:
+                answerCSV.drop(columns=column, inplace=True)
+            else:
+                missing.append(column)
+
+        numerator, denominator = 0, 0
+        unnecessaryCol, noMatch = [], []
+        for column in testFrame:
+            if column in answerCSV.columns:
+                if (testFrame[column]).dropna().apply(str).str.cat(sep=' ') == (answerCSV[column]).dropna().apply(str).str.cat(sep=' '):
+                    numerator += 1
+                else:
+                    noMatch.append(column)
+                missing.remove(column)
+            else:
+                denominator += 1
+                unnecessaryCol.append(column)
+        denominator += len(answerCSV.columns)
+        
+        totalCorrect += numerator
+        totalNum += denominator
+
         print(file)
-        print("Required Headers Accuracy --> " + str("{:.2%}".format(correct/total)))
-        print("Total Number of Headers Accuracy --> " + str("{:.2%}".format(len(testFrame.columns)/total)))
-        print()
-    print("-----------------------------------------------------------------------------------------------")
+        print("Required Headers Accuracy --> " + str("{:.2%}".format(numerator/denominator)))
+        if len(missing) != 0:
+            print()
+            print("Headers Missing:")
+            for elem in missing:
+                print(elem)
+                if elem in missingDict:
+                    missingDict[elem] += 1
+                else:
+                    missingDict[elem] = 1
+        if len(noMatch) != 0:
+            print()
+            print("Correct Header w/ Incorrectly Matched Data:")
+            for elem in noMatch:
+                print(elem)
+                if elem in noMatchDict:
+                    noMatchDict[elem] += 1
+                else:
+                    noMatchDict[elem] = 1
+        if len(unnecessaryCol) != 0:
+            print()
+            print("Unnecessary Incorrect Header:")
+            for elem in unnecessaryCol:
+                print(elem)
+                if elem in unnecessaryColDict:
+                    unnecessaryColDict[elem] += 1
+                else:
+                    unnecessaryColDict[elem] = 1
+        print("----------------------------------------------------------------------------------------")
+    print("----------------------------------------------------------------------------------------")
+    totalErrors = 0
+    print("Headers Missing:")
+    for elem in missingDict:
+        print(elem + " = " + str(missingDict[elem]))
+        totalErrors += missingDict[elem]
+    print()
+    print("Correct Header w/ Incorrectly Matched Data:")
+    for elem in noMatchDict:
+        print(elem + " = " + str(noMatchDict[elem]))
+        totalErrors += noMatchDict[elem]
+    print()
+    print("Unnecessary Incorrect Header:")
+    for elem in unnecessaryColDict:
+        print(elem + " = " + str(unnecessaryColDict[elem]))
+        totalErrors += unnecessaryColDict[elem]
+    print()
     print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
+    print("Total Errors --> " + str(totalErrors))
+    return totalErrors
 
 	
