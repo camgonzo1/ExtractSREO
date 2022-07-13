@@ -13,10 +13,10 @@ from torchtext.vocab import build_vocab_from_iterator
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines whether the user is using CPU or GPU processing
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
-emsize = 256
+emsize = 512
 EPOCHS = 5
-LR = 10 #The learning rate of the model
-BATCH_SIZE = 16 #Number of data points in each batch
+LR = 1 #The learning rate of the model
+BATCH_SIZE = 32 #Number of data points in each batch
 vocab = None
 text_pipeline = None
 label_pipeline = None
@@ -30,7 +30,6 @@ HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 # Gets Number of Labels
 def getNumLabels():
 	 return len(COLUMN_LABELS) - 1
-
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
@@ -65,7 +64,7 @@ class TextClassificationModel(nn.Module):
 	def __init__(self, vocab_size, embed_dim, num_class):
 		super().__init__()
 		self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=True) #The model's embedding bag
-		#self.fc1 = nn.Linear(512, 256)
+		self.fc1 = nn.Linear(512, 256)
 		self.fc2 = nn.Linear(256, 128)
 		self.fc3 = nn.Linear(128, 64)
 		self.fc4 = nn.Linear(64, 16)
@@ -76,8 +75,8 @@ class TextClassificationModel(nn.Module):
 	def init_weights(self):
 		initrange = 0.5
 		self.embedding.weight.data.uniform_(-initrange,initrange)
-		#self.fc1.weight.data.uniform_(-initrange,initrange)
-		#self.fc1.bias.data.zero_()
+		self.fc1.weight.data.uniform_(-initrange,initrange)
+		self.fc1.bias.data.zero_()
 		self.fc2.weight.data.uniform_(-initrange,initrange)
 		self.fc2.bias.data.zero_()
 		self.fc3.weight.data.uniform_(-initrange,initrange)
@@ -90,8 +89,8 @@ class TextClassificationModel(nn.Module):
 	#Applies the model to inputted text to achieve a result
 	def forward(self, text, offsets):
 		embedded = self.embedding(text, offsets)
-		#x = F.relu(self.fc1(embedded))
-		x = F.relu(self.fc2(embedded))
+		x = F.relu(self.fc1(embedded))
+		x = F.relu(self.fc2(x))
 		x = F.relu(self.fc3(x))
 		x = F.relu(self.fc4(x))
 		x = self.fc5(x)
@@ -236,7 +235,7 @@ def outputConfidence(testColumn, modelName, textInput, print):
 		if maxVal < probs[0][i]:
 			maxVal = probs[0][i]
 			maxIndex = i
-	if maxVal > .95:
+	if maxVal > .9:
 		return labels[maxIndex], maxVal
 	else: return "N/A", maxVal
 

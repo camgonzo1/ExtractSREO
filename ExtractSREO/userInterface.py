@@ -96,7 +96,7 @@ class createBetterModelPopup(QtWidgets.QWidget):
 			randVal = random.randint(0,23)
 			trainingData = pd.concat([trainingData, generateData(randVal)],ignore_index=True)
 		trainModel.trainModel(True, True, modelName,"trainingData.csv")
-		while ExtractSREO.testOnSolvedCSV() < self.goal:
+		while ExtractSREO.testOnSolvedCSV() >= self.goal:
 			print("----------------------------------------------------------------------------------")
 			numReps = random.randint(10, 100) * 100
 			modelName = "newTrial" + str(count) + "-" + str(numReps)

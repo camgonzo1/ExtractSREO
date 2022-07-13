@@ -21,6 +21,7 @@ warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
 ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
 PERMITTED_FORMATS = ["csv", "xlsx"]
 HEADER_MODEL, DATA_MODEL = 'Model/headerTest', '' # Trained AI Models for Data Interpretation
+DATA_ANALYSIS, HEADER_ANALYSIS = 1, 2 
 NO_PRINT, PRINT = 0, 1
 modelName = None
 totalCorrect, totalNum = 0, 0
@@ -29,10 +30,10 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 def setModelName(name):
-    global modelName
-    modelName = name
+	global modelName
+	modelName = name
 def getModelName():
-    return modelName
+	return modelName
 
 # Name: extractSREO()
 # Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
@@ -91,43 +92,43 @@ def getHeaderIndex(searchData):
 #              data in a standardized model which it exports in a .xlsx format fllowing a 
 #              notification to the abstraction team. 
 def fillTemplate(sreoDataFrame, newName):
-    sreoTemplate = pd.DataFrame(columns=['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index'])
-    bestIndex = {'Property Name': [-1, 0],
-                 'Address': [-1, 0],
-                 'City': [-1, 0],
-                 'State':[-1, 0],
-                 'Property Type': [-1, 0],
-                 'Units': [-1, 0],
-                 'Square Feet': [-1, 0],
-                 'Occupancy': [-1, 0],
-                 'Acquisition Date': [-1, 0],
-                 'Lender': [-1, 0],
-                 'Maturity Date': [-1, 0],
-                 'Loan Amount': [-1, 0],
-                 'Current Balance': [-1, 0],
-                 'Debt Service': [-1, 0],
-                 'NOI': [-1, 0],
-                 'DSCR': [-1, 0],
-                 'Market Value': [-1, 0],
-                 'LTV': [-1, 0],
-                 'Amort Start Date': [-1, 0],
-                 'Rate Type': [-1, 0],
-                 'All-In Rate': [-1, 0],
-                 'Spread': [-1, 0],
-                 'Index': [-1, 0]}
-    for dataColumn in sreoDataFrame.columns:
-        guess = outputConfidence(True, modelName, str(dataColumn[0]), NO_PRINT)
-        if guess[0] != "N/A" and guess[0] != "Invalid" and guess[1] > bestIndex[guess[0]][1]:
-           bestIndex[guess[0]][0] = str(dataColumn[0])
-           bestIndex[guess[0]][1] = guess[1]
+	sreoTemplate = pd.DataFrame(columns=['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index'])
+	bestIndex = {'Property Name': [-1, 0],
+				 'Address': [-1, 0],
+				 'City': [-1, 0],
+				 'State':[-1, 0],
+				 'Property Type': [-1, 0],
+				 'Units': [-1, 0],
+				 'Square Feet': [-1, 0],
+				 'Occupancy': [-1, 0],
+				 'Acquisition Date': [-1, 0],
+				 'Lender': [-1, 0],
+				 'Maturity Date': [-1, 0],
+				 'Loan Amount': [-1, 0],
+				 'Current Balance': [-1, 0],
+				 'Debt Service': [-1, 0],
+				 'NOI': [-1, 0],
+				 'DSCR': [-1, 0],
+				 'Market Value': [-1, 0],
+				 'LTV': [-1, 0],
+				 'Amort Start Date': [-1, 0],
+				 'Rate Type': [-1, 0],
+				 'All-In Rate': [-1, 0],
+				 'Spread': [-1, 0],
+				 'Index': [-1, 0]}
+	for dataColumn in sreoDataFrame.columns:
+		guess = outputConfidence(modelName, DATA_ANALYSIS, str(dataColumn[0]), NO_PRINT)
+		if guess[0] != "N/A" and guess[0] != "Invalid" and guess[1] > bestIndex[guess[0]][1]:
+			bestIndex[guess[0]][0] = str(dataColumn[0])
+			bestIndex[guess[0]][1] = guess[1]
 
-    for entry in bestIndex:
-        if bestIndex[entry][0] != -1:
-            sreoTemplate[entry] = sreoDataFrame[bestIndex[entry][0]]
+	for entry in bestIndex:
+		if bestIndex[entry][0] != -1:
+			sreoTemplate[entry] = sreoDataFrame[bestIndex[entry][0]]
 
-    Workbook().save(filename = "Standardized-" + newName + ".xlsx")
-    sreoTemplate.to_excel("Standardized-" + newName + ".xlsx", index=False)
-    return sreoTemplate
+	Workbook().save(filename = "Standardized-" + newName + ".xlsx")
+	sreoTemplate.to_excel("Standardized-" + newName + ".xlsx", index=False)
+	return sreoTemplate
 
 # Name: standardizeSREO()
 # Parameters: sreoFilePath (string) --> conatins the current path to the desired file for importation
@@ -136,8 +137,8 @@ def fillTemplate(sreoDataFrame, newName):
 #              data in a standardized model which it exports in a .xlsx format following a 
 #              notification to the abstraction team.
 def standardizeSREO(sreoFilePath):
-    fileName = sreoFilePath.split("/")
-    return fillTemplate(extractSREO(sreoFilePath), fileName[len(fileName) - 1].split(".")[0])
+	fileName = sreoFilePath.split("/")
+	return fillTemplate(extractSREO(sreoFilePath), fileName[len(fileName) - 1].split(".")[0])
 
 
 ######################## For Testing #################################
@@ -185,7 +186,7 @@ def testConfidence(trainColumn, data):
 # Description: This function allows the user to create models and test said models against SREOs
 def runTests(trainColumn):
 	global modelName
-	startOption = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
+	startOption = int(input("1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit, 6 to test CSV Folder, 7 for experimental data eval creator: "))
 	if startOption == 2: trainColumn = False
 	while(startOption != 5):
 		if startOption == 4:
@@ -208,6 +209,30 @@ def runTests(trainColumn):
 			startOption = int(input("1 for Column model, 2 for Header model: "))
 			modelName = input("Model Name: ")
 			print(outputConfidence(trainColumn, modelName, startOption, input("Input test string: "), 1))
+		elif startOption == 6:
+			modelName = input("Model Name: ")
+			testOnSolvedCSV()
+		elif startOption == 7:
+			typeAnalysis = int(input("Insert 2 to make model with certain errors or 1 to make model better than current: "))
+			if typeAnalysis == 1:
+				modelName = input("Insert Best Model: ")
+				goal = testOnSolvedCSV()
+			elif typeAnalysis == 2:
+				goal = int(input("Number of Errors to Beat: "))
+			count = 1
+			numReps = random.randint(1, 100) * 100
+			modelName = "newTrial1-" + str(numReps)
+			createData(1, 'trainingData.csv', numReps)
+			trainModel(1, "trainingData.csv", auto=True, modelName=modelName)
+			while testOnSolvedCSV() >= goal:
+				print("----------------------------------------------------------------------------------")
+				numReps = random.randint(40, 100) * 100
+				modelName = "newTrial" + str(count) + "-" + str(numReps)
+				createData(1, 'trainingData.csv', numReps)
+				trainModel(1, "trainingData.csv", auto=True, modelName=modelName)
+				count += 1
+			print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			print("New Best Model = " + modelName)
 		else:
 			if(input("Create new dataset (Y/N) ") == "Y"): 
 				numRepeats = input("Number of Repeats per Category: ")
@@ -218,90 +243,100 @@ def runTests(trainColumn):
 				trainModel(trainColumn, "extractedTrainingData.csv")
 			else: trainModel(trainColumn, "trainingData.csv")
 		startOption = int(input("\n1 for Column training, 2 for Header training, 3 for testing existing model, 4 to test SREOs, 5 to quit: "))
+		
 
-
+FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv", "David T. Matheny and Susan Matheny - RE Schedule 5.19.21.csv", 
+			 "Mark Johnson - RE Schedule September 2020.csv", "NorthBridge.csv", "RPA REO Schedule - 01.31.2022.csv", "Simpson REO Schedule (12-31-21).csv",
+			 "SimpsonHousingLLLP-DebtSummary-2021-09-07.csv", "SP Inc., SP II and SP III - RE Schedule 11.20.2019.csv", "SREO Export Template v2 - final.csv", "Stoneweg.csv", "TCG - 2022 Fund XI REO Schedule.csv"]
+#FILE_LIST = ["2021 12 14_MWest_Debt Schedule.csv", "2022 Lawrence S Connor REO Schedule.csv", "AP - REO excel 202112.csv", "Copy of Carlos & Vera Koo - RE Schedule - March 2022 v.2.csv"]
+#FILE_LIST = ["TCG - 2022 Fund XI REO Schedule.csv"]
 COLUMN_CHECK = ['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index']
 def testOnSolvedCSV():
-    totalCorrect, totalNum = 0, 0
-    missingDict, noMatchDict, unnecessaryColDict = {}, {}, {}
-    for file in os.listdir("SREOs/CSVs"):
-        testFrame = standardizeSREO("SREOs/CSVs/" + file)
-        testFrame.dropna(axis=COLUMN, how='all', inplace=True)
+	totalCorrect, totalNum = 0, 0
+	missingDict, noMatchDict, unnecessaryColDict = {}, {}, {}
+	for file in FILE_LIST:
+		testFrame = standardizeSREO("SREOs/CSVs/" + file)
+		testFrame.dropna(axis=COLUMN, how='all', inplace=True)
 
-        answerCSV = pd.read_csv("SREOs/CSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN)
-        missing = []
-        for column in answerCSV.columns:
-            if column not in COLUMN_CHECK:
-                answerCSV.drop(columns=column, inplace=True)
-            else:
-                missing.append(column)
+		answerCSV = pd.read_csv("SREOs/CSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN).replace('\n', '', regex=True)
+		missing = []
+		for column in answerCSV.columns:
+			if column not in COLUMN_CHECK:
+				answerCSV.drop(columns=column, inplace=True)
+			else:
+				missing.append(column)
 
-        numerator, denominator = 0, 0
-        unnecessaryCol, noMatch = [], []
-        for column in testFrame:
-            if column in answerCSV.columns:
-                if (testFrame[column]).dropna().apply(str).str.cat(sep=' ') == (answerCSV[column]).dropna().apply(str).str.cat(sep=' '):
-                    numerator += 1
-                else:
-                    noMatch.append(column)
-                missing.remove(column)
-            else:
-                denominator += 1
-                unnecessaryCol.append(column)
-        denominator += len(answerCSV.columns)
-        
-        totalCorrect += numerator
-        totalNum += denominator
+		numerator, denominator = 0, 0
+		unnecessaryCol, noMatch = [], []
+		for column in testFrame:
+			if column in answerCSV.columns:
+				if (testFrame[column]).dropna().apply(str).str.cat(sep=' ') == (answerCSV[column]).dropna().apply(str).str.cat(sep=' '):
+					numerator += 1
+				else:
+					print((testFrame[column]).dropna().apply(str).str.cat(sep=' '))
+					print((answerCSV[column]).dropna().apply(str).str.cat(sep=' '))
+					noMatch.append(column)
+				missing.remove(column)
+			else:
+				denominator += 1
+				unnecessaryCol.append(column)
+		denominator += len(answerCSV.columns)
+		
+		totalCorrect += numerator
+		totalNum += denominator
+		
+		print(file)
+		print("Required Headers Accuracy --> " + str("{:.2%}".format(numerator/denominator)))
+		if len(missing) != 0:
+			print()
+			print("Headers Missing:")
+			for elem in missing:
+				print(elem)
+				if elem in missingDict:
+					missingDict[elem] += 1
+				else:
+					missingDict[elem] = 1
+		if len(noMatch) != 0:
+			print()
+			print("Correct Header w/ Incorrectly Matched Data:")
+			for elem in noMatch:
+				print(elem)
+				if elem in noMatchDict:
+					noMatchDict[elem] += 1
+				else:
+					noMatchDict[elem] = 1
+		if len(unnecessaryCol) != 0:
+			print()
+			print("Unnecessary Incorrect Header:")
+			for elem in unnecessaryCol:
+				print(elem)
+				if elem in unnecessaryColDict:
+					unnecessaryColDict[elem] += 1
+				else:
+					unnecessaryColDict[elem] = 1
+		print("----------------------------------------------------------------------------------------")
+	print("----------------------------------------------------------------------------------------")
+	totalErrors = 0
+	print("Headers Missing:")
+	for elem in missingDict:
+		print(elem + " = " + str(missingDict[elem]))
+		totalErrors += missingDict[elem]
+	print()
+	print("Correct Header w/ Incorrectly Matched Data:")
+	for elem in noMatchDict:
+		print(elem + " = " + str(noMatchDict[elem]))
+		totalErrors += noMatchDict[elem]
+	print()
+	print("Unnecessary Incorrect Header:")
+	for elem in unnecessaryColDict:
+		print(elem + " = " + str(unnecessaryColDict[elem]))
+		totalErrors += unnecessaryColDict[elem]
+	print()
+	print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
+	print("Total Errors --> " + str(totalErrors))
+	print("----------------------------------------------------------------------------------------")
+	return totalErrors
 
-        print(file)
-        print("Required Headers Accuracy --> " + str("{:.2%}".format(numerator/denominator)))
-        if len(missing) != 0:
-            print()
-            print("Headers Missing:")
-            for elem in missing:
-                print(elem)
-                if elem in missingDict:
-                    missingDict[elem] += 1
-                else:
-                    missingDict[elem] = 1
-        if len(noMatch) != 0:
-            print()
-            print("Correct Header w/ Incorrectly Matched Data:")
-            for elem in noMatch:
-                print(elem)
-                if elem in noMatchDict:
-                    noMatchDict[elem] += 1
-                else:
-                    noMatchDict[elem] = 1
-        if len(unnecessaryCol) != 0:
-            print()
-            print("Unnecessary Incorrect Header:")
-            for elem in unnecessaryCol:
-                print(elem)
-                if elem in unnecessaryColDict:
-                    unnecessaryColDict[elem] += 1
-                else:
-                    unnecessaryColDict[elem] = 1
-        print("----------------------------------------------------------------------------------------")
-    print("----------------------------------------------------------------------------------------")
-    totalErrors = 0
-    print("Headers Missing:")
-    for elem in missingDict:
-        print(elem + " = " + str(missingDict[elem]))
-        totalErrors += missingDict[elem]
-    print()
-    print("Correct Header w/ Incorrectly Matched Data:")
-    for elem in noMatchDict:
-        print(elem + " = " + str(noMatchDict[elem]))
-        totalErrors += noMatchDict[elem]
-    print()
-    print("Unnecessary Incorrect Header:")
-    for elem in unnecessaryColDict:
-        print(elem + " = " + str(unnecessaryColDict[elem]))
-        totalErrors += unnecessaryColDict[elem]
-    print()
-    print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
-    print("Total Errors --> " + str(totalErrors))
-    return totalErrors
-
-	
+#if __name__ == "__main__":
+	#os.chdir(os.path.dirname(os.path.abspath(__file__)))
+	#runTests()

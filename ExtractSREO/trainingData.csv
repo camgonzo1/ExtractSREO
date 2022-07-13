@@ -1,1001 +1,5001 @@
 label,text
-Maturity Date,Loan Maturity Date
-City,Location
-Units,# Units / SF
-Maturity Date,Maturity
-Acquisition Date,Acquisition Date (yr)
-Current Balance,Mortgage Liens as of 
-Index,Index
-Address,Street
-Square Feet,Sq. Ft.
-Market Value,Value
-Square Feet,Sq. Footage
-Address,Property Address
-State,Providence
-NOI,NOI (Period Ending YTD)
-Debt Service,Total Debt Service
-Debt Service,Debt Service
-Index,Interest Rate Index
-LTV,LTV
-Amort Start Date,Amortization Start
-Debt Service,Debt Service
-Occupancy,Occ. %
-Amort Start Date,Amortization Date
-Debt Service,Debt Service
-Debt Service,Debt Service Total
-Units,Multifamily Units (#)
-Lender,Mortgage Lender
-Debt Service,Annual Debt Service
-Loan Amount,Orig. Loan Amount
-Current Balance,Mortgage Outstanding
-All-In Rate,Rate
-All-In Rate,Interest
-LTV,Loan-To-Value
-All-In Rate,All-In
+City,Property City
+Units,#units
+Market Value,Market Value
+Current Balance,Outstanding Principal Balance
 Acquisition Date,Year Acquired
-Occupancy,Occ. %
+Debt Service,Debt Service Value
+Spread,Spread
+Index,Rate Index
+Property Name,Property Number
+NOI,Net Rental Income
+All-In Rate,Current Rate
+Square Feet,Sq. Ft.
+Market Value,Internal Valuation
+Acquisition Date,Acquisition Date
+Market Value,Internal Valuation
+Address,Property Address
+City,Property City
+Spread,Spread
+Acquisition Date,Date of Acquisition
+Address,Location
+Square Feet,Sq. Feet
+Square Feet,Sq. Footage
+Rate Type,Fixed or Floating
+Maturity Date,Date of Maturity
+Lender,Lender
+Lender,Lender
+Units,# of Units
+State,Location
+Maturity Date,Maturity Date(s)
 Loan Amount,OG Loan Amount
-State,Providence
-Address,Street
-State,ST
-Debt Service,Total Debt Service
-Lender,Mortgage Holder
-Amort Start Date,Amort Start Date
-All-In Rate,All In Rate
+Spread,Spread
+Address,Street Location
+Loan Amount,OG Loan Amount
+Maturity Date,Maturation Date
+Loan Amount,Loan Amount
+Market Value,Value
+Property Type,Description
+NOI,NOI (Period Ending YTD)
+Spread,Credit Spread
+City,Town
+Current Balance,Principal Balance
+City,Town
+Acquisition Date,Acquistion
+Loan Amount,Original Loan Amount
+Debt Service,Debt Service Value
+Market Value,PWC Value
+Occupancy,Occ. %
+Market Value,Value
+Occupancy,Occupancy
+Loan Amount,Loan Amount
+Rate Type,Type of Rate
+Address,Street Address
+Market Value,PWC Value
+City,Location
+State,Territory
+Loan Amount,Orig. Loan Amount
+Square Feet,Sq. Ft.
+NOI,Current Net Operating Income
+Lender,Lender
+Rate Type,Interest Rate Type
+Index,Rate Index
+Acquisition Date,Year of Initial Ownership
+Amort Start Date,Amort Date
+Lender,Mortgage Lender
+Loan Amount,Orig. Loan Amount
+Current Balance,Balance
+All-In Rate,All-In Rate
+Market Value,Internal Valuation
+Property Name,Property Name
+Maturity Date,Loan Maturity Date
+Property Type,Description
+Acquisition Date,Owned Since
+Loan Amount,Original Loan Amount
+Address,Street Address
+Debt Service,Annual Debt Service
+Maturity Date,Maturity Date(s)
+Address,Street Address
+Rate Type,Floating (Y/N)
+Lender,Lender
+Square Feet,Square Feet
+Property Type,Description
+Amort Start Date,Amortization Start Date
+Property Type,Prop. Type
+State,State
+Spread,Spread
+Maturity Date,Maturity
+All-In Rate,All-In Rate
+Index,Rate Index
+NOI,NOI (Period Ending YTD)
+Maturity Date,Matures
+Maturity Date,Loan Maturity Date
+Property Name,Property ID
+Property Name,ID
+Rate Type,Type of Loan
+Rate Type,Rate Type
+LTV,Loan To Value
+Square Feet,Sq. Feet
+Spread,Credit Spread
+Index,Index
+Property Type,Type of Community
+Market Value,Value
+Rate Type,Interest Rate Type
+DSCR,Total DSCR
+Amort Start Date,Amort Start
+City,Town
+Acquisition Date,Acquisition Date (yr)
+Amort Start Date,Amort Start
+Units,# of Units
+Loan Amount,Original Loan Amount
+Index,Index
+NOI,NOI
+Debt Service,Annual Debt Service
+Occupancy,Occupancy at end of quarter
+Loan Amount,OG Loan Amount
+Address,Property Location
+Units,# Units / SF
+Rate Type,Type of Rate
+NOI,Net Income
+City,Property City
+City,Location
+Occupancy,Occupancy Status
+Occupancy,Occupancy at end of quarter
+Spread,Credit Spread
+Maturity Date,Maturation Date
+City,City
+DSCR,Debt Service Ratio
+City,Location
+Rate Type,Type of Interest Rate
+LTV,Loan To Value
+Current Balance,Mortgage Liens as of 
 Property Type,Prop. Type
 Units,Number of Units
-LTV,LTV
-Maturity Date,Maturity Date(s)
-Address,Street
-NOI,Net Rental Income
-LTV,Loan To Value
-DSCR,DSCR
-Debt Service,Debt Service Value
-Loan Amount,Original Loan Amount
-City,City
-LTV,LTV
-Market Value,Full Market Value
-Lender,Mortgage Lender
-DSCR,Total DCR
-Lender,Mortgage Holder
-Maturity Date,Maturation Date
-LTV,Loan-To-Value
-Lender,Mortgage Holder
-Square Feet,Sq. Footage
-DSCR,DSCR
-Debt Service,Debt Service Total
-LTV,LTV
-Current Balance,Current Debt
-Spread,Spread
-Property Name,Legal Name
-Amort Start Date,Amort Start
-Amort Start Date,Amort Date
-State,Territory
-Address,Full Property Address
-Current Balance,Loan Balance
-Square Feet,Square Footage
-Units,# Units / SF
-DSCR,Debt Coverage Ratio
-Property Name,Property Name
-Address,Property Address
-DSCR,Total DCR
 Square Feet,Sq. Feet
-Property Name,Property Name
-State,State
-Occupancy,Occupancy
-Amort Start Date,Amortization Date
-Square Feet,Square Footage
-Maturity Date,Matures
-All-In Rate,Current Rate
-Amort Start Date,Amort Date
-NOI,NOI
-NOI,NOI
-Index,Rate Index
-Property Name,Building
-Current Balance,Loan Balance
-City,City
-Address,Address
-Market Value,PWC Value
-Maturity Date,Maturity Date
-Amort Start Date,Amort Start
-NOI,N.O.I.
-Occupancy,% Occupied
+Address,Street Address
+Property Name,ID
 Address,Property Address
-DSCR,Debt Service Coverage
-Occupancy,Occupancy Status
-Property Name,Legal Name
-Market Value,Market Total Value
-Current Balance,Outstanding Principal Balance
-Debt Service,Total Debt Service
-Property Name,Property Name
-Property Type,Type of Community
-City,Location
-Property Type,Property Type
-Market Value,Value
-Acquisition Date,Owned Since
-Maturity Date,Maturity Date(s)
-Debt Service,Debt Service
-Property Name,Property ID
-Units,Units
+Occupancy,Current Occupancy
+Acquisition Date,Origination
+Square Feet,Sq. Feet
 Lender,Mortgage Lender
-Property Type,Description
-Current Balance,Outstanding Debt
-Occupancy,Occupancy
-Square Feet,Sq. Footage
+City,Location
+State,Providence
+Address,Street Location
+Amort Start Date,Amortization Start
+State,Providence
+Property Type,Prop. Type
 Index,Interest Rate Index
-Loan Amount,OG Loan Amount
-LTV,LTV
-DSCR,Debt Service Ratio
-Property Type,Type
-State,State
-Occupancy,Occupancy
-LTV,LTV
-Acquisition Date,Date of Acquisition
-Loan Amount,Orig. Loan Amount
-Index,Index
-Debt Service,Debt Service
-Loan Amount,Loan Amount
-Market Value,Value
-City,City
-LTV,Loan To Value
-Maturity Date,Date of Maturity
-Occupancy,% Occupancy
-State,ST
-Current Balance,Outstanding Loan(s)
-Loan Amount,OG Loan Amount
-State,State
+Square Feet,Sq. Feet
 Property Name,Legal Name
-DSCR,Debt Service Coverage
-Rate Type,Floating (Y/N)
+Square Feet,Sq. Ft.
+NOI,Current NOI
+Occupancy,Current Occupancy
+Maturity Date,Maturity
+Loan Amount,Original Loan Amount
+Lender,Mortgage Holder
+State,Providence
+Square Feet,Square Footage
+Property Type,Description
+Address,Property Address
+Square Feet,Square Footage
+City,Town
+Index,Interest Rate Index
+Property Type,Asset Type
+All-In Rate,All In Rate
+Property Type,Prop. Type
+Debt Service,Debt Service Value
+Rate Type,Interest Rate Type
+Current Balance,Mortgage Liens as of 
+Debt Service,Total Debt Service
+Current Balance,Outstanding Principal Balance
+Spread,Spread
+All-In Rate,Interest Rate
+Current Balance,Outstanding
+Property Type,Type
+Spread,Credit Spread
+Spread,Credit Spread
+Market Value,Value
+Debt Service,Debt Service Total
+All-In Rate,Rate
+Square Feet,Feet
+Occupancy,% Occupied
+Acquisition Date,Date of Acquisition
+City,Location
+Occupancy,Occupancy %
+Property Name,Building Name
+NOI,Net Income
+Maturity Date,Loan Maturity Date
+DSCR,Total DCR
+LTV,Loan-To-Value
+Index,Interest Rate Index
+LTV,Loan-To-Value
+Market Value,PWC Value
+Property Type,Prop. Type
+Lender,Lender
+City,Town
+City,Property City
 Address,Location
+Units,#units
+Property Name,Building Name
+Property Type,Type
+City,Town
+State,Territory
+NOI,N.O.I.
+Units,Multifamily Units
+Current Balance,Current Balance
+NOI,NOI (Period Ending YTD)
+Square Feet,Feet
+Debt Service,Total Debt Service
+City,Town
+Rate Type,Fixed or Floating
+State,Territory
+Loan Amount,Original Loan Amount
+NOI,Net Rental Income
+Acquisition Date,Acquisition Date
+Property Type,Property Type
+Loan Amount,Original Loan Amount
+All-In Rate,Current Rate
+Spread,Credit Spread
+Debt Service,Debt Service
+Index,Index
+LTV,Loan To Value
+Acquisition Date,Year Acquired
+Spread,Spread
+Units,# Units / SF
 Property Name,Property Number
 LTV,LTV
+Lender,Mortgage Holder
+Lender,Lender
+LTV,LTV
+Current Balance,Current Debt
+Property Name,Property Number
+Lender,Mortgage Holder
+Index,Interest Rate Index
+Property Type,Property Description
+NOI,Net Rental Income
+Current Balance,Current Debt
+LTV,Loan To Value
+DSCR,Debt Coverage
+City,Location
+Acquisition Date,Origination Date
+State,State
+Address,Street Address
+Amort Start Date,Amortization Start
+State,Property State
+Loan Amount,Original Loan Amount
+Occupancy,Occupancy
+Market Value,Full Market Value
+Debt Service,Debt Service
+Rate Type,Fixed or Floating
+Current Balance,Loan Balance
+Loan Amount,OG Loan Amount
+Loan Amount,Orig. Loan Amount
+NOI,Net Operating Income
+DSCR,Total DCR
+NOI,Net Operating Income
+Maturity Date,Date of Maturity
+Rate Type,Floating (Y/N)
+Amort Start Date,Commence Date
+Loan Amount,Orig. Loan Amount
+Current Balance,Outstanding Loan Amount
+LTV,Loan-To-Value
+DSCR,Total DSCR
+Property Name,Building Name
+LTV,Loan-To-Value
+Property Type,Asset Type
+Debt Service,Debt Service Total
+Address,Full Property Address
+Maturity Date,Maturity Date(s)
+Property Type,Asset Type
+Property Name,Property ID
+City,Town
+Index,Interest Rate Index
+Index,Interest Rate Index
+Spread,Credit Spread
+Maturity Date,Loan Maturity Date
+Loan Amount,OG Loan Amount
+Lender,Lender
+Lender,Lender
+Loan Amount,Orig. Loan Amount
+Loan Amount,Original Loan Amount
+Rate Type,Type
+City,Location
+Index,Rate Index
+Market Value,Value
+Debt Service,Annual Debt Service
+Loan Amount,OG Loan Amount
+Occupancy,Current Occupancy (%)
+Acquisition Date,Acq. Date Cost
+Lender,Mortgage Lender
+Debt Service,Annual Debt Service
+Maturity Date,Matures
+Spread,Spread
+Index,Interest Rate Index
+Rate Type,Interest Rate Type
+Amort Start Date,Amort Start
+Address,Property Street Address
+Loan Amount,Orig. Loan Amount
+Units,# Units / SF
+Current Balance,Current Balance
+State,ST
+Index,Rate Index
+Lender,Mortgage Holder
+Address,Location
+Index,Rate Index
+Acquisition Date,Acquired
+State,ST
+Spread,Spread
+City,Property City
+Lender,Mortgage Lender
+Acquisition Date,Acquired
+Property Type,Description
+Maturity Date,Matures
+Property Name,Building Number
+Address,Property Address
+State,Property State
+Market Value,PWC Value
+Square Feet,Square Feet
+Current Balance,Outstanding Debt (YE)
+All-In Rate,Interest
+NOI,Current NOI
+Loan Amount,OG Loan Amount
+DSCR,Debt Coverage
+Property Type,Asset Type
+Index,Interest Rate Index
+Amort Start Date,Amort Start Date
+Property Name,Property ID
+LTV,Loan-To-Value
+Property Name,ID
+All-In Rate,All-In Rate
+Debt Service,Debt Service Total
+Rate Type,Rate Type
+Amort Start Date,Amort Date
+Occupancy,Current Occupancy
+Rate Type,Interest Rate Type
+Market Value,Value
+NOI,NOI
+Square Feet,Feet
+NOI,NOI (Period Ending YTD)
+Loan Amount,OG Loan Amount
+Occupancy,Occupancy Status
+NOI,Current N.O.I.
+Rate Type,Type of Rate
+Spread,Spread
+City,Location
+Rate Type,Type of Interest Rate
+Market Value,MV
+NOI,N.O.I.
+Spread,Spread
+Amort Start Date,Amort Start
+Property Name,Property Name
+Market Value,Value
+Index,Index
+Address,Address
+Rate Type,Rate Type
+Address,Street Address
+Property Name,ID
+Amort Start Date,Amort Start
+Units,SF/Units
+Spread,Spread
+LTV,Loan To Value
+Units,# of Units
+Lender,Mortgage Lender
+Acquisition Date,Acquired
+All-In Rate,All-In Rate
+Units,#units
+Lender,Lender
+All-In Rate,Interest
+Property Name,Building Name
+Acquisition Date,Acquisition Date
+Property Name,Building Name
+Maturity Date,Date Matures
+City,City
+Square Feet,Sq. Feet
+Maturity Date,Due Date (year)
+Spread,Spread
+Property Name,Property ID
+Square Feet,Sq. Feet
+Maturity Date,Date Matures
+Lender,Mortgage Lender
+Amort Start Date,Amort Date
+NOI,Net Operating Income
+LTV,LTV
+DSCR,Total DSCR
+Square Feet,Sq. Feet
+Address,Location
+LTV,Loan-To-Value
+Property Name,Building
+All-In Rate,All-In
+Maturity Date,Date Matures
+Property Name,Property Name
+Rate Type,Rate Type
+Rate Type,Interest Rate Type
+Square Feet,Sq. Feet
+Property Name,Property Number
+Address,Street Address
+NOI,Net Operating Income
+Debt Service,Debt Service Value
+NOI,NOI (Period Ending YTD)
+Property Type,Property Type
+Current Balance,Outstanding Loan Amount
+DSCR,DSCR
+Rate Type,Type of Interest Rate
+Property Type,Property Type
+Occupancy,Physical Occupancy
+Occupancy,Current Occupancy (%)
+Occupancy,% Occupancy
+Current Balance,Current Amount
+City,Property City
+LTV,Loan To Value
+DSCR,Total DCR
+Address,Street
+All-In Rate,Rate
+Maturity Date,Loan Matures
+All-In Rate,Interest
+Debt Service,Total Debt Service
+Acquisition Date,Year Acquired
+Debt Service,Debt Service
+Maturity Date,Loan Matures
+City,City
+NOI,Net Income
+Rate Type,Type of Rate
+Rate Type,Type
+Index,Interest Rate Index
+Rate Type,Type of Rate
+Index,Interest Rate Index
+Loan Amount,OG Loan Amount
+Index,Index
+Units,Multifamily Units (#)
+State,State
+Acquisition Date,Year Acquired
+LTV,Loan-To-Value
+NOI,NOI
+Spread,Credit Spread
+Lender,Mortgage Lender
+NOI,Current N.O.I.
+Market Value,Internal Valuation
+LTV,Loan To Value
+Rate Type,Fixed / Variable
+Rate Type,Type of Interest Rate
+Lender,Mortgage Holder
+Lender,Lender
+Amort Start Date,Amortization Date
+Square Feet,Sq. Feet
+Rate Type,Fixed or Floating
+Square Feet,Sq. Ft.
+Square Feet,Sq. Feet
+Square Feet,Square Feet
+Rate Type,Rate Type
+Occupancy,% Occupancy
+Debt Service,Total Debt Service
+Square Feet,Square Feet
+All-In Rate,All-in
+NOI,N.O.I.
+Property Type,Asset Type
+Address,Full Property Address
+Index,Interest Rate Index
+All-In Rate,Rate
+City,City
+State,Location
+City,City
+All-In Rate,All-In Rate
+Rate Type,Floating (Y/N)
+Property Name,Property Number
+Acquisition Date,Date of Acquisition
+Market Value,PWC Value
+Market Value,Full Market Value
+Market Value,Internal Valuation
+NOI,Net Operating Income
+Acquisition Date,Year Originated
+Occupancy,Occupancy at end of quarter
+Market Value,PWC Value
+Property Type,Type of Community
+Property Type,Type of Property
+DSCR,Total DCR
+Lender,Lender
+State,State
+Rate Type,Type of Loan
+Occupancy,Occupancy %
+All-In Rate,All-in
+DSCR,DSCR
+Amort Start Date,Amort Start Date
+Square Feet,Square Footage
+DSCR,Debt Service Ratio
+Index,Index
+State,Property State
+Rate Type,Fixed / Variable
+Index,Interest Rate Index
+Property Type,Property Description
+Lender,Lender
+Lender,Lender
+NOI,NOI
+DSCR,DCR
+Amort Start Date,Commence Date
+Lender,Lender
+All-In Rate,Current Rate
+Maturity Date,Final Maturity
+Spread,Spread
+Spread,Credit Spread
+Address,Location
+Acquisition Date,Origination
+Units,# Units / SF
+Spread,Spread
+Property Type,Asset Type
+DSCR,Total DSCR
+Property Name,Building Name
+Occupancy,% Occupancy
+Debt Service,Debt Service
+Current Balance,Outstanding
+Property Name,ID
+City,City
+Property Type,Property Description
+Units,Units
+City,Location
+Property Name,Property ID
+NOI,NOI
+DSCR,Debt Service Ratio
+LTV,Loan-To-Value
+Property Type,Type of Community
+Square Feet,Square Feet
+Square Feet,Square Footage
+Square Feet,Feet
+Spread,Spread
+All-In Rate,Current Rate
+Occupancy,Current Occupancy (%)
+Units,SF/Units
+Spread,Spread
+LTV,LTV
+Index,Index
+Rate Type,Fixed or Floating
+Property Name,Property Number
+Square Feet,Sq. Ft.
+LTV,Loan To Value
+Maturity Date,Maturity Date(s)
+Market Value,Borrower Started Value
+Loan Amount,OG Loan Amount
+Property Name,Building
+Address,Property Address
+Square Feet,Sq. Ft.
+Units,# Units / SF
+Units,Multifamily Units
+Debt Service,Debt Service
+Occupancy,Occupancy at end of quarter
+Current Balance,Outstanding Principal Balance
+Property Name,Building Name
+Square Feet,Sq. Ft.
+City,Property City
+Square Feet,Square Footage
+Index,Index
+Market Value,Value
+City,Location
+Loan Amount,Original Loan Amount
+Spread,Spread
+Loan Amount,Loan Amount
+NOI,NOI
+State,Property State
+Maturity Date,Maturity
+Occupancy,Current Occupancy (%)
+Square Feet,Feet
+All-In Rate,Interest
+Market Value,MV
+Current Balance,Outstanding Principal Balance
+Current Balance,Outstanding
+Square Feet,Sq. Ft.
+Rate Type,Type
+Square Feet,Sq. Footage
+NOI,Net Rental Income
+State,ST
+City,Location
+Lender,Mortgage Holder
+DSCR,Total DCR
+Property Type,Prop. Type
+Lender,Mortgage Lender
+All-In Rate,Interest Rate
+LTV,Loan To Value
+Loan Amount,Orig. Loan Amount
+State,Providence
+Loan Amount,OG Loan Amount
+City,Property City
+Address,Location
+All-In Rate,All In
+City,City
+Property Type,Type of Community
+Units,#units
+Occupancy,Occ. %
+Occupancy,% Occupied
+Loan Amount,Orig. Loan Amount
+NOI,Current N.O.I.
+LTV,Loan-To-Value
+Address,Address
+Maturity Date,Loan Matures
+Amort Start Date,Amort Date
+Acquisition Date,Acquired
+City,City
+Square Feet,Feet
+Spread,Credit Spread
+Address,Street Address
+All-In Rate,Interest
+LTV,Loan-To-Value
+Occupancy,% Occupied
+Acquisition Date,Acquired
+Acquisition Date,Purchase Date
+Maturity Date,Maturity
+Square Feet,Square Feet
+Property Name,Property Name
+Current Balance,Outstanding Debt
+Square Feet,Square Feet
+Debt Service,Debt Service Total
+Amort Start Date,Commence Date
+Units,SF / # of Units
+Property Name,Property ID
+Occupancy,Occupancy %
+Occupancy,Occupancy %
+Maturity Date,Final Maturity
+City,City
+Square Feet,Sq. Feet
+Index,Index
+DSCR,Debt Service Coverage
+Amort Start Date,Amort Start
+Units,Number of Units
+Rate Type,Loan Type
+Current Balance,OPB
+Maturity Date,Date of Maturity
+Property Name,Building Name/Number
+Units,Multifamily Units
+Property Name,ID
+Market Value,Market Total Value
+Units,Multifamily Units
+Property Name,Building
+Address,Property Location
+All-In Rate,Rate
+Spread,Credit Spread
+Current Balance,Outstanding Loan(s)
+Address,Street
+Loan Amount,OG Loan Amount
+Occupancy,Occupancy Status
+Occupancy,Occupancy
+Market Value,Value
+Market Value,Market Value
+Units,Unit Count
+Property Type,Type of Property
+Square Feet,Feet
+LTV,Loan To Value
+All-In Rate,Interest Rate
+Index,Interest Rate Index
+Acquisition Date,Acquired
+Index,Interest Rate Index
+Market Value,Borrower Started Value
+Lender,Mortgage Holder
+DSCR,Debt Service Coverage
+Spread,Spread
+DSCR,Debt Service Ratio
+State,ST
+Debt Service,Total Debt Service
+Index,Rate Index
+Acquisition Date,Acquistion
+Loan Amount,OG Loan Amount
+Units,SF/Units
+Acquisition Date,Year of Initial Ownership
+Debt Service,Debt Service Value
+Lender,Lender
+Index,Rate Index
+Lender,Lender
+Acquisition Date,Year Acquired
+Loan Amount,Orig. Loan Amount
+Market Value,Value
+Loan Amount,OG Loan Amount
+LTV,Loan To Value
+Debt Service,Debt Service Total
+Units,# of Units
+Index,Interest Rate Index
+Property Name,Property Name
+Property Name,Building Number
+Lender,Mortgage Lender
+DSCR,Debt Coverage
+Square Feet,Square Footage
+Current Balance,OPB
+Loan Amount,Loan Amount
+Property Type,Type of Property
+Property Type,Description
+Units,SF / # of Units
+Units,Units / Sq. Ft.
+Address,Street Location
+Spread,Spread
+Occupancy,Occupancy at end of quarter
+Square Feet,Square Feet
+Property Type,Type
+DSCR,Total DCR
+Occupancy,Occupancy
+DSCR,Total DCR
+NOI,NOI (Period Ending YTD)
+City,City
+Units,Multifamily Units
+NOI,NOI
+Spread,Spread
+NOI,Current N.O.I.
+All-In Rate,All-In Rate
+DSCR,Total DSCR
+Square Feet,Sq. Ft.
+Acquisition Date,Acquistion
+NOI,N.O.I.
+Rate Type,Loan Type
+Debt Service,Debt Service
+Debt Service,Debt Service
+Index,Index
+NOI,Current N.O.I.
+Market Value,Internal Valuation
+Property Name,Property Number
+Property Name,Building Number
+Amort Start Date,Amort Start
+Square Feet,Sq. Feet
+Acquisition Date,Origination
+Address,Property Location
+Debt Service,Total Debt Service
+Acquisition Date,Date Acquired
+Property Type,Asset Type
+Property Name,Building Name
+City,Property City
+Rate Type,Floating (Y/N)
+Occupancy,Occupancy %
+State,Location
+Acquisition Date,Date of Acquisition
+Occupancy,% Occupancy
+Rate Type,Floating (Y/N)
+Rate Type,Type of Loan
+Property Name,ID
+Debt Service,Debt Service
+NOI,NOI (Period Ending YTD)
+Rate Type,Fixed or Floating
+Market Value,Market Value
+Maturity Date,Matures
+Rate Type,Rate Type
+Debt Service,Debt Service
+Index,Interest Rate Index
+Acquisition Date,Year Acquired
+Lender,Lender
+Property Type,Property Type
+Address,Street Location
+Rate Type,Floating (Y/N)
+NOI,Net Operating Income
+DSCR,Total DCR
+Lender,Mortgage Holder
+City,City
+Lender,Mortgage Holder
+Market Value,MV
+Loan Amount,Orig. Loan Amount
+Current Balance,Outstanding Principal Balance
+Property Name,Building Name
+Amort Start Date,Amort Date
+Current Balance,Mortgage Liens as of 
+Units,Units
+Square Feet,Feet
+Property Name,Property Name
+Lender,Lender
+Maturity Date,Maturity Date(s)
+DSCR,DCR
+State,Territory
+Rate Type,Type of Interest Rate
+Address,Location
+Loan Amount,Loan Amount
+Index,Rate Index
+Maturity Date,Final Maturity
 State,State
 Property Type,Asset Type
-Spread,Spread
-Property Type,Property Description
+Square Feet,Sq. Footage
+Address,Street Address
+Address,Street
 LTV,Loan-To-Value
-Lender,Mortgage Lender
-NOI,Net Rental Income
-Market Value,Internal Valuation
-Index,Interest Rate Index
-Market Value,Value
-Address,Full Property Address
-Index,Index
-Market Value,Internal Valuation
-Debt Service,Total Debt Service
-Address,Full Property Address
-LTV,LTV
-Amort Start Date,Amortization Start Date
-DSCR,DSCR
 Spread,Spread
-DSCR,Debt Coverage
-Property Type,Type
-Loan Amount,Orig. Loan Amount
-Acquisition Date,Acquisition Date
-Rate Type,Type of Rate
-Debt Service,Debt Service Total
-All-In Rate,All-In Rate
-Market Value,PWC Value
-Loan Amount,Orig. Loan Amount
-LTV,Loan-To-Value
-LTV,Loan To Value
-All-In Rate,All-In
-Spread,Spread
-Market Value,MV
-Occupancy,Occupancy at end of quarter
-Loan Amount,Loan Amount
-Lender,Lender
-NOI,N.O.I.
-Loan Amount,OG Loan Amount
-State,State
-Loan Amount,Original Loan Amount
-Loan Amount,Loan Amount
-Amort Start Date,Amort Date
-Amort Start Date,Amort Date
-Maturity Date,Maturity
+Lender,Mortgage Holder
 Amort Start Date,Amort Start
-Square Feet,Square Footage
-Occupancy,Current Occupancy (%)
-NOI,NOI
-Spread,Credit Spread
-Acquisition Date,Acquisition Date
-Lender,Lender
-Address,Property Address
-Loan Amount,OG Loan Amount
-LTV,Loan-To-Value
-DSCR,DCR
-Address,Full Property Address
-Debt Service,Total Debt Service
-Spread,Credit Spread
-Square Feet,Square Feet
-Loan Amount,OG Loan Amount
-Lender,Lender
-Address,Street Location
-DSCR,Debt Service Ratio
-Acquisition Date,Year of Initial Ownership
-Property Type,Property Type
-Acquisition Date,Year of Initial Ownership
-Property Type,Property Description
-Units,SF/Units
-Loan Amount,Loan Amount
-Spread,Credit Spread
-Acquisition Date,Date of Acquisition
-State,State
-Rate Type,Fixed / Variable
-Debt Service,Annual Debt Service
-Current Balance,Balance of Mortgages
-Current Balance,Mortgage Liens as of 
-State,Providence
-LTV,Loan-To-Value
-Debt Service,Debt Service Total
-Market Value,Market Value
-Loan Amount,Original Loan Amount
-Acquisition Date,Origination
-State,Location
-City,Location
-Property Name,Building Name/Number
-Address,Address
-NOI,Net Operating Income
-LTV,LTV
-Maturity Date,Maturity Date(s)
-Amort Start Date,Amort Start Date
-Loan Amount,Loan Amount
-DSCR,DSCR
-LTV,Loan-To-Value
-Amort Start Date,Amortization Date
-Current Balance,Loan Balance
-Loan Amount,OG Loan Amount
-Loan Amount,OG Loan Amount
-Debt Service,Annual Debt Service
+Current Balance,Outstanding Loan Amount
 Lender,Mortgage Holder
 Maturity Date,Date of Maturity
-Loan Amount,Loan Amount
-City,City
-Property Type,Property Type
-Current Balance,Loan Balance
-NOI,Net Operating Income
-Rate Type,Type of Interest Rate
-Current Balance,Balance of Mortgages
-NOI,N.O.I.
-Market Value,Market Value
-NOI,NOI (Period Ending YTD)
-All-In Rate,All In
-Lender,Lender
-All-In Rate,Interest
-State,Providence
-LTV,LTV
-NOI,Current Net Operating Income
-LTV,Loan To Value
-Spread,Spread
-NOI,NOI
-Maturity Date,Loan Maturity Date
-Current Balance,Outstanding Loan Amount
-Spread,Credit Spread
-Occupancy,Current Occupancy
-Lender,Mortgage Lender
-DSCR,DSCR
-Units,Unit Count
-Market Value,Market Value
-Debt Service,Debt Service
-Rate Type,Type of Interest Rate
-NOI,N.O.I.
-All-In Rate,All In Rate
-Acquisition Date,Year of Initial Ownership
-Index,Interest Rate Index
 Debt Service,Annual Debt Service
-Occupancy,Occupancy at end of quarter
-All-In Rate,All-In Rate
-Current Balance,Current Debt
-DSCR,DCR
-Loan Amount,OG Loan Amount
-Loan Amount,Original Loan Amount
-All-In Rate,All In
-Loan Amount,OG Loan Amount
-Square Feet,Square Footage
-Market Value,PWC Value
-LTV,Loan-To-Value
-All-In Rate,All In
-Units,Number of Units
-Debt Service,Debt Service Total
-Current Balance,OPB
-Rate Type,Type of Interest Rate
+Units,# of Units
+Market Value,Internal Valuation
 Amort Start Date,Amort Start Date
-Market Value,MV
-All-In Rate,All-In
-Market Value,Value
-Loan Amount,OG Loan Amount
-Property Name,Property ID
-Units,#units
-Loan Amount,OG Loan Amount
-Spread,Spread
-State,Location
+Maturity Date,Matures
+All-In Rate,All-In Rate
+Occupancy,% Occupancy
+Lender,Mortgage Lender
 Units,#units
 Amort Start Date,Amortization Start
+Address,Property Location
+Index,Interest Rate Index
+Occupancy,Current Occupancy (%)
+NOI,Net Operating Income
+Occupancy,Occupancy Status
+Property Type,Type
+State,Location
+Address,Street Location
+NOI,Current Net Operating Income
+Property Type,Type of Property
+Occupancy,Physical Occupancy
+City,Property City
+Lender,Mortgage Lender
 Units,SF/Units
-Spread,Credit Spread
-Rate Type,Type of Loan
-Current Balance,Outstanding Loan(s)
-Index,Rate Index
-Market Value,Borrower Started Value
-Address,Property Address
-Acquisition Date,Acq. Date Cost
+DSCR,Debt Service Coverage
+Market Value,PWC Value
+Acquisition Date,Acquisition Date
+Maturity Date,Due Date
+Market Value,Value
 Loan Amount,OG Loan Amount
-NOI,N.O.I.
-Address,Property Street Address
-State,Property State
-Property Type,Property Description
-NOI,NOI (Period Ending YTD)
-City,Town
-Address,Property Street Address
-LTV,Loan-To-Value
-Rate Type,Floating (Y/N)
-Occupancy,Occupancy
-Current Balance,Loan Balance
-Acquisition Date,Origination Date
+Loan Amount,OG Loan Amount
+Loan Amount,OG Loan Amount
+Debt Service,Debt Service
+DSCR,DCR
+DSCR,Debt Service Ratio
 Property Name,Building
-Market Value,MV
-All-In Rate,Interest
-Spread,Credit Spread
+NOI,Current Net Operating Income
+Units,Unit Count
+Index,Index
+Index,Index
+Debt Service,Debt Service
+Loan Amount,OG Loan Amount
+State,Territory
+Index,Index
+Square Feet,Square Feet
 Occupancy,% Occupancy
-LTV,Loan-To-Value
-Loan Amount,Loan Amount
+City,Location
+Current Balance,Loan Balance
+Rate Type,Type of Rate
 State,State
+Index,Rate Index
+Market Value,Value
+Rate Type,Type of Interest Rate
+Market Value,Borrower Started Value
+Loan Amount,OG Loan Amount
+Spread,Spread
+All-In Rate,Rate
+Property Type,Type of Property
+Occupancy,Occupancy at end of quarter
+Property Type,Type
+Market Value,Internal Valuation
+Debt Service,Total Debt Service
+NOI,Net Income
+Spread,Spread
+All-In Rate,All In
+Address,Full Property Address
+Current Balance,Outstanding Principal Balance
+Spread,Spread
+Lender,Mortgage Lender
+Spread,Spread
+All-In Rate,Rate
+Address,Street Location
+All-In Rate,All-in
+Acquisition Date,Acquired
+Acquisition Date,Year Acquired
+Property Name,Property Name
+Property Name,Legal Name
+Loan Amount,Orig. Loan Amount
+Rate Type,Loan Type
+NOI,Net Rental Income
+Debt Service,Total Debt Service
+LTV,Loan To Value
+Market Value,PWC Value
+Index,Rate Index
+Index,Interest Rate Index
+DSCR,Total DCR
+Current Balance,Balance
+LTV,LTV
+City,Location
+State,ST
+LTV,LTV
+Square Feet,Feet
+Market Value,Market Total Value
+Property Type,Prop. Type
+DSCR,Debt Coverage
+Rate Type,Type of Loan
+NOI,Current NOI
+All-In Rate,All-in
 Acquisition Date,Acq. Date Cost
-Units,Number of Units
-Amort Start Date,Amort Start
+Loan Amount,Loan Amount
+NOI,NOI
+All-In Rate,All-In Rate
+Debt Service,Debt Service Total
+Units,# Units / SF
+Units,SF / # of Units
+DSCR,Total DSCR
+All-In Rate,All In Rate
+Address,Location
+All-In Rate,All-In Rate
+Lender,Mortgage Holder
+Property Type,Type
+Market Value,PWC Value
+Address,Address
+Debt Service,Debt Service Value
+City,City
+Index,Interest Rate Index
+Property Type,Property Type
+City,Property City
+Property Name,Building
+Debt Service,Debt Service Total
+Debt Service,Debt Service
+LTV,LTV
+Lender,Mortgage Holder
+Maturity Date,Due Date (year)
+DSCR,Debt Service Ratio
+Maturity Date,Final Maturity
+Square Feet,Square Footage
+Property Type,Asset Type
+Debt Service,Total Debt Service
+Loan Amount,OG Loan Amount
+City,Property City
+City,Town
+Current Balance,Outstanding Debt
 Index,Interest Rate Index
 Rate Type,Type
-Property Type,Type
-Square Feet,Sq. Ft.
-Acquisition Date,Origination Date
+Acquisition Date,Acq. Date Cost
+Amort Start Date,Amortization Start
 Occupancy,Occupancy
+Index,Rate Index
+Units,#units
+Acquisition Date,Year of Initial Ownership
+State,Providence
+Spread,Spread
+Acquisition Date,Acquired
+Spread,Credit Spread
+Units,Multifamily Units (#)
+Index,Rate Index
+All-In Rate,All-In Rate
+Loan Amount,OG Loan Amount
+Property Name,Property ID
+State,Property State
+LTV,Loan-To-Value
+Rate Type,Type of Interest Rate
+All-In Rate,All In
+Acquisition Date,Origination
+Rate Type,Loan Type
+Amort Start Date,Amortization Start
+Index,Index
+Spread,Spread
+City,City
+Lender,Lender
+Lender,Lender
+Property Name,Building Number
+Amort Start Date,Amort Date
+Square Feet,Sq. Feet
+Units,Unit Count
+Market Value,Internal Valuation
+City,Property City
+Market Value,Full Market Value
+Amort Start Date,Amort Date
+City,Property City
+All-In Rate,All-In
+City,Property City
+Units,Units / Sq. Ft.
+Square Feet,Square Footage
+Acquisition Date,Origination
+Units,Units
+Amort Start Date,Commence Date
+Property Type,Type
+Acquisition Date,Owned Since
+Spread,Credit Spread
+Spread,Credit Spread
+Amort Start Date,Amortization Start Date
+Acquisition Date,Acquisition Date
+Debt Service,Debt Service Total
+NOI,Net Income
+NOI,Current Net Operating Income
+Square Feet,Square Feet
+Loan Amount,Original Loan Amount
+Occupancy,Occupancy Status
+Lender,Mortgage Holder
+Address,Property Location
+Market Value,Market Value
+Spread,Spread
+Occupancy,Physical Occupancy
+Spread,Spread
+Loan Amount,OG Loan Amount
+All-In Rate,Current Rate
+City,Town
+All-In Rate,All In
+All-In Rate,Interest Rate
+Property Type,Prop. Type
+State,Territory
+Occupancy,% Occupancy
+Square Feet,Sq. Footage
+Amort Start Date,Amort Start
+Lender,Mortgage Lender
+Property Type,Prop. Type
+Units,Units
+State,State
+Maturity Date,Due Date
+Square Feet,Square Feet
+State,ST
+City,Property City
+Market Value,PWC Value
+Maturity Date,Maturity Date(s)
+Market Value,Value
+Maturity Date,Final Maturity
+Rate Type,Floating (Y/N)
+All-In Rate,All-In
+Lender,Mortgage Lender
+Amort Start Date,Amort Start Date
+Index,Index
+Market Value,Internal Valuation
+City,Town
+Property Type,Property Description
+NOI,Current NOI
+Lender,Mortgage Holder
+Market Value,Borrower Started Value
+Units,Number of Units
+All-In Rate,Interest
+Index,Interest Rate Index
+Lender,Lender
+LTV,Loan To Value
+Debt Service,Annual Debt Service
+City,Town
+Property Name,ID
+City,Property City
+Occupancy,Physical Occupancy
+State,Providence
+Index,Rate Index
+Rate Type,Type of Interest Rate
+Index,Index
+Amort Start Date,Commence Date
+City,Location
+City,Location
+Square Feet,Square Feet
+Index,Rate Index
+Index,Interest Rate Index
+Rate Type,Type of Interest Rate
+Lender,Lender
+Loan Amount,Loan Amount
+Spread,Credit Spread
+Lender,Mortgage Holder
+DSCR,Debt Service Ratio
+Lender,Lender
+Debt Service,Total Debt Service
+Occupancy,Occupancy %
+Amort Start Date,Commence Date
+Square Feet,Square Feet
+Units,Multifamily Units
+Loan Amount,OG Loan Amount
+State,Providence
+State,Providence
+Debt Service,Debt Service
+Lender,Lender
+Lender,Mortgage Lender
+Lender,Mortgage Lender
+Property Name,Building
+City,Location
+Units,SF / # of Units
+Occupancy,% Occupied
+LTV,LTV
+State,State
+Current Balance,Loan Balance
+DSCR,Debt Service Coverage
+Debt Service,Annual Debt Service
+Maturity Date,Date of Maturity
+Property Type,Type of Property
+Amort Start Date,Amort Date
+NOI,Current NOI
+Square Feet,Square Footage
+Loan Amount,Loan Amount
+City,City
+Amort Start Date,Commence Date
+NOI,Current NOI
+Index,Rate Index
+DSCR,Debt Coverage
+Property Type,Type of Community
+Debt Service,Debt Service
+DSCR,DSCR
+Units,SF/Units
+Square Feet,Square Footage
+Index,Interest Rate Index
+Maturity Date,Maturity
+Current Balance,Outstanding Debt (YE)
+Amort Start Date,Amortization Start
+Loan Amount,Loan Amount
 NOI,NOI
+Acquisition Date,Year Acquired
+Maturity Date,Due Date (year)
+City,Town
+All-In Rate,All In Rate
+LTV,Loan-To-Value
+Lender,Mortgage Holder
+LTV,Loan To Value
+Spread,Credit Spread
+Acquisition Date,Owned Since
+Square Feet,Sq. Footage
+Index,Index
+Units,Number of Units
+Market Value,Market Value
+DSCR,Debt Service Coverage
+Maturity Date,Final Maturity
+Amort Start Date,Amort Start
+Rate Type,Type
+Amort Start Date,Amortization Start Date
 All-In Rate,All-in
+NOI,N.O.I.
+Rate Type,Type of Loan
+Market Value,Full Market Value
+Square Feet,Square Footage
+LTV,Loan To Value
+Maturity Date,Maturation Date
+Lender,Mortgage Lender
+NOI,N.O.I.
+Address,Street
+All-In Rate,All-In Rate
+Acquisition Date,Origination Date
+Acquisition Date,Acquistion
+Acquisition Date,Origination Date
+Amort Start Date,Amortization Start Date
+Units,Multifamily Units (#)
+City,City
+Current Balance,Current Amount
+Lender,Mortgage Holder
+State,Property State
+City,City
+Property Type,Type of Property
+Rate Type,Type of Loan
+Current Balance,Current Debt
+All-In Rate,All In Rate
+Address,Street
+State,Property State
+Lender,Lender
+Acquisition Date,Purchase Date
+Units,#units
+Debt Service,Annual Debt Service
+Amort Start Date,Commence Date
+Acquisition Date,Origination
+Index,Index
+Units,Unit Count
+Spread,Credit Spread
+NOI,Net Income
+Property Type,Asset Type
+City,Property City
+Debt Service,Total Debt Service
+Address,Property Street Address
+Index,Rate Index
+Spread,Credit Spread
+Spread,Spread
+NOI,Net Income
+Property Name,Legal Name
+Loan Amount,Orig. Loan Amount
+Property Name,Property Number
+Index,Interest Rate Index
+Amort Start Date,Amort Start Date
+DSCR,Debt Service Coverage
+Property Name,Property Name
+Address,Property Location
+DSCR,DSCR
+Market Value,Market Value
+All-In Rate,Current Rate
+DSCR,DCR
+Amort Start Date,Commence Date
+Amort Start Date,Amort Start Date
+NOI,NOI
+Address,Location
+Occupancy,Occ. %
+Occupancy,Current Occupancy
+Occupancy,Occupancy at end of quarter
+DSCR,Debt Coverage Ratio
+Market Value,Market Value
+City,City
+LTV,Loan To Value
+LTV,Loan To Value
+Index,Index
+Lender,Mortgage Lender
+Index,Interest Rate Index
+Units,Multifamily Units
+Acquisition Date,Year of Initial Ownership
+Units,Number of Units
+City,Property City
+Property Type,Prop. Type
+Maturity Date,Matures
+Maturity Date,Due Date
+Market Value,Internal Valuation
+Rate Type,Floating (Y/N)
+Rate Type,Interest Rate Type
+All-In Rate,All-In Rate
+Debt Service,Total Debt Service
+State,Providence
+LTV,Loan-To-Value
+Amort Start Date,Amortization Start
+Spread,Credit Spread
+Debt Service,Debt Service
+Lender,Lender
+NOI,Net Operating Income
+Amort Start Date,Amort Date
+Market Value,Value
+Square Feet,Sq. Feet
+Occupancy,Occupancy
+Acquisition Date,Date of Acquisition
+Acquisition Date,Purchase Date
+Market Value,Full Market Value
+City,Property City
+Property Name,Building Name
+Property Name,Building Name/Number
+NOI,Net Rental Income
+Occupancy,Occupancy at end of quarter
+All-In Rate,All-In Rate
+Acquisition Date,Acq. Date Cost
+Debt Service,Debt Service
+All-In Rate,All In Rate
+Maturity Date,Maturity Date
+Spread,Credit Spread
+Property Name,ID
+Maturity Date,Maturity Date
+Current Balance,Outstanding Debt (YE)
+Amort Start Date,Amort Date
+Occupancy,Occupancy %
+State,State
+Units,# of Units
+LTV,LTV
+LTV,Loan-To-Value
+Amort Start Date,Amortization Start
+Occupancy,Current Occupancy (%)
+All-In Rate,Current Rate
+City,City
+Debt Service,Total Debt Service
+Property Name,Name
+Current Balance,Outstanding Loan Amount
+Acquisition Date,Acquistion
+Current Balance,Current Debt
+All-In Rate,All-In
+All-In Rate,All In
+Rate Type,Loan Type
+Property Type,Type
+Acquisition Date,Acquired
+City,City
+Debt Service,Annual Debt Service
+Market Value,Internal Valuation
+Square Feet,Feet
+Current Balance,Outstanding Loan Amount
+City,City
+Occupancy,Occupancy %
+Acquisition Date,Year of Initial Ownership
+DSCR,Debt Coverage Ratio
+Acquisition Date,Acquistion
+Address,Property Address
+Acquisition Date,Acq. Date Cost
+Property Name,Property ID
+Acquisition Date,Acquisition Date (yr)
+City,Property City
+Amort Start Date,Commence Date
+Property Name,Legal Name
+Current Balance,Current Amount
+Loan Amount,OG Loan Amount
+DSCR,Debt Service Coverage
+City,Property City
+City,Property City
+Rate Type,Rate Type
+All-In Rate,All In
+Debt Service,Total Debt Service
+Units,Multifamily Units
+Maturity Date,Date Matures
+State,ST
+Square Feet,Sq. Ft.
+Debt Service,Debt Service Total
+Address,Full Property Address
+Debt Service,Debt Service Value
+Maturity Date,Final Maturity
+Units,# Units / SF
+NOI,NOI
+City,Town
+Property Name,Legal Name
+Lender,Mortgage Holder
+Property Type,Description
+NOI,NOI
+Amort Start Date,Amort Date
+Amort Start Date,Commence Date
+Amort Start Date,Amort Start Date
+Property Name,Building Number
+Loan Amount,Loan Amount
+Address,Street Location
+Property Type,Description
+Lender,Mortgage Lender
+Spread,Spread
+City,Property City
+Maturity Date,Loan Maturity Date
+Maturity Date,Maturity
+Lender,Mortgage Holder
+City,Property City
+Rate Type,Type of Rate
+Current Balance,Outstanding Loans
+Loan Amount,Orig. Loan Amount
+Market Value,Borrower Started Value
+LTV,LTV
+Current Balance,Principal Balance
+Index,Rate Index
+Occupancy,Occupancy
+All-In Rate,Current Rate
+Maturity Date,Due Date
+Units,Number of Units
+Units,SF / # of Units
+Spread,Credit Spread
+Address,Location
+Index,Interest Rate Index
+LTV,Loan To Value
+Market Value,Borrower Started Value
+State,Property State
+Acquisition Date,Origination
+Maturity Date,Due Date (year)
+Spread,Credit Spread
+Maturity Date,Matures
+Acquisition Date,Purchase Date
+Lender,Lender
+Property Name,Property ID
+Address,Address
+Units,SF/Units
+Maturity Date,Loan Maturity Date
+Spread,Credit Spread
+Property Name,Legal Name
+State,Territory
+Amort Start Date,Amort Date
+Amort Start Date,Commence Date
+Spread,Credit Spread
+Units,Multifamily Units
+Rate Type,Floating (Y/N)
+Address,Property Address
+Rate Type,Floating (Y/N)
+NOI,Current Net Operating Income
+Loan Amount,Orig. Loan Amount
+Spread,Spread
+Spread,Credit Spread
+Index,Index
+NOI,Current Net Operating Income
+NOI,Current NOI
+Debt Service,Total Debt Service
+Occupancy,Occupancy Status
+All-In Rate,Interest
+Property Type,Asset Type
+Occupancy,Current Occupancy
+Debt Service,Annual Debt Service
+Lender,Lender
+Property Type,Type of Property
+Index,Interest Rate Index
+Units,# of Units
+Loan Amount,OG Loan Amount
+City,Town
+Lender,Mortgage Holder
+Property Type,Prop. Type
+Square Feet,Square Footage
+LTV,Loan To Value
+All-In Rate,All In Rate
+Acquisition Date,Year of Initial Ownership
+NOI,NOI
+DSCR,Debt Coverage Ratio
+Occupancy,Current Occupancy
+Property Type,Asset Type
+State,Territory
+City,Property City
+City,Property City
+Acquisition Date,Year Originated
+Rate Type,Type of Rate
+Amort Start Date,Amortization Start
+Acquisition Date,Origination Date
+City,Property City
+Debt Service,Debt Service Total
+Current Balance,Current Balance
+Units,Units
+Maturity Date,Final Maturity
+Current Balance,Current Balance
+Units,Multifamily Units
+Square Feet,Sq. Ft.
+Property Name,Property Number
+Units,#units
+Property Name,Property Name
+Square Feet,Square Footage
+LTV,Loan-To-Value
+Index,Interest Rate Index
+Square Feet,Sq. Footage
+Maturity Date,Matures
+Occupancy,Occupancy at end of quarter
+Units,SF/Units
+Property Type,Property Type
+Market Value,Market Value
+Rate Type,Type
+NOI,NOI
+Maturity Date,Loan Maturity Date
+Index,Interest Rate Index
+Amort Start Date,Amortization Start Date
+Square Feet,Square Feet
+LTV,Loan To Value
+Amort Start Date,Amortization Start Date
+Acquisition Date,Year Acquired
+Property Type,Asset Type
+Amort Start Date,Amort Start Date
+Property Name,Building Number
+State,Providence
+Current Balance,Current Balance
+State,Location
+Units,Units / Sq. Ft.
+Property Type,Prop. Type
+Current Balance,Current Balance
+Acquisition Date,Acq. Date Cost
+State,Territory
+All-In Rate,Current Rate
+Debt Service,Debt Service Value
+NOI,Net Operating Income
+State,Territory
+City,Property City
+Property Name,Legal Name
+Address,Full Property Address
+NOI,Net Income
+Rate Type,Floating (Y/N)
+Rate Type,Fixed / Variable
+NOI,Net Rental Income
+Rate Type,Type
+Square Feet,Sq. Feet
+Units,SF/Units
+Amort Start Date,Amortization Date
+Maturity Date,Date Matures
+Spread,Credit Spread
+Amort Start Date,Commence Date
+Spread,Credit Spread
+Square Feet,Square Footage
+DSCR,DCR
+Maturity Date,Loan Maturity Date
+Amort Start Date,Amortization Date
+Spread,Credit Spread
+Debt Service,Total Debt Service
+Occupancy,% Occupied
+Spread,Spread
+NOI,Current N.O.I.
+State,State
+DSCR,Debt Coverage
+State,Location
+LTV,LTV
+Spread,Spread
+Rate Type,Type of Loan
+Loan Amount,Original Loan Amount
+State,ST
+LTV,Loan To Value
+DSCR,Debt Service Ratio
+Address,Property Street Address
+NOI,Net Income
+Acquisition Date,Origination
+Spread,Credit Spread
+Units,# of Units
+Square Feet,Square Feet
+Address,Address
+Address,Location
+Market Value,Internal Valuation
+NOI,Current Net Operating Income
+Spread,Spread
+Current Balance,Outstanding Loan Amount
+Rate Type,Loan Type
+City,Property City
+Current Balance,Outstanding
+Units,Multifamily Units (#)
+LTV,LTV
+State,ST
+City,Property City
+Lender,Mortgage Lender
+DSCR,Debt Coverage Ratio
+Debt Service,Debt Service Value
+City,City
+Amort Start Date,Amortization Date
+Loan Amount,Original Loan Amount
+Units,Number of Units
+Square Feet,Sq. Footage
+Property Name,Property Number
+Lender,Mortgage Holder
+Maturity Date,Loan Maturity Date
+Acquisition Date,Year Acquired
+NOI,Current NOI
+Address,Address
+City,Property City
+City,Location
+LTV,Loan-To-Value
+Loan Amount,Loan Amount
+Occupancy,% Occupancy
+Current Balance,Principal Balance
+Address,Street
+Amort Start Date,Amort Date
+Units,Units / Sq. Ft.
+City,Town
+Occupancy,Current Occupancy (%)
+Loan Amount,Loan Amount
+Debt Service,Total Debt Service
+Lender,Lender
+Acquisition Date,Origination
+NOI,Net Rental Income
+All-In Rate,All In
+Occupancy,% Occupied
+Units,Multifamily Units (#)
+Loan Amount,Original Loan Amount
+All-In Rate,All-in
+Rate Type,Floating (Y/N)
+Amort Start Date,Amort Start
+Acquisition Date,Owned Since
+Property Name,Name
+Property Name,Property Name
+Loan Amount,Original Loan Amount
+State,Territory
+Property Name,ID
+Debt Service,Total Debt Service
+State,State
+LTV,LTV
+Square Feet,Square Footage
+Units,Multifamily Units (#)
+Index,Rate Index
+Current Balance,Outstanding Loan Amount
+City,Town
+All-In Rate,All In
+Lender,Lender
+LTV,Loan To Value
+All-In Rate,Interest Rate
+Amort Start Date,Amortization Date
+Maturity Date,Date of Maturity
+LTV,Loan To Value
+Rate Type,Type
+Acquisition Date,Purchase Date
+DSCR,Total DSCR
+Occupancy,Current Occupancy
+Maturity Date,Maturation Date
+NOI,Net Rental Income
+Maturity Date,Matures
+Spread,Spread
+Address,Property Street Address
+Rate Type,Type
+Property Type,Prop. Type
+Market Value,Internal Valuation
 Debt Service,Debt Service Value
 State,ST
-Units,Units / Sq. Ft.
-Index,Index
-Address,Location
-Square Feet,Feet
-State,Providence
-Index,Interest Rate Index
-City,City
-Property Type,Type of Community
-City,Property City
-Address,Full Property Address
-Property Name,Property
-All-In Rate,All In Rate
-NOI,NOI
-Occupancy,% Occupancy
-Square Feet,Sq. Ft.
-All-In Rate,All In
-Index,Index
-Units,Units / Sq. Ft.
-Property Type,Type of Community
-Spread,Spread
-Rate Type,Loan Type
-Address,Full Property Address
-NOI,NOI (Period Ending YTD)
-Index,Rate Index
-Spread,Credit Spread
-Amort Start Date,Amortization Start Date
-Property Name,Building Number
-Current Balance,Outstanding Loan(s)
-Market Value,Internal Valuation
-Amort Start Date,Amort Start
-Loan Amount,Loan Amount
-NOI,NOI (Period Ending YTD)
-Index,Rate Index
-Lender,Mortgage Holder
-Occupancy,Current Occupancy (%)
-Current Balance,Principal Balance
-Square Feet,Sq. Feet
-Current Balance,Mortgage Liens as of 
-Lender,Mortgage Holder
-Market Value,Borrower Started Value
-Acquisition Date,Year of Initial Ownership
-Amort Start Date,Amort Start Date
-Index,Index
-Debt Service,Total Debt Service
-Index,Index
-DSCR,Debt Coverage Ratio
-LTV,LTV
-Debt Service,Total Debt Service
-Rate Type,Fixed / Variable
 LTV,Loan To Value
-Spread,Credit Spread
-Maturity Date,Date of Maturity
-All-In Rate,Interest Rate
-Square Feet,Sq. Feet
-Index,Index
-Spread,Spread
-DSCR,Total DCR
-Units,Unit Count
-Address,Location
-Property Type,Type of Property
-Current Balance,Outstanding Loan(s)
-Debt Service,Debt Service
-Property Name,Building
-Property Type,Type of Community
-Market Value,Market Total Value
-Occupancy,Current Occupancy
-Property Type,Description
 DSCR,Total DSCR
-Occupancy,Occ. %
-NOI,Current Net Operating Income
-Debt Service,Debt Service
-Index,Rate Index
-LTV,Loan-To-Value
-LTV,LTV
-NOI,Current N.O.I.
-LTV,Loan-To-Value
-Current Balance,Outstanding Principal Balance
-Debt Service,Annual Debt Service
-Lender,Mortgage Lender
-LTV,Loan-To-Value
-Rate Type,Fixed or Floating
-NOI,Current Net Operating Income
-Acquisition Date,Acq. Date Cost
-Market Value,Borrower Started Value
-NOI,Net Rental Income
-NOI,Current Net Operating Income
-All-In Rate,All In Rate
-Current Balance,Outstanding Loan Amount
+Units,Units
 City,Town
-Lender,Mortgage Holder
-Maturity Date,Maturity Date(s)
-Index,Interest Rate Index
-LTV,Loan To Value
-Current Balance,Outstanding Loan Amount
-Rate Type,Rate Type
-City,City
-Spread,Spread
-Address,Full Property Address
-Occupancy,Physical Occupancy
-Acquisition Date,Origination
-Loan Amount,Orig. Loan Amount
-Property Name,Legal Name
-Lender,Mortgage Lender
-Debt Service,Debt Service Value
-Loan Amount,Loan Amount
-Units,#units
-Index,Interest Rate Index
-Debt Service,Annual Debt Service
-Index,Interest Rate Index
-Address,Location
-Property Type,Prop. Type
-Lender,Mortgage Holder
-State,Property State
-Occupancy,Occupancy %
-Occupancy,% Occupancy
-Amort Start Date,Amortization Start
-Square Feet,Sq. Footage
-Spread,Spread
-Rate Type,Type of Interest Rate
-Debt Service,Debt Service
-Property Type,Type of Property
-NOI,Net Income
-Rate Type,Interest Rate Type
-LTV,Loan To Value
-Address,Address
-Loan Amount,Original Loan Amount
-Acquisition Date,Origination
-Spread,Spread
-DSCR,Debt Coverage Ratio
-Maturity Date,Date Matures
-Property Name,Building Name
-Property Name,Building Number
-Square Feet,Feet
-Debt Service,Debt Service Value
-Debt Service,Annual Debt Service
-Property Type,Type
-NOI,NOI
-DSCR,Total DCR
-Debt Service,Debt Service Total
-Units,Number of Units
-NOI,Current Net Operating Income
-Current Balance,Principal Balance
-Address,Location
-Maturity Date,Final Maturity
-Spread,Spread
-Maturity Date,Loan Matures
-Loan Amount,Orig. Loan Amount
-Square Feet,Sq. Footage
-Current Balance,Current Balance
-DSCR,Debt Coverage
-NOI,Net Rental Income
-Address,Full Property Address
-Amort Start Date,Amortization Start Date
-Property Name,Property
-DSCR,Total DSCR
-Maturity Date,Date of Maturity
-Lender,Mortgage Holder
-Property Type,Prop. Type
-Loan Amount,Loan Amount
-Units,SF/Units
-Amort Start Date,Amortization Start
-Address,Full Property Address
-LTV,Loan-To-Value
-DSCR,DSCR
-Address,Street
-Address,Property Street Address
-Market Value,MV
-Spread,Spread
-Square Feet,Feet
-City,Property City
-City,Town
-Units,Multifamily Units
-Lender,Mortgage Lender
-Amort Start Date,Amort Date
-Index,Interest Rate Index
-Maturity Date,Loan Matures
-State,Location
-City,Town
-Occupancy,% Occupied
-Spread,Credit Spread
-City,City
-Rate Type,Fixed / Variable
-Occupancy,Occupancy at end of quarter
-City,City
-All-In Rate,Current Rate
-All-In Rate,Rate
-Loan Amount,Original Loan Amount
-Address,Property Street Address
-NOI,Net Operating Income
-DSCR,DSCR
-City,Property City
-Property Name,Legal Name
-Acquisition Date,Origination
-Spread,Spread
-Address,Street Address
-Market Value,Full Market Value
-All-In Rate,All In
-State,Providence
-Market Value,Internal Valuation
-LTV,LTV
-Spread,Spread
-Units,#units
-All-In Rate,All In Rate
-Property Type,Type
-Market Value,Internal Valuation
-LTV,LTV
-Square Feet,Square Feet
-All-In Rate,Current Rate
-NOI,Net Income
-Property Name,ID
-Lender,Lender
-Property Type,Property Description
-Current Balance,Mortgage Liens as of 
-Acquisition Date,Acquisition Date
-Spread,Credit Spread
-Market Value,MV
-Market Value,PWC Value
-Lender,Lender
-State,Providence
-Square Feet,Sq. Ft.
-State,Property State
-Property Type,Description
-Spread,Spread
-Occupancy,Occupancy
-Acquisition Date,Origination
-Acquisition Date,Acquired
-Index,Interest Rate Index
-DSCR,DCR
-Debt Service,Total Debt Service
-City,Town
-Loan Amount,Loan Amount
-Maturity Date,Due Date (year)
-All-In Rate,All-In
-City,Property City
-NOI,Current NOI
-Current Balance,Outstanding Loans
-Acquisition Date,Origination
-Address,Property Street Address
-City,Property City
-Rate Type,Fixed / Variable
-City,Town
-DSCR,DCR
-Maturity Date,Date Matures
-Square Feet,Sq. Footage
-Market Value,Internal Valuation
-Rate Type,Loan Type
-Acquisition Date,Origination
-Amort Start Date,Amort Date
-Spread,Credit Spread
-Rate Type,Rate Type
-Market Value,Internal Valuation
-Occupancy,Occupancy
-City,City
-NOI,NOI
-City,Property City
-Amort Start Date,Amortization Start Date
-Spread,Credit Spread
-Current Balance,Outstanding Principal Balance
-DSCR,Debt Service Coverage
-Square Feet,Sq. Feet
-Occupancy,Occupancy at end of quarter
-NOI,Current NOI
-Market Value,MV
-Current Balance,Mortgage Liens as of 
-Loan Amount,Orig. Loan Amount
-Rate Type,Fixed or Floating
-Debt Service,Debt Service Value
-Property Name,Name
-Units,SF / # of Units
-LTV,Loan-To-Value
-State,Providence
-Property Name,Property Name
-NOI,Net Operating Income
-Property Type,Type of Property
-Current Balance,Mortgage Liens as of 
-Rate Type,Type of Loan
-DSCR,Debt Service Coverage
-Property Type,Type
-Amort Start Date,Amort Date
-LTV,Loan-To-Value
-Acquisition Date,Origination
-Loan Amount,Original Loan Amount
-Lender,Mortgage Lender
-Address,Full Property Address
-Property Name,Building Name/Number
-Spread,Credit Spread
-State,Location
-DSCR,DSCR
-Loan Amount,Orig. Loan Amount
-Current Balance,Outstanding Principal Balance
-Acquisition Date,Origination
-Spread,Credit Spread
-Occupancy,Current Occupancy
-Amort Start Date,Amortization Date
-Debt Service,Debt Service
-Square Feet,Square Footage
-Occupancy,Occupancy Status
-Acquisition Date,Year Originated
-Occupancy,Occupancy
-Market Value,Full Market Value
-Amort Start Date,Commence Date
-Maturity Date,Due Date
-Property Type,Type
-DSCR,Debt Service Ratio
-Market Value,Market Value
-LTV,Loan To Value
-All-In Rate,All-In Rate
-Acquisition Date,Owned Since
-Current Balance,Outstanding Loans
-Property Name,Building Number
-Maturity Date,Due Date
-Rate Type,Loan Type
-NOI,Current NOI
-Rate Type,Loan Type
-Index,Interest Rate Index
-State,State
-Amort Start Date,Commence Date
-Market Value,Borrower Started Value
-Amort Start Date,Amort Start Date
-All-In Rate,All-in
-All-In Rate,All In Rate
-Property Name,Property Number
-Spread,Credit Spread
-NOI,Net Income
-Square Feet,Square Feet
-Spread,Spread
-Acquisition Date,Acquired
-LTV,Loan To Value
-City,Property City
-Property Type,Type of Community
-Property Type,Type of Property
-NOI,NOI (Period Ending YTD)
-Acquisition Date,Year of Initial Ownership
-Units,SF / # of Units
-Loan Amount,Orig. Loan Amount
-Loan Amount,Orig. Loan Amount
-Rate Type,Type of Interest Rate
-Spread,Credit Spread
-Property Type,Type
-Property Type,Description
-Acquisition Date,Acquistion
-Index,Index
-Debt Service,Debt Service
-Maturity Date,Due Date (year)
-Property Type,Property Type
-Lender,Mortgage Lender
-DSCR,DCR
-LTV,LTV
-City,Location
-All-In Rate,Interest
-Lender,Lender
-DSCR,DCR
-Lender,Mortgage Holder
-NOI,Current N.O.I.
-Lender,Mortgage Holder
-All-In Rate,All-In Rate
-Spread,Credit Spread
-Occupancy,Occupancy at end of quarter
-Address,Street
-Address,Full Property Address
-DSCR,Total DCR
-LTV,LTV
-Acquisition Date,Acquisition Date (yr)
-Square Feet,Square Feet
-LTV,LTV
-Loan Amount,Original Loan Amount
-All-In Rate,All-In Rate
-NOI,Current Net Operating Income
-City,Location
-Maturity Date,Maturity Date
-Debt Service,Total Debt Service
-State,State
-City,Location
-Rate Type,Loan Type
+Property Type,Asset Type
 All-In Rate,Interest Rate
-Spread,Credit Spread
-NOI,NOI
-Maturity Date,Date of Maturity
-All-In Rate,Interest
-Property Name,Building Name
-Market Value,Value
-Rate Type,Type of Rate
-Spread,Credit Spread
-Market Value,Market Total Value
-Property Name,Building Number
-Loan Amount,OG Loan Amount
-Loan Amount,Orig. Loan Amount
-All-In Rate,Rate
-Address,Property Location
-Property Type,Property Description
-Amort Start Date,Amortization Start
-Lender,Mortgage Lender
-Debt Service,Total Debt Service
-Loan Amount,Orig. Loan Amount
-Property Type,Description
-DSCR,DCR
-NOI,Net Income
-Acquisition Date,Owned Since
-Spread,Credit Spread
-Loan Amount,Orig. Loan Amount
-Property Type,Description
-Maturity Date,Maturity Date
-City,City
-Square Feet,Square Feet
-Units,# of Units
 Current Balance,Loan Balance
-Rate Type,Floating (Y/N)
-Debt Service,Total Debt Service
-Maturity Date,Matures
-City,Town
-DSCR,Total DCR
-Maturity Date,Due Date (year)
-Debt Service,Debt Service Total
-Units,Number of Units
-Occupancy,Occupancy at end of quarter
-Market Value,PWC Value
-Occupancy,Occ. %
-State,State
-Market Value,Market Total Value
+Property Type,Type of Property
 Property Type,Property Description
-Current Balance,Outstanding Debt (YE)
-Index,Rate Index
-Acquisition Date,Year Originated
 Acquisition Date,Acquisition Date
+Loan Amount,OG Loan Amount
+City,Town
+Occupancy,Occupancy %
+All-In Rate,Rate
+NOI,NOI (Period Ending YTD)
+Debt Service,Debt Service Total
+Debt Service,Debt Service Total
+City,City
+Occupancy,Occupancy Status
+Property Name,Property
+DSCR,DSCR
+State,Property State
+Occupancy,Occupancy at end of quarter
+Property Name,Building Name/Number
+DSCR,Debt Coverage
+DSCR,Total DCR
+Market Value,Value
+Address,Street
+Lender,Lender
+Amort Start Date,Commence Date
+Address,Property Address
+NOI,Current NOI
+Acquisition Date,Year Originated
+Acquisition Date,Acquired
+Index,Index
+Loan Amount,Loan Amount
+Amort Start Date,Commence Date
+LTV,Loan-To-Value
+Acquisition Date,Owned Since
+Index,Index
+City,City
+Property Type,Property Description
+Debt Service,Annual Debt Service
+Rate Type,Rate Type
+All-In Rate,All-In Rate
+Market Value,Market Total Value
+Current Balance,Loan Balance
+State,Territory
+City,Property City
+City,Property City
+Current Balance,Mortgage Liens as of 
+All-In Rate,Rate
+Current Balance,Outstanding Loan Amount
+Maturity Date,Date of Maturity
+Debt Service,Total Debt Service
+Property Type,Type
+Property Name,Legal Name
+Acquisition Date,Purchase Date
+Property Type,Type of Community
+Maturity Date,Maturation Date
+DSCR,Debt Coverage Ratio
+Occupancy,Physical Occupancy
+Address,Property Location
 Square Feet,Square Feet
+Property Name,Legal Name
+Spread,Credit Spread
+Market Value,PWC Value
+Current Balance,Balance of Mortgages
+All-In Rate,Interest Rate
+Occupancy,Occupancy Status
+Rate Type,Fixed / Variable
+Maturity Date,Maturity Date
+Address,Address
+Index,Interest Rate Index
+DSCR,DCR
+City,Location
+Maturity Date,Maturation Date
+NOI,Net Operating Income
+LTV,LTV
+Loan Amount,Original Loan Amount
+DSCR,Debt Service Coverage
+Current Balance,Current Debt
+Rate Type,Floating (Y/N)
+Acquisition Date,Acquisition Date
+Units,Multifamily Units
+Lender,Lender
+Current Balance,Balance
+NOI,N.O.I.
+Market Value,Value
+Maturity Date,Matures
+Debt Service,Debt Service Total
+Units,SF/Units
+DSCR,DCR
+Market Value,Market Value
+Units,Multifamily Units
+Market Value,Borrower Started Value
+State,Providence
+Property Name,Property Number
+Units,Multifamily Units (#)
+LTV,LTV
+Property Name,ID
+Occupancy,Occupancy at end of quarter
+Rate Type,Fixed or Floating
+Market Value,Value
+Spread,Spread
+Amort Start Date,Amortization Start
+Occupancy,Physical Occupancy
+LTV,Loan-To-Value
+DSCR,Debt Coverage Ratio
+Units,Multifamily Units
+Index,Interest Rate Index
+City,Property City
+Lender,Lender
+State,Territory
+Market Value,Full Market Value
+Square Feet,Sq. Ft.
+State,Property State
+NOI,NOI
+Maturity Date,Maturity Date(s)
+Index,Index
+Rate Type,Interest Rate Type
+Rate Type,Interest Rate Type
+Occupancy,Occupancy at end of quarter
+Maturity Date,Loan Matures
+NOI,Net Operating Income
+State,Territory
+Property Type,Type of Property
+LTV,Loan-To-Value
+LTV,LTV
+City,Town
+Spread,Spread
+Occupancy,Physical Occupancy
+NOI,Current NOI
+Square Feet,Square Feet
+All-In Rate,All In Rate
+Current Balance,Loan Balance
+Debt Service,Total Debt Service
+Maturity Date,Date of Maturity
+Property Type,Type of Property
+Square Feet,Feet
+Acquisition Date,Year Acquired
+Occupancy,Occupancy at end of quarter
+DSCR,DCR
+City,City
+Property Type,Type
+Current Balance,Current Amount
+Current Balance,Outstanding Loans
+LTV,Loan To Value
+Loan Amount,Loan Amount
+Amort Start Date,Amort Date
+City,City
+Amort Start Date,Amort Date
+Amort Start Date,Amortization Start Date
+All-In Rate,Rate
+Acquisition Date,Acquistion
+Square Feet,Sq. Ft.
+Current Balance,Balance of Mortgages
+Maturity Date,Maturation Date
+Current Balance,Current Balance
+Spread,Spread
+Current Balance,Balance of Mortgages
+Rate Type,Fixed or Floating
+Rate Type,Interest Rate Type
+Property Type,Property Description
+Market Value,Market Total Value
+Property Type,Type of Property
+All-In Rate,Current Rate
+All-In Rate,All-In
+Units,Number of Units
+Lender,Mortgage Lender
+Debt Service,Debt Service Value
+Current Balance,Current Balance
+Loan Amount,Orig. Loan Amount
+All-In Rate,All-In Rate
+Property Type,Prop. Type
+Rate Type,Fixed / Variable
+City,Location
+Spread,Spread
+City,City
+Debt Service,Debt Service Total
+Property Type,Type of Community
+City,Town
+Current Balance,Current Amount
+Property Name,Building
+Debt Service,Debt Service Value
+Current Balance,Outstanding Loan Amount
+Acquisition Date,Year Originated
+Loan Amount,Original Loan Amount
+Property Type,Description
+Index,Interest Rate Index
+Rate Type,Interest Rate Type
+Amort Start Date,Commence Date
+Spread,Spread
+Debt Service,Total Debt Service
+DSCR,Debt Service Coverage
+Occupancy,Occ. %
+Rate Type,Interest Rate Type
+Loan Amount,Loan Amount
+Current Balance,Outstanding Loan(s)
+DSCR,Debt Service Ratio
+Address,Full Property Address
+Market Value,Full Market Value
+Current Balance,Outstanding Loan Amount
+City,Property City
+Debt Service,Debt Service Total
+Address,Property Location
+Maturity Date,Due Date (year)
+Spread,Credit Spread
+Debt Service,Debt Service
+City,Town
+Spread,Spread
+Market Value,Value
+Loan Amount,Orig. Loan Amount
+Debt Service,Total Debt Service
+Address,Full Property Address
+Index,Rate Index
+Index,Rate Index
+Square Feet,Square Footage
+Rate Type,Type
+NOI,Current N.O.I.
+Amort Start Date,Amortization Start
+DSCR,Debt Coverage Ratio
+Current Balance,OPB
+Rate Type,Rate Type
+Square Feet,Square Footage
+Market Value,MV
+Property Type,Type of Property
+Spread,Spread
+Current Balance,Balance of Mortgages
+Index,Rate Index
+NOI,Net Operating Income
+Square Feet,Sq. Feet
+Lender,Lender
+Property Name,Property Name
+Current Balance,Current Amount
+LTV,Loan-To-Value
+Property Name,ID
+Spread,Credit Spread
+LTV,LTV
+Property Type,Property Type
+DSCR,Debt Coverage Ratio
+City,Location
+Current Balance,Current Debt
+Loan Amount,Loan Amount
+All-In Rate,All-In
+All-In Rate,Interest
+DSCR,DCR
+Current Balance,Current Balance
+Property Type,Type
+Maturity Date,Final Maturity
+Index,Interest Rate Index
+Current Balance,Outstanding Loans
+Acquisition Date,Purchase Date
+Lender,Lender
+Market Value,MV
+Address,Street Address
+Acquisition Date,Acq. Date Cost
+DSCR,DSCR
+Occupancy,% Occupancy
+Acquisition Date,Year Acquired
+LTV,Loan-To-Value
+State,Providence
+Occupancy,Occ. %
+Current Balance,Balance of Mortgages
+Debt Service,Annual Debt Service
+Market Value,Market Value
+DSCR,Total DCR
+Amort Start Date,Amort Start
+Square Feet,Square Footage
+Address,Full Property Address
+Spread,Credit Spread
+Amort Start Date,Amort Date
+State,Providence
+Loan Amount,Loan Amount
+All-In Rate,Current Rate
+Market Value,PWC Value
+Maturity Date,Final Maturity
+Loan Amount,Orig. Loan Amount
+LTV,Loan To Value
+Units,SF / # of Units
+Property Name,Name
+Rate Type,Type of Interest Rate
+Maturity Date,Final Maturity
+Lender,Mortgage Lender
+Address,Property Street Address
+Loan Amount,Loan Amount
+LTV,Loan-To-Value
+Square Feet,Sq. Ft.
+Amort Start Date,Commence Date
+Spread,Credit Spread
+Maturity Date,Final Maturity
+Acquisition Date,Acquired
+Property Type,Description
+DSCR,DCR
+Property Type,Asset Type
+LTV,Loan To Value
+Amort Start Date,Amortization Date
+Rate Type,Fixed / Variable
+Property Name,Building Name/Number
+Loan Amount,Orig. Loan Amount
+Current Balance,Outstanding Loan Amount
+Lender,Mortgage Holder
+LTV,LTV
+State,Territory
+Lender,Mortgage Holder
+Property Name,Building
+Property Name,Building Name
+Units,Units / Sq. Ft.
+Occupancy,Occupancy at end of quarter
+City,Town
+Current Balance,Outstanding
+Current Balance,Balance of Mortgages
+Acquisition Date,Date Acquired
+Index,Interest Rate Index
+Rate Type,Rate Type
+Spread,Credit Spread
+Square Feet,Feet
+Acquisition Date,Date Acquired
+Amort Start Date,Amortization Start
+DSCR,Debt Coverage Ratio
+DSCR,Debt Coverage
+All-In Rate,All In Rate
+Rate Type,Interest Rate Type
+Rate Type,Loan Type
+DSCR,DCR
+NOI,Current NOI
+Acquisition Date,Date Acquired
+Debt Service,Annual Debt Service
+Spread,Spread
+Lender,Lender
+Debt Service,Debt Service Value
+Loan Amount,Loan Amount
+Property Type,Type of Community
+Acquisition Date,Date Acquired
+Property Name,Building Name
+All-In Rate,Current Rate
+Rate Type,Type of Loan
+DSCR,DCR
+Units,Units
+Index,Interest Rate Index
+All-In Rate,All In Rate
+Spread,Credit Spread
+Square Feet,Sq. Footage
+Units,Multifamily Units (#)
+Market Value,PWC Value
+Property Name,Building
+Square Feet,Square Footage
+Units,Unit Count
+Debt Service,Annual Debt Service
+LTV,Loan-To-Value
+Debt Service,Debt Service
+Units,# of Units
+Acquisition Date,Date of Acquisition
+Index,Index
+Current Balance,Outstanding Loan Amount
+Spread,Credit Spread
+LTV,Loan-To-Value
+NOI,Current Net Operating Income
+Current Balance,Outstanding
+Market Value,MV
+Square Feet,Sq. Feet
+DSCR,Total DSCR
+Occupancy,Current Occupancy
+Lender,Lender
+Property Type,Description
+Units,# of Units
+Amort Start Date,Amort Start
+DSCR,Debt Service Coverage
+Maturity Date,Date of Maturity
+Amort Start Date,Commence Date
+Address,Address
+Amort Start Date,Amort Start
+Amort Start Date,Commence Date
+Index,Rate Index
+Units,Units
+Square Feet,Sq. Ft.
+Address,Street Location
+Square Feet,Sq. Ft.
+Index,Interest Rate Index
+State,State
+Property Name,Building Name
+Debt Service,Debt Service
+Acquisition Date,Date of Acquisition
+Debt Service,Annual Debt Service
+Property Name,Name
+Market Value,Market Total Value
+Acquisition Date,Origination
+NOI,Current NOI
+State,Property State
+City,Location
+LTV,LTV
+Index,Index
+Current Balance,Outstanding Principal Balance
+Acquisition Date,Origination Date
+Occupancy,Occupancy
+Current Balance,Current Balance
+DSCR,DSCR
+City,Property City
+Index,Interest Rate Index
+Amort Start Date,Amort Start Date
+Address,Property Location
+City,City
+LTV,LTV
+LTV,Loan To Value
+Market Value,Full Market Value
+NOI,Current NOI
+Address,Location
+Amort Start Date,Amortization Start Date
+State,Providence
+Units,# of Units
+DSCR,Debt Coverage Ratio
+Debt Service,Debt Service
+State,Location
+NOI,NOI (Period Ending YTD)
+LTV,LTV
+Amort Start Date,Amortization Date
+Loan Amount,Loan Amount
+Current Balance,Outstanding
+Units,# Units / SF
+Maturity Date,Due Date
+Rate Type,Interest Rate Type
+Lender,Mortgage Holder
+Property Name,Legal Name
+Occupancy,Occupancy at end of quarter
+DSCR,Total DSCR
+Rate Type,Type of Rate
+LTV,LTV
+Maturity Date,Maturity
+Market Value,PWC Value
+Market Value,Market Total Value
+Market Value,Borrower Started Value
+Property Name,Property ID
+Address,Property Street Address
+Occupancy,Current Occupancy (%)
+Amort Start Date,Commence Date
+Amort Start Date,Amort Start Date
+Current Balance,OPB
+Acquisition Date,Origination
+Property Name,Building Name
+Lender,Lender
+Spread,Credit Spread
+Current Balance,Current Debt
+NOI,Net Rental Income
+Address,Location
+Rate Type,Fixed or Floating
+Current Balance,Outstanding Debt (YE)
+Maturity Date,Maturation Date
+State,State
+Rate Type,Type of Rate
+Property Name,Building Number
+Units,Unit Count
+Rate Type,Loan Type
+LTV,LTV
+Occupancy,Occupancy
+Property Name,Property Number
+Maturity Date,Loan Maturity Date
+City,Location
+Occupancy,Physical Occupancy
+DSCR,Debt Service Coverage
+Current Balance,Current Amount
+Market Value,PWC Value
+Index,Interest Rate Index
+Occupancy,Occupancy at end of quarter
+Lender,Mortgage Holder
+Index,Rate Index
+Lender,Lender
+DSCR,Debt Service Coverage
+Lender,Lender
+DSCR,Debt Service Ratio
+Units,Number of Units
+Acquisition Date,Acq. Date Cost
+Property Name,Legal Name
+Units,Unit Count
+Current Balance,Current Balance
+Address,Property Street Address
+Loan Amount,Loan Amount
+Acquisition Date,Date of Acquisition
+LTV,Loan-To-Value
+Occupancy,Occupancy %
+Property Type,Asset Type
+Occupancy,Occupancy
+DSCR,DCR
+Rate Type,Type
+State,Property State
+Units,Number of Units
+NOI,NOI
+Property Type,Type
+LTV,LTV
+DSCR,DCR
+Address,Location
+LTV,Loan-To-Value
+Loan Amount,Loan Amount
+Occupancy,Current Occupancy (%)
+Units,# of Units
+Occupancy,Current Occupancy
+Lender,Lender
+Address,Full Property Address
+Lender,Mortgage Holder
+Current Balance,Outstanding Loan(s)
+Debt Service,Total Debt Service
+NOI,N.O.I.
+City,City
+Square Feet,Square Footage
+Acquisition Date,Acquisition Date
+Current Balance,Outstanding Loan(s)
+LTV,Loan-To-Value
+Property Name,Property
+Property Name,Building Number
+Address,Street Location
+City,City
+Loan Amount,Orig. Loan Amount
+Rate Type,Type
+State,Property State
+Acquisition Date,Origination Date
+State,ST
+Address,Property Street Address
+Amort Start Date,Commence Date
+Debt Service,Annual Debt Service
+Property Name,Building Number
+All-In Rate,Interest
+Spread,Credit Spread
+DSCR,DSCR
+Acquisition Date,Acquisition Date
+Acquisition Date,Acquistion
+DSCR,Debt Coverage Ratio
+Square Feet,Feet
+Property Type,Asset Type
+Spread,Credit Spread
+DSCR,Debt Service Ratio
+Amort Start Date,Amort Start Date
+Occupancy,Current Occupancy
+City,City
+Maturity Date,Due Date (year)
+DSCR,Debt Coverage Ratio
+Current Balance,Balance
+Property Type,Prop. Type
+Debt Service,Debt Service Total
+Address,Location
+Units,# of Units
+Lender,Lender
+Loan Amount,OG Loan Amount
+Loan Amount,Original Loan Amount
+Market Value,PWC Value
+Property Type,Type of Community
+Index,Interest Rate Index
+Maturity Date,Loan Matures
+Acquisition Date,Origination
+Spread,Spread
+City,City
+NOI,N.O.I.
+Property Name,Name
+Current Balance,Loan Balance
+Debt Service,Total Debt Service
+City,Town
+DSCR,Debt Service Coverage
+Square Feet,Sq. Ft.
+City,City
+Occupancy,Occupancy %
+DSCR,Total DCR
+Property Name,Name
+LTV,LTV
+DSCR,DCR
+Current Balance,Current Debt
+Units,Number of Units
+Rate Type,Type of Interest Rate
+Maturity Date,Loan Matures
+Lender,Lender
+Occupancy,Physical Occupancy
+Lender,Mortgage Holder
+Maturity Date,Date Matures
+Lender,Mortgage Lender
+NOI,Net Operating Income
+DSCR,Debt Coverage
+Maturity Date,Due Date
+NOI,Current NOI
+Lender,Mortgage Lender
+Property Name,Building Name/Number
+Square Feet,Sq. Footage
+Spread,Spread
+Property Name,Building Number
+Occupancy,Occupancy %
+Spread,Spread
+Amort Start Date,Amortization Start Date
+Loan Amount,Orig. Loan Amount
+Amort Start Date,Amort Date
+DSCR,Debt Service Coverage
+Property Name,Name
+All-In Rate,Interest Rate
+Units,#units
+Maturity Date,Due Date
+LTV,Loan To Value
+Units,SF/Units
+Rate Type,Fixed / Variable
+Index,Index
+DSCR,Debt Service Ratio
+City,Location
+LTV,Loan To Value
+Current Balance,Outstanding Debt
+Acquisition Date,Acquired
+Occupancy,Occupancy %
+Units,Units / Sq. Ft.
+Rate Type,Fixed / Variable
+Index,Rate Index
+Maturity Date,Due Date
+Units,# Units / SF
+Property Type,Prop. Type
+Occupancy,Occupancy %
+Spread,Spread
+State,Territory
 Spread,Spread
 Maturity Date,Date Matures
-Address,Property Street Address
-Debt Service,Total Debt Service
-Square Feet,Sq. Footage
-LTV,LTV
-Market Value,PWC Value
-Amort Start Date,Amortization Start
-Occupancy,Occupancy at end of quarter
-Property Type,Type
-Address,Full Property Address
-City,Town
-Current Balance,Balance of Mortgages
-Property Name,Name
-All-In Rate,All In
-Occupancy,Occupancy at end of quarter
-Rate Type,Type of Interest Rate
-Property Name,Property
-Acquisition Date,Acquisition Date
-Address,Property Address
-Debt Service,Debt Service
-Square Feet,Square Feet
+DSCR,DSCR
+Property Name,Building Number
 Acquisition Date,Date of Acquisition
 NOI,NOI
-Units,Units / Sq. Ft.
-DSCR,Total DCR
-All-In Rate,All-In
-Rate Type,Floating (Y/N)
-Property Name,Property Name
-City,Location
-Debt Service,Total Debt Service
-Square Feet,Square Footage
-Property Type,Prop. Type
-DSCR,Debt Service Ratio
-Current Balance,Outstanding Loans
-Acquisition Date,Date Acquired
-Amort Start Date,Amort Date
+Lender,Mortgage Lender
+Rate Type,Fixed or Floating
+Spread,Credit Spread
+Occupancy,Occupancy at end of quarter
+DSCR,Debt Service Coverage
 Address,Property Location
-State,Territory
-Units,Number of Units
-Property Name,Legal Name
-Maturity Date,Loan Maturity Date
-LTV,Loan-To-Value
-Debt Service,Debt Service Value
-Maturity Date,Final Maturity
-State,Territory
-Amort Start Date,Commence Date
-Current Balance,Outstanding Debt (YE)
-Loan Amount,OG Loan Amount
-Units,SF/Units
-Debt Service,Debt Service Value
-Units,#units
-City,Location
-Index,Interest Rate Index
-Amort Start Date,Amort Date
-Acquisition Date,Purchase Date
-NOI,Net Operating Income
-Address,Location
+Market Value,Internal Valuation
+Loan Amount,Loan Amount
+Address,Street Address
+LTV,Loan To Value
+Units,Unit Count
 Index,Index
-Property Name,Name
+Loan Amount,Orig. Loan Amount
+Spread,Credit Spread
+NOI,NOI
+Debt Service,Debt Service
+Debt Service,Debt Service Value
+Occupancy,Occupancy Status
+Address,Property Location
+Market Value,Value
+Property Type,Description
+Property Type,Type of Community
+State,Providence
+Occupancy,Occ. %
+Occupancy,Current Occupancy
+DSCR,Debt Coverage Ratio
+Property Type,Asset Type
+LTV,Loan-To-Value
+Maturity Date,Maturation Date
+DSCR,Debt Coverage Ratio
+Acquisition Date,Date Acquired
+Square Feet,Square Footage
+Rate Type,Rate Type
+Acquisition Date,Year Acquired
+Square Feet,Feet
+Units,Multifamily Units (#)
+Property Type,Property Description
+Debt Service,Debt Service
+State,Location
+Amort Start Date,Amortization Start
+Debt Service,Debt Service
+Property Type,Asset Type
+Lender,Mortgage Holder
+Rate Type,Floating (Y/N)
+Spread,Spread
+Square Feet,Sq. Footage
+Loan Amount,OG Loan Amount
+Current Balance,Mortgage Outstanding
+Rate Type,Fixed / Variable
+Units,SF / # of Units
+Current Balance,Principal Balance
+Current Balance,Mortgage Liens as of 
+Debt Service,Total Debt Service
+DSCR,Debt Service Coverage
+Index,Rate Index
+Square Feet,Sq. Feet
+Loan Amount,OG Loan Amount
+Maturity Date,Loan Maturity Date
+Maturity Date,Maturity Date(s)
+Debt Service,Debt Service Total
+Lender,Mortgage Lender
+Address,Full Property Address
+State,Territory
+Units,Units / Sq. Ft.
+Amort Start Date,Amort Start Date
+City,Property City
+Square Feet,Sq. Ft.
+Square Feet,Square Footage
+Market Value,PWC Value
+Property Type,Prop. Type
+Spread,Credit Spread
+Loan Amount,Original Loan Amount
+State,ST
+NOI,Current N.O.I.
+NOI,Net Income
+State,Property State
+LTV,LTV
+NOI,NOI
+Spread,Spread
+Current Balance,Outstanding
+Address,Street Location
+Rate Type,Fixed or Floating
+Rate Type,Type of Loan
+Square Feet,Square Footage
+Acquisition Date,Year Acquired
+Property Type,Prop. Type
+State,Territory
+Maturity Date,Due Date (year)
+Amort Start Date,Amortization Date
+Current Balance,Outstanding
+State,Territory
+DSCR,DCR
+Index,Index
+Acquisition Date,Year Originated
+Loan Amount,Loan Amount
+Current Balance,Outstanding Loans
+LTV,LTV
+Index,Interest Rate Index
+Property Name,Building Number
+Index,Rate Index
+All-In Rate,Interest
+Units,Unit Count
+Current Balance,Loan Balance
+State,ST
+Maturity Date,Maturity Date
+Spread,Spread
+LTV,Loan-To-Value
+Debt Service,Annual Debt Service
+LTV,Loan To Value
+Address,Street Location
+Debt Service,Debt Service Total
+Rate Type,Fixed / Variable
+Loan Amount,Loan Amount
+State,State
+Loan Amount,Original Loan Amount
+Current Balance,Outstanding Debt (YE)
+Rate Type,Loan Type
+Maturity Date,Loan Maturity Date
+Debt Service,Debt Service Total
+City,Property City
+Debt Service,Debt Service Value
+Index,Interest Rate Index
+LTV,Loan To Value
+Maturity Date,Maturity
+Spread,Spread
+Loan Amount,Loan Amount
+Units,Units
+State,Location
+Index,Rate Index
+City,Location
+NOI,NOI
+Market Value,Borrower Started Value
+Occupancy,Physical Occupancy
+State,ST
+Property Type,Asset Type
 Units,SF/Units
+Occupancy,Occ. %
+Amort Start Date,Amortization Date
+LTV,Loan-To-Value
+Current Balance,Outstanding Loans
+City,Property City
+State,Providence
+Current Balance,Outstanding
+DSCR,DSCR
+Address,Property Street Address
+State,Providence
+Acquisition Date,Year of Initial Ownership
+LTV,Loan-To-Value
+Square Feet,Square Footage
+State,State
+Debt Service,Debt Service
+Maturity Date,Final Maturity
+Property Name,Building Name
+Loan Amount,OG Loan Amount
+Loan Amount,Original Loan Amount
+Amort Start Date,Amortization Date
+Acquisition Date,Year of Initial Ownership
+Acquisition Date,Date of Acquisition
+Maturity Date,Due Date
+Square Feet,Sq. Ft.
+State,Territory
+Acquisition Date,Year Acquired
+Address,Property Location
+City,Location
+Address,Property Address
+State,ST
+City,Location
+Acquisition Date,Year of Initial Ownership
+Square Feet,Feet
+DSCR,DSCR
+Maturity Date,Final Maturity
+Address,Location
+Property Name,Property Number
+Index,Rate Index
+LTV,Loan-To-Value
+NOI,Net Operating Income
+LTV,Loan-To-Value
+Acquisition Date,Purchase Date
+All-In Rate,All-In Rate
+DSCR,Debt Coverage
+Current Balance,Principal Balance
+Index,Rate Index
+Debt Service,Annual Debt Service
+Lender,Lender
+State,ST
+Rate Type,Loan Type
+Property Type,Description
+Property Name,Property Name
+Current Balance,Outstanding Principal Balance
+Address,Property Location
+Units,Units / Sq. Ft.
+Units,SF/Units
+Amort Start Date,Amort Start Date
+All-In Rate,Interest Rate
+Current Balance,Mortgage Outstanding
+NOI,Current Net Operating Income
+Market Value,Full Market Value
+Lender,Lender
+DSCR,DSCR
+Property Name,Building
+Occupancy,Occupancy
+Debt Service,Total Debt Service
+Acquisition Date,Year Originated
+All-In Rate,Interest
+NOI,N.O.I.
+Spread,Spread
+State,ST
+Units,Multifamily Units
+Property Name,Legal Name
+Address,Property Street Address
+Address,Property Location
+City,Town
+Property Name,Name
+Debt Service,Debt Service Total
+Index,Interest Rate Index
+Acquisition Date,Acquisition Date
+Amort Start Date,Amortization Start
+Occupancy,Occ. %
+Market Value,MV
+Rate Type,Type of Loan
+Current Balance,Mortgage Liens as of 
+Rate Type,Loan Type
+Acquisition Date,Owned Since
+Amort Start Date,Amort Start Date
+Current Balance,Outstanding Loan(s)
+Units,Number of Units
+Acquisition Date,Year Acquired
+Address,Street Address
+Index,Interest Rate Index
+Property Name,Building Name/Number
+Address,Property Address
+Current Balance,Outstanding Loan Amount
+Property Type,Type of Community
+DSCR,Total DCR
+Acquisition Date,Acquistion
+Rate Type,Interest Rate Type
+NOI,NOI
+Spread,Credit Spread
+LTV,Loan-To-Value
+Current Balance,Mortgage Liens as of 
+Spread,Spread
+All-In Rate,All In Rate
+LTV,Loan To Value
+Occupancy,Physical Occupancy
+NOI,NOI (Period Ending YTD)
+Address,Property Address
+Occupancy,Occupancy
+Property Type,Type
+Lender,Mortgage Lender
+Lender,Lender
+Spread,Credit Spread
+Maturity Date,Loan Matures
+Acquisition Date,Origination
+Acquisition Date,Origination Date
+Market Value,MV
+NOI,Net Operating Income
+Debt Service,Debt Service Value
+NOI,NOI (Period Ending YTD)
+Acquisition Date,Year Acquired
+Units,SF / # of Units
+Spread,Spread
+Occupancy,% Occupied
+Debt Service,Debt Service Value
+Property Name,Building Name/Number
+Current Balance,Outstanding
+Rate Type,Type of Loan
+Spread,Spread
+Property Type,Type
+Occupancy,Occupancy
+Loan Amount,Loan Amount
+Square Feet,Feet
+Address,Address
+Occupancy,% Occupancy
+State,Territory
+Units,Units / Sq. Ft.
+LTV,Loan To Value
+Maturity Date,Due Date
+Maturity Date,Maturation Date
+Units,Unit Count
+Maturity Date,Maturity Date
+Units,Unit Count
+DSCR,Debt Coverage Ratio
+Property Name,Name
+Square Feet,Sq. Feet
+Occupancy,Occupancy Status
+Current Balance,Principal Balance
+LTV,LTV
+Address,Address
+Debt Service,Debt Service Value
+Occupancy,Occupancy
+Index,Rate Index
+Address,Street
+Acquisition Date,Acquired
+Acquisition Date,Year Originated
+Property Name,Building Name
+Property Type,Type of Community
+Index,Index
+Current Balance,Current Amount
+Market Value,Market Total Value
+NOI,Current N.O.I.
+Address,Property Street Address
+All-In Rate,All In
+City,City
+City,Property City
+All-In Rate,Rate
+Rate Type,Loan Type
+Debt Service,Total Debt Service
+DSCR,DSCR
+Loan Amount,Loan Amount
+Market Value,Market Total Value
+LTV,Loan To Value
+State,Providence
+Index,Interest Rate Index
+Index,Interest Rate Index
+Lender,Mortgage Holder
+Acquisition Date,Owned Since
+Amort Start Date,Amort Start Date
+All-In Rate,Interest Rate
 Acquisition Date,Acq. Date Cost
+Loan Amount,Original Loan Amount
+Property Type,Property Description
+Square Feet,Square Feet
+Acquisition Date,Purchase Date
+Acquisition Date,Acquired
+Current Balance,Mortgage Liens as of 
+All-In Rate,All-In
+Current Balance,Outstanding Loan(s)
+State,ST
+City,Location
+Address,Property Location
+City,Location
+Index,Index
+Property Type,Type of Community
+Square Feet,Sq. Footage
+NOI,NOI (Period Ending YTD)
+Acquisition Date,Origination Date
+Loan Amount,Original Loan Amount
+Current Balance,Current Amount
+Address,Address
+Address,Address
+City,City
+Units,SF / # of Units
+Amort Start Date,Commence Date
+City,Location
+Acquisition Date,Acquired
+Index,Index
+Units,Multifamily Units (#)
+Debt Service,Debt Service
+Loan Amount,Loan Amount
+LTV,Loan To Value
+Property Type,Asset Type
+Occupancy,Occupancy Status
+Market Value,Market Value
+LTV,LTV
+Address,Address
+Debt Service,Annual Debt Service
+Market Value,PWC Value
+Index,Index
+Units,Units / Sq. Ft.
+Maturity Date,Maturation Date
+LTV,LTV
+State,ST
+Lender,Lender
+All-In Rate,Rate
+LTV,Loan To Value
+Current Balance,Current Balance
+Amort Start Date,Amortization Date
+State,Property State
+DSCR,Total DSCR
+Acquisition Date,Acquisition Date
+Maturity Date,Matures
+Occupancy,Occ. %
+Lender,Mortgage Lender
+Lender,Mortgage Holder
+Market Value,Market Value
+Address,Full Property Address
+Units,# Units / SF
+Occupancy,Current Occupancy
+Current Balance,Current Amount
+Address,Address
+Units,Number of Units
+City,City
+Occupancy,Occupancy Status
+Units,# Units / SF
+Property Type,Type
+DSCR,Debt Service Ratio
+Loan Amount,Loan Amount
+Index,Rate Index
+Spread,Spread
+Property Name,Building
+All-In Rate,Rate
+DSCR,Debt Service Ratio
+Maturity Date,Date of Maturity
+Property Name,Building Name/Number
+Units,Multifamily Units (#)
+Debt Service,Debt Service Value
+Property Name,Property
+DSCR,DCR
+All-In Rate,Interest Rate
+Property Name,Property Number
+LTV,Loan To Value
+LTV,Loan-To-Value
+DSCR,DCR
+Amort Start Date,Commence Date
+Rate Type,Floating (Y/N)
+Loan Amount,Orig. Loan Amount
+Amort Start Date,Amort Start Date
+Lender,Mortgage Holder
+Square Feet,Square Footage
+All-In Rate,All-in
+All-In Rate,All-In
+Square Feet,Feet
+Loan Amount,Original Loan Amount
+Rate Type,Loan Type
+Maturity Date,Final Maturity
+DSCR,Debt Service Coverage
+Loan Amount,Orig. Loan Amount
+Square Feet,Sq. Ft.
+Lender,Lender
+DSCR,Debt Service Ratio
+Address,Full Property Address
+Property Type,Type of Community
+Acquisition Date,Year Acquired
+Amort Start Date,Commence Date
+Property Type,Type of Property
+Market Value,MV
+City,Location
+LTV,LTV
+Maturity Date,Final Maturity
+State,Property State
+State,State
+Property Name,Building Number
+Spread,Spread
+Occupancy,Occupancy at end of quarter
+Current Balance,Balance
+City,Property City
+Lender,Mortgage Holder
+Current Balance,Mortgage Outstanding
+State,Property State
+Loan Amount,Loan Amount
+Square Feet,Feet
+Units,# Units / SF
+Acquisition Date,Origination
+Market Value,Market Total Value
+City,Location
+City,City
+Address,Full Property Address
+Market Value,Market Total Value
+Rate Type,Fixed / Variable
+Units,Units / Sq. Ft.
+Acquisition Date,Origination Date
+State,Territory
+NOI,NOI (Period Ending YTD)
+Maturity Date,Matures
+Debt Service,Debt Service Total
+Index,Index
+Current Balance,Principal Balance
+State,Territory
+Occupancy,Current Occupancy
+Rate Type,Fixed / Variable
+Occupancy,Occupancy %
+Maturity Date,Due Date (year)
+Square Feet,Sq. Ft.
+Lender,Mortgage Holder
+Property Type,Property Description
+Property Type,Property Description
+Property Type,Property Description
+Units,SF/Units
+Units,# Units / SF
+State,ST
+Debt Service,Annual Debt Service
+State,Providence
+City,Town
+Address,Full Property Address
+Acquisition Date,Year Originated
+Units,Units / Sq. Ft.
+Market Value,Full Market Value
+DSCR,Debt Coverage Ratio
+Maturity Date,Date Matures
+State,Providence
+Square Feet,Sq. Footage
+Rate Type,Fixed or Floating
+Maturity Date,Maturation Date
+Spread,Credit Spread
+Square Feet,Sq. Footage
+Debt Service,Debt Service
+City,City
+LTV,LTV
+Market Value,Market Value
+Current Balance,Outstanding Debt (YE)
+Amort Start Date,Amortization Date
+NOI,Current NOI
+Market Value,MV
+All-In Rate,All In Rate
+Spread,Credit Spread
+Maturity Date,Matures
+Current Balance,Outstanding Debt (YE)
+Square Feet,Sq. Feet
+NOI,NOI
+Index,Index
+Property Type,Property Type
+Spread,Credit Spread
+Spread,Credit Spread
+Index,Index
+All-In Rate,Current Rate
+Spread,Credit Spread
+Current Balance,Mortgage Liens as of 
+Property Type,Type of Property
+Index,Rate Index
+Lender,Lender
+Acquisition Date,Year Originated
+Property Type,Type of Property
+Rate Type,Type of Rate
+Loan Amount,Loan Amount
+Property Name,Name
+State,Territory
+Acquisition Date,Date of Acquisition
+Occupancy,Occupancy %
+Spread,Credit Spread
+NOI,Current N.O.I.
+State,Providence
+Square Feet,Feet
+NOI,Current NOI
+City,Location
+DSCR,Debt Coverage Ratio
+Acquisition Date,Purchase Date
+Occupancy,Occupancy at end of quarter
+DSCR,Debt Coverage Ratio
+Amort Start Date,Commence Date
+Lender,Lender
+Square Feet,Sq. Footage
+State,Territory
+Square Feet,Square Footage
+Square Feet,Square Footage
+Index,Rate Index
+All-In Rate,All In
+Spread,Credit Spread
+Debt Service,Debt Service
+Property Name,Property Name
+Lender,Lender
+NOI,N.O.I.
+Address,Property Street Address
+Property Type,Prop. Type
+Rate Type,Rate Type
+Rate Type,Floating (Y/N)
+Amort Start Date,Commence Date
 All-In Rate,All In
 Acquisition Date,Origination Date
-Lender,Mortgage Holder
-Occupancy,Current Occupancy (%)
-Current Balance,Current Balance
-Index,Interest Rate Index
+Loan Amount,Loan Amount
+Address,Full Property Address
 LTV,Loan-To-Value
-State,State
-LTV,Loan-To-Value
-Maturity Date,Loan Maturity Date
-Lender,Mortgage Lender
 Rate Type,Type of Loan
-City,Location
-Units,Multifamily Units (#)
-Lender,Mortgage Lender
-Market Value,Full Market Value
-Current Balance,Outstanding Loans
-Property Name,Building Name
-DSCR,DCR
-Amort Start Date,Amort Start Date
-Lender,Mortgage Lender
-All-In Rate,Rate
-Occupancy,% Occupancy
-DSCR,Debt Coverage Ratio
-All-In Rate,All-In Rate
-Amort Start Date,Amort Start
-City,City
+Amort Start Date,Amortization Start
+NOI,Net Operating Income
 Property Type,Type of Community
-Maturity Date,Due Date
-NOI,Current NOI
-LTV,Loan To Value
-DSCR,Debt Service Ratio
-DSCR,Total DSCR
-Property Name,Name
-Property Type,Prop. Type
-Property Name,Property Number
-Index,Index
-Maturity Date,Date Matures
 Lender,Mortgage Holder
-Units,Number of Units
-State,Location
-Acquisition Date,Acquired
-Market Value,Value
-State,Providence
-Maturity Date,Date Matures
-Lender,Lender
-Property Type,Type
-Property Name,Building
-Amort Start Date,Amort Start
-NOI,NOI (Period Ending YTD)
-Amort Start Date,Amortization Start
-Amort Start Date,Commence Date
-Amort Start Date,Amort Start
-Address,Property Address
-All-In Rate,Interest
-Square Feet,Square Footage
-Property Type,Prop. Type
-Market Value,Market Total Value
-Market Value,Borrower Started Value
-Market Value,Market Value
-Acquisition Date,Year of Initial Ownership
-NOI,Current N.O.I.
-City,Property City
-DSCR,DCR
-Amort Start Date,Commence Date
-Property Name,Name
-LTV,Loan To Value
-Debt Service,Debt Service Value
-Occupancy,% Occupied
-Spread,Spread
-Amort Start Date,Amortization Start Date
-Rate Type,Floating (Y/N)
-Rate Type,Rate Type
-Property Type,Description
-All-In Rate,All-In
-Rate Type,Type of Interest Rate
+DSCR,Debt Coverage Ratio
 LTV,Loan-To-Value
-Units,Units
-Occupancy,Current Occupancy
-Rate Type,Interest Rate Type
-Maturity Date,Maturity
-Maturity Date,Maturity Date
-Square Feet,Square Feet
-Rate Type,Type of Loan
-Loan Amount,Loan Amount
-Current Balance,Current Balance
-Occupancy,Occupancy at end of quarter
-Loan Amount,Original Loan Amount
-Index,Index
+Index,Interest Rate Index
+Amort Start Date,Amortization Start Date
+LTV,Loan To Value
+State,ST
+Amort Start Date,Amort Start Date
+Square Feet,Sq. Feet
 Spread,Credit Spread
-Debt Service,Debt Service Total
-Amort Start Date,Amortization Date
-Spread,Credit Spread
-Property Name,Building Name/Number
-Address,Address
-Maturity Date,Matures
-Spread,Spread
-City,Location
-Amort Start Date,Amortization Date
-Property Name,Building Name
-Loan Amount,Original Loan Amount
-DSCR,Debt Service Ratio
-Maturity Date,Final Maturity
-LTV,Loan To Value
-NOI,NOI
-Maturity Date,Final Maturity
-LTV,Loan To Value
-Market Value,Full Market Value
-Units,Unit Count
-Spread,Spread
-Index,Rate Index
-Debt Service,Debt Service
-City,Property City
-Property Type,Property Description
-Acquisition Date,Acquisition Date (yr)
-LTV,Loan To Value
-Spread,Spread
+State,Territory
 DSCR,DSCR
-Market Value,PWC Value
-Units,Multifamily Units (#)
-Debt Service,Total Debt Service
-Current Balance,Current Balance
-Units,SF / # of Units
-Maturity Date,Maturity
-City,Location
+Loan Amount,Loan Amount
+Acquisition Date,Acquisition Date
+Rate Type,Type of Interest Rate
+Square Feet,Sq. Feet
+Occupancy,Occupancy at end of quarter
+Lender,Lender
+City,Town
 Lender,Lender
 Loan Amount,Loan Amount
-Lender,Mortgage Holder
-Maturity Date,Final Maturity
-Square Feet,Sq. Footage
-City,City
+Index,Index
+Market Value,Market Total Value
+Maturity Date,Maturity
+Units,Unit Count
+DSCR,Total DSCR
 Property Type,Asset Type
-Amort Start Date,Amortization Start
-NOI,Current N.O.I.
-Loan Amount,Original Loan Amount
-Index,Interest Rate Index
-Current Balance,Mortgage Liens as of 
-Occupancy,Physical Occupancy
-Spread,Spread
+Occupancy,Occupancy Status
+Debt Service,Annual Debt Service
+Loan Amount,Loan Amount
+DSCR,Debt Service Ratio
+LTV,Loan-To-Value
+NOI,NOI (Period Ending YTD)
+Maturity Date,Loan Maturity Date
+All-In Rate,Rate
+Market Value,MV
+All-In Rate,Interest
+Rate Type,Type of Interest Rate
+Market Value,Market Total Value
+All-In Rate,All-In
+City,City
+Property Name,Name
 Property Name,Building Name/Number
-Spread,Spread
-Amort Start Date,Amortization Start Date
-Maturity Date,Date Matures
-Units,Multifamily Units (#)
-Address,Property Street Address
+NOI,Current Net Operating Income
+All-In Rate,Current Rate
+Current Balance,Outstanding Principal Balance
+Amort Start Date,Amort Start
+Loan Amount,OG Loan Amount
+NOI,Current Net Operating Income
+Property Type,Property Type
+Maturity Date,Maturity Date
+Debt Service,Debt Service Value
+Amort Start Date,Amort Start
+Property Name,ID
+Address,Property Address
+Loan Amount,Loan Amount
+Square Feet,Sq. Footage
+Loan Amount,Original Loan Amount
 LTV,Loan To Value
-Debt Service,Debt Service Total
-Occupancy,% Occupied
+LTV,Loan-To-Value
+Amort Start Date,Amort Date
+Acquisition Date,Origination
+Lender,Mortgage Holder
+Debt Service,Debt Service Value
+Index,Index
 Debt Service,Total Debt Service
 Units,# of Units
-Current Balance,Outstanding Debt (YE)
-Amort Start Date,Amort Start Date
+Loan Amount,Loan Amount
+Amort Start Date,Amortization Date
+Market Value,MV
+Square Feet,Square Feet
+Index,Rate Index
+Maturity Date,Maturity Date(s)
+Units,Units / Sq. Ft.
+Lender,Lender
+City,City
 Spread,Credit Spread
+Index,Index
+Spread,Credit Spread
+Current Balance,Mortgage Liens as of 
+Debt Service,Total Debt Service
+Square Feet,Square Feet
+Lender,Mortgage Holder
+Property Type,Type of Community
+Amort Start Date,Amort Start Date
+Loan Amount,Original Loan Amount
+Property Name,Property ID
+DSCR,Debt Service Coverage
+LTV,Loan To Value
+Debt Service,Debt Service Value
+DSCR,DSCR
+Units,Multifamily Units
+Property Type,Property Type
+Occupancy,Occupancy
+Units,# Units / SF
+Square Feet,Sq. Ft.
+Lender,Lender
+Square Feet,Sq. Ft.
 Market Value,Value
+Rate Type,Fixed / Variable
+All-In Rate,All In
+Occupancy,Occupancy at end of quarter
+City,City
+Amort Start Date,Amort Start
+Acquisition Date,Acquisition Date (yr)
+State,Property State
+Square Feet,Feet
+Units,Units / Sq. Ft.
+City,Property City
+State,Providence
+All-In Rate,Interest
+DSCR,Debt Coverage Ratio
+Debt Service,Debt Service Total
+Spread,Credit Spread
+DSCR,DSCR
+Units,SF/Units
+City,Property City
+Maturity Date,Maturation Date
+Occupancy,Physical Occupancy
+Debt Service,Debt Service Value
+Market Value,PWC Value
+Loan Amount,Loan Amount
+Property Type,Asset Type
+Address,Location
+State,Providence
+Property Name,Building Number
+Property Name,ID
+Acquisition Date,Acquisition Date (yr)
+Address,Property Street Address
+City,City
+NOI,NOI (Period Ending YTD)
+Debt Service,Total Debt Service
+Maturity Date,Maturity Date(s)
+All-In Rate,All In
+DSCR,Debt Service Ratio
+All-In Rate,Rate
+Index,Interest Rate Index
+All-In Rate,All In Rate
+Maturity Date,Final Maturity
+Amort Start Date,Commence Date
+Acquisition Date,Purchase Date
+DSCR,Total DSCR
+Units,Multifamily Units (#)
+Acquisition Date,Acquisition Date
+Property Type,Description
+Spread,Spread
+LTV,Loan To Value
+DSCR,Total DCR
+Amort Start Date,Amortization Start Date
+Maturity Date,Maturation Date
+Property Type,Type of Property
+LTV,Loan-To-Value
+Amort Start Date,Amortization Date
+State,Location
+Debt Service,Debt Service Total
+Market Value,Value
+Rate Type,Interest Rate Type
+Occupancy,Current Occupancy (%)
+NOI,Net Operating Income
+City,Property City
+Spread,Credit Spread
+City,Town
+Property Type,Type of Property
+Maturity Date,Due Date
+Address,Street Location
+City,Town
+Occupancy,% Occupied
+Property Type,Property Type
+Address,Street Address
+Market Value,Value
+Market Value,MV
+Current Balance,Outstanding Principal Balance
+Market Value,Internal Valuation
+Acquisition Date,Owned Since
+Amort Start Date,Commence Date
+Maturity Date,Matures
+State,Providence
+DSCR,Total DSCR
+City,Town
+NOI,NOI (Period Ending YTD)
+Square Feet,Sq. Ft.
+Lender,Lender
+Market Value,PWC Value
+State,Property State
+NOI,Current NOI
+Property Name,Building Number
+State,Territory
+DSCR,DCR
+City,Location
+Property Type,Prop. Type
+LTV,LTV
+Spread,Credit Spread
+Market Value,PWC Value
+Rate Type,Rate Type
+Maturity Date,Loan Matures
+State,Providence
+DSCR,Debt Coverage Ratio
+Square Feet,Sq. Footage
+Lender,Mortgage Holder
+Property Type,Type of Property
+Loan Amount,Loan Amount
+Units,Number of Units
+DSCR,DCR
+Market Value,Borrower Started Value
+Lender,Lender
+Units,Units
+Address,Address
+Loan Amount,Loan Amount
+Property Name,Building Name
+Debt Service,Total Debt Service
+Current Balance,OPB
+State,Providence
+City,Location
+Property Name,Building
+Spread,Spread
+Current Balance,Outstanding
+All-In Rate,All-In Rate
+Amort Start Date,Amortization Start Date
+DSCR,Total DCR
+Debt Service,Debt Service Total
+Square Feet,Square Footage
+All-In Rate,All-in
+NOI,Current Net Operating Income
+Acquisition Date,Date of Acquisition
+Acquisition Date,Owned Since
+Property Name,Building Name
+Loan Amount,Original Loan Amount
+Property Name,Legal Name
+City,Location
+Debt Service,Total Debt Service
+Acquisition Date,Date of Acquisition
+Debt Service,Debt Service
+City,Location
+Market Value,Full Market Value
+Address,Property Address
+State,Providence
+Lender,Mortgage Lender
+City,Location
+Loan Amount,Orig. Loan Amount
+Rate Type,Rate Type
+State,Providence
+Debt Service,Annual Debt Service
+Property Name,Building Name/Number
+LTV,LTV
+City,Town
+Acquisition Date,Acquisition Date (yr)
+Acquisition Date,Date Acquired
+LTV,LTV
+DSCR,DSCR
+Spread,Credit Spread
+NOI,Current NOI
+Amort Start Date,Amort Date
+Debt Service,Debt Service Value
+Lender,Mortgage Lender
+Loan Amount,OG Loan Amount
+Spread,Credit Spread
+NOI,Net Rental Income
+LTV,LTV
+State,State
+State,Providence
+Occupancy,Occ. %
+Index,Rate Index
+Spread,Spread
+DSCR,DSCR
+Acquisition Date,Year of Initial Ownership
+Square Feet,Square Footage
+State,Providence
+Square Feet,Square Footage
+All-In Rate,All-In Rate
+City,Location
+Maturity Date,Date of Maturity
+Address,Street Address
+NOI,Current Net Operating Income
+Property Name,Name
+Loan Amount,Loan Amount
+Units,# Units / SF
+Loan Amount,Orig. Loan Amount
+State,ST
+Rate Type,Fixed / Variable
+City,Location
+Address,Street
+DSCR,Total DSCR
+Amort Start Date,Amort Date
+Rate Type,Fixed / Variable
+Debt Service,Debt Service Value
+LTV,Loan To Value
+Rate Type,Fixed / Variable
+Loan Amount,Orig. Loan Amount
+Lender,Lender
+City,Town
+Spread,Credit Spread
+DSCR,Debt Coverage Ratio
+Square Feet,Feet
+Debt Service,Debt Service Total
+Lender,Lender
+Spread,Credit Spread
+Current Balance,Outstanding Loan Amount
+Maturity Date,Maturity
+Spread,Credit Spread
+Market Value,PWC Value
+Acquisition Date,Acquired
+City,Town
+Property Name,Building Name/Number
+City,Property City
+Address,Address
+Index,Index
+LTV,Loan-To-Value
+State,Territory
+Acquisition Date,Acquisition Date
+NOI,NOI
+Address,Full Property Address
+LTV,Loan To Value
+Debt Service,Debt Service Total
+Lender,Mortgage Lender
+Debt Service,Annual Debt Service
+Amort Start Date,Amort Start
+DSCR,DSCR
+Occupancy,Occ. %
+Lender,Mortgage Lender
+Index,Rate Index
+Market Value,Market Value
+State,ST
+Units,Unit Count
+Acquisition Date,Year Originated
+NOI,Current Net Operating Income
+Lender,Lender
+Rate Type,Fixed or Floating
+Amort Start Date,Amortization Start Date
+DSCR,Debt Coverage Ratio
+Index,Interest Rate Index
+All-In Rate,All-in
+Units,#units
+DSCR,DCR
+DSCR,Debt Service Coverage
+Debt Service,Debt Service Value
+Spread,Spread
+Debt Service,Debt Service Total
+Index,Rate Index
+Occupancy,Current Occupancy (%)
+City,City
+Index,Interest Rate Index
+City,Town
+All-In Rate,Current Rate
+Acquisition Date,Acq. Date Cost
+Index,Interest Rate Index
+All-In Rate,All In Rate
+Index,Interest Rate Index
+Acquisition Date,Year of Initial Ownership
+Occupancy,Physical Occupancy
+LTV,LTV
+Current Balance,OPB
+Acquisition Date,Year Acquired
+Index,Interest Rate Index
+Units,Unit Count
+Debt Service,Total Debt Service
+NOI,NOI
+City,Town
+Address,Address
+Market Value,Internal Valuation
+Spread,Credit Spread
+Square Feet,Sq. Ft.
+City,City
+Property Name,Property Number
+Index,Rate Index
+Lender,Mortgage Lender
+Market Value,Market Total Value
+Debt Service,Debt Service Total
+Lender,Mortgage Holder
+Spread,Spread
+State,Providence
+LTV,Loan To Value
+All-In Rate,Rate
+Address,Location
+Occupancy,Current Occupancy (%)
 Maturity Date,Maturity Date
 Square Feet,Square Footage
-NOI,Current Net Operating Income
+City,Location
+Lender,Mortgage Holder
+Current Balance,Current Balance
+Current Balance,Outstanding Debt (YE)
+Acquisition Date,Date of Acquisition
+Acquisition Date,Origination
+Address,Property Location
+DSCR,Total DCR
+Units,# Units / SF
+Address,Property Street Address
 Index,Interest Rate Index
+Occupancy,Current Occupancy (%)
+City,Location
+LTV,Loan To Value
+Acquisition Date,Acquisition Date (yr)
+Amort Start Date,Amort Date
+Amort Start Date,Amort Start
+Occupancy,Physical Occupancy
+Spread,Spread
+Property Name,Property Number
+Debt Service,Debt Service Value
+Debt Service,Debt Service Total
+Lender,Mortgage Holder
+State,Location
+Rate Type,Type
+Maturity Date,Maturity Date(s)
+All-In Rate,All-in
+Address,Property Location
+Loan Amount,Orig. Loan Amount
+Market Value,Borrower Started Value
+Address,Address
+Occupancy,Occupancy %
+Current Balance,Mortgage Outstanding
+NOI,Current Net Operating Income
+NOI,NOI
+DSCR,Total DCR
+Acquisition Date,Acquired
+Current Balance,Current Balance
+Units,# of Units
+Lender,Mortgage Holder
+Units,# Units / SF
+Amort Start Date,Amort Start Date
+All-In Rate,All-in
+Rate Type,Type of Interest Rate
+City,City
+Amort Start Date,Amortization Start
+Property Type,Type of Community
+Occupancy,Occupancy at end of quarter
+LTV,LTV
+Debt Service,Debt Service
+Square Feet,Sq. Ft.
+Square Feet,Feet
+Spread,Spread
+City,Property City
+Current Balance,Principal Balance
+Lender,Lender
+City,City
+Units,Units / Sq. Ft.
+Units,#units
+State,State
+State,Providence
+Rate Type,Fixed or Floating
+Property Name,Property Number
+Index,Index
+Current Balance,Current Balance
+Lender,Mortgage Holder
+Property Name,Property
+Market Value,Internal Valuation
+Property Type,Asset Type
+NOI,Net Income
+Rate Type,Type of Rate
+Address,Property Location
+All-In Rate,All In
+Amort Start Date,Amortization Date
+Units,Unit Count
+Amort Start Date,Amort Start
+State,Location
+All-In Rate,All In Rate
+Address,Address
+Debt Service,Debt Service Value
+Lender,Lender
+Property Type,Property Type
+All-In Rate,All In Rate
+Units,Multifamily Units (#)
+LTV,LTV
+Debt Service,Debt Service Value
+NOI,Current Net Operating Income
+Property Name,Building Name
+City,City
+Property Name,Building Name
+Lender,Lender
+NOI,NOI
+Amort Start Date,Amortization Start
+Maturity Date,Maturity Date(s)
+Loan Amount,Orig. Loan Amount
+All-In Rate,Interest
+Maturity Date,Loan Matures
+Loan Amount,Loan Amount
+Maturity Date,Date Matures
+Lender,Lender
+Debt Service,Annual Debt Service
+Debt Service,Debt Service Value
+Rate Type,Fixed / Variable
+Debt Service,Annual Debt Service
+Address,Address
+Square Feet,Square Footage
+State,State
+Property Type,Prop. Type
+State,ST
+Market Value,Internal Valuation
+Index,Rate Index
+LTV,Loan-To-Value
+Units,SF/Units
+Loan Amount,Orig. Loan Amount
+State,Territory
+DSCR,Debt Coverage Ratio
+Market Value,MV
+DSCR,Total DCR
+All-In Rate,All-In
+Debt Service,Annual Debt Service
+State,Providence
+Maturity Date,Maturity Date
+Property Name,Property
+Loan Amount,Original Loan Amount
+Property Type,Type of Property
+All-In Rate,All-In Rate
+Current Balance,Mortgage Liens as of 
+Market Value,Internal Valuation
+Units,Units
+All-In Rate,Rate
+Loan Amount,OG Loan Amount
+Spread,Credit Spread
+All-In Rate,All In Rate
+City,Property City
+Current Balance,Outstanding Debt (YE)
+Amort Start Date,Commence Date
+Lender,Mortgage Lender
+Rate Type,Rate Type
+Index,Rate Index
+Current Balance,Outstanding Principal Balance
+Acquisition Date,Year Acquired
+Acquisition Date,Year Acquired
+Rate Type,Fixed / Variable
+Occupancy,% Occupancy
+State,ST
+Index,Interest Rate Index
+Loan Amount,OG Loan Amount
+Address,Street Location
+State,Location
+All-In Rate,All In
+Amort Start Date,Commence Date
+NOI,NOI (Period Ending YTD)
+Rate Type,Floating (Y/N)
+Square Feet,Feet
+Current Balance,Outstanding Principal Balance
+Maturity Date,Due Date (year)
+Lender,Lender
+Spread,Credit Spread
+Current Balance,Outstanding
+All-In Rate,Current Rate
+Amort Start Date,Amortization Date
+All-In Rate,All-In Rate
+City,Property City
+Lender,Mortgage Lender
+LTV,LTV
+Rate Type,Floating (Y/N)
+Rate Type,Floating (Y/N)
+Acquisition Date,Origination
+Property Type,Type of Community
+All-In Rate,Interest Rate
+Spread,Credit Spread
+Occupancy,Occupancy at end of quarter
+Occupancy,Occupancy Status
+Spread,Spread
+Current Balance,Outstanding Principal Balance
+Units,Units
+Acquisition Date,Origination
+Property Name,Property Number
+DSCR,Debt Service Ratio
+Amort Start Date,Commence Date
+All-In Rate,All In Rate
+All-In Rate,All-In Rate
+Property Name,Name
+Maturity Date,Due Date (year)
+Address,Address
+Square Feet,Sq. Footage
+Property Name,Building Number
+Amort Start Date,Amort Start Date
+Acquisition Date,Acquisition Date
+Spread,Spread
+Debt Service,Total Debt Service
+City,Town
+Lender,Mortgage Lender
+Occupancy,Occ. %
+Occupancy,Current Occupancy
+State,Providence
+Amort Start Date,Amortization Start
+Current Balance,Outstanding Debt
+Square Feet,Sq. Footage
+Square Feet,Square Footage
+Market Value,Borrower Started Value
+City,City
+Market Value,PWC Value
+Amort Start Date,Amort Start Date
+Units,Number of Units
+Market Value,Borrower Started Value
+Amort Start Date,Amort Start
+Spread,Spread
+Lender,Mortgage Lender
+LTV,Loan-To-Value
+Debt Service,Total Debt Service
+DSCR,Total DCR
+All-In Rate,Interest
+LTV,Loan To Value
+Debt Service,Total Debt Service
+Debt Service,Total Debt Service
+Address,Property Street Address
+Occupancy,Physical Occupancy
+Loan Amount,Loan Amount
+Property Type,Property Description
+Maturity Date,Maturity Date
+Spread,Credit Spread
+Index,Rate Index
+Lender,Mortgage Lender
+Units,Units / Sq. Ft.
+Rate Type,Rate Type
+NOI,NOI
+State,ST
+All-In Rate,Interest Rate
+Current Balance,Outstanding Loans
+Units,# Units / SF
+Lender,Mortgage Holder
+NOI,Net Operating Income
+Maturity Date,Date Matures
+State,Property State
+Debt Service,Total Debt Service
+Maturity Date,Final Maturity
+City,City
+Loan Amount,Original Loan Amount
+All-In Rate,Interest Rate
+Maturity Date,Maturity
+DSCR,Debt Coverage
+Acquisition Date,Acquisition Date (yr)
+Property Name,Property ID
+Spread,Credit Spread
+Current Balance,Mortgage Liens as of 
+Units,# Units / SF
+Current Balance,Mortgage Liens as of 
+City,City
+Index,Rate Index
+Lender,Mortgage Holder
+City,Town
+Current Balance,Balance of Mortgages
+All-In Rate,Interest
+Property Name,Property Name
+Property Type,Property Description
+Market Value,Borrower Started Value
+Loan Amount,OG Loan Amount
+Square Feet,Feet
+Property Type,Type
+City,Location
+DSCR,Debt Service Coverage
+City,Property City
+Lender,Lender
+Acquisition Date,Acquistion
+NOI,Net Operating Income
+State,Location
+Acquisition Date,Owned Since
+Occupancy,Physical Occupancy
+Occupancy,Occ. %
+Current Balance,Current Balance
+Property Name,Legal Name
+Units,Multifamily Units
+Current Balance,Outstanding Debt
+State,Location
+LTV,Loan-To-Value
+Lender,Lender
+Market Value,MV
+Amort Start Date,Amort Date
+Acquisition Date,Acquisition Date (yr)
+Index,Interest Rate Index
+Spread,Spread
+Property Name,Building Number
+Loan Amount,Original Loan Amount
+NOI,N.O.I.
+Lender,Lender
+Current Balance,Mortgage Outstanding
+Loan Amount,Orig. Loan Amount
+Index,Index
+Market Value,Market Value
+Property Type,Type of Community
+LTV,LTV
+Property Type,Asset Type
+State,Providence
+Property Name,Name
+Maturity Date,Maturity Date
+Lender,Mortgage Lender
+Occupancy,Current Occupancy (%)
+NOI,Net Rental Income
+Property Type,Type of Property
+Loan Amount,Loan Amount
+City,Location
+City,Property City
+Acquisition Date,Origination
+Property Type,Property Description
+Property Name,Legal Name
+Spread,Spread
+Loan Amount,Loan Amount
+Property Type,Property Type
+Debt Service,Debt Service Total
+State,Territory
+Market Value,Value
+Property Name,Property Number
+Occupancy,Occupancy at end of quarter
+All-In Rate,All-in
+Occupancy,Occupancy at end of quarter
+Lender,Mortgage Lender
+Property Type,Property Type
+Acquisition Date,Acquisition Date
+Index,Interest Rate Index
+Square Feet,Sq. Ft.
+Square Feet,Sq. Feet
+State,Territory
+DSCR,Debt Coverage
+Units,Multifamily Units (#)
+NOI,Net Operating Income
+Amort Start Date,Commence Date
+Rate Type,Type of Loan
+Rate Type,Interest Rate Type
+LTV,LTV
+Loan Amount,Loan Amount
+Rate Type,Interest Rate Type
+State,ST
+Maturity Date,Loan Matures
+All-In Rate,All-in
+Address,Location
+DSCR,Debt Service Ratio
+Address,Street
+Index,Interest Rate Index
+Square Feet,Square Feet
+State,Territory
+Acquisition Date,Year Originated
+Index,Rate Index
+Loan Amount,Loan Amount
+State,Property State
+State,Property State
+Acquisition Date,Date of Acquisition
+DSCR,Debt Coverage
+Loan Amount,OG Loan Amount
+State,Property State
+Lender,Lender
+State,Property State
+Property Type,Type of Community
+All-In Rate,All-in
+Debt Service,Debt Service Value
+NOI,NOI
+Property Type,Property Description
+Index,Interest Rate Index
+Address,Property Street Address
+LTV,Loan-To-Value
+Current Balance,Outstanding Debt (YE)
+Acquisition Date,Year Acquired
+Property Type,Type
+All-In Rate,All In
+Debt Service,Annual Debt Service
+Occupancy,Current Occupancy (%)
+Address,Property Address
+LTV,LTV
+Loan Amount,OG Loan Amount
+Market Value,Market Value
+Current Balance,Outstanding Principal Balance
+LTV,LTV
+LTV,Loan-To-Value
+NOI,NOI (Period Ending YTD)
+Occupancy,Occupancy %
+Acquisition Date,Origination Date
+State,Location
+Debt Service,Debt Service Value
+Debt Service,Total Debt Service
+Debt Service,Annual Debt Service
+DSCR,Debt Coverage
+Property Type,Type
+Lender,Mortgage Holder
+Address,Street
+DSCR,Debt Coverage
+Rate Type,Rate Type
+DSCR,DSCR
+Square Feet,Square Footage
+Property Type,Type
+Units,SF/Units
+Property Name,Building Name
+Current Balance,Balance
+Lender,Mortgage Lender
+Units,Multifamily Units
+Lender,Lender
+State,Property State
+Loan Amount,Loan Amount
+Address,Property Street Address
+Square Feet,Sq. Ft.
+All-In Rate,Interest Rate
+Market Value,Value
+Rate Type,Type of Interest Rate
+Current Balance,Outstanding Loan(s)
+Index,Interest Rate Index
+Property Type,Description
+Debt Service,Debt Service
+Occupancy,Occupancy Status
+Property Type,Prop. Type
+Lender,Mortgage Holder
+Maturity Date,Maturity Date
+Amort Start Date,Amortization Start Date
+Maturity Date,Maturity Date
+Address,Property Address
+City,City
+Square Feet,Square Feet
+Occupancy,Occ. %
+NOI,Net Income
+NOI,Net Rental Income
+Occupancy,Occupancy Status
+Current Balance,Balance
+State,Location
+Maturity Date,Loan Maturity Date
+Acquisition Date,Acquistion
+Maturity Date,Maturation Date
+Current Balance,Outstanding Loan Amount
+Amort Start Date,Amortization Start
+All-In Rate,All-in
+LTV,Loan To Value
+Acquisition Date,Acq. Date Cost
+Loan Amount,OG Loan Amount
+Loan Amount,Original Loan Amount
+Square Feet,Sq. Ft.
+Spread,Spread
+Index,Interest Rate Index
+Amort Start Date,Amortization Date
+Current Balance,Current Debt
+Amort Start Date,Amortization Date
+Lender,Mortgage Lender
+Current Balance,Mortgage Liens as of 
+Index,Interest Rate Index
+Amort Start Date,Amortization Start Date
+Spread,Credit Spread
+City,City
+LTV,Loan To Value
+Loan Amount,Orig. Loan Amount
+City,Location
+All-In Rate,All-In
+City,Town
+Lender,Mortgage Holder
+Maturity Date,Maturation Date
+Amort Start Date,Commence Date
+Occupancy,Occupancy %
+City,Property City
+Current Balance,Current Amount
+DSCR,Debt Coverage
+Current Balance,Current Balance
+Debt Service,Debt Service
+Market Value,Internal Valuation
+Maturity Date,Maturity
+Property Type,Prop. Type
+All-In Rate,All-In
+NOI,Current NOI
+LTV,LTV
+Rate Type,Type of Rate
+Acquisition Date,Year Originated
+NOI,Current NOI
+Square Feet,Feet
+DSCR,Total DCR
+Maturity Date,Date Matures
+DSCR,Debt Coverage
+Square Feet,Sq. Footage
+All-In Rate,All-In Rate
+City,Town
+City,Location
+Loan Amount,Loan Amount
+State,Property State
+State,Territory
+Rate Type,Interest Rate Type
+Spread,Credit Spread
+City,Property City
+Amort Start Date,Amortization Start
+City,Location
+Spread,Spread
+DSCR,DSCR
+City,Location
+Spread,Spread
+Lender,Mortgage Lender
+Spread,Credit Spread
+Units,SF / # of Units
+Current Balance,Balance of Mortgages
+Debt Service,Debt Service Total
+DSCR,Total DCR
+Occupancy,Current Occupancy (%)
+Rate Type,Rate Type
+State,Property State
+Property Name,Property
+Debt Service,Debt Service Total
+Amort Start Date,Amort Start
+DSCR,DCR
+Market Value,Full Market Value
+Address,Property Location
+Maturity Date,Maturity Date(s)
+Property Type,Property Type
+Rate Type,Loan Type
+Spread,Credit Spread
+Property Name,Name
+Acquisition Date,Acq. Date Cost
+Loan Amount,Original Loan Amount
+Rate Type,Loan Type
+DSCR,DSCR
+Maturity Date,Matures
+State,State
+DSCR,DCR
+Address,Location
+Acquisition Date,Acquistion
+Acquisition Date,Acquisition Date
+State,Location
+Spread,Credit Spread
+Acquisition Date,Owned Since
+Index,Interest Rate Index
+All-In Rate,All In Rate
+Spread,Spread
+Index,Index
+State,Location
+Property Type,Type of Property
+All-In Rate,Interest
+Maturity Date,Loan Maturity Date
+Property Name,ID
+Lender,Mortgage Lender
+Amort Start Date,Amortization Date
+Maturity Date,Maturity Date
+Market Value,MV
+Market Value,Borrower Started Value
+Market Value,Full Market Value
+Spread,Spread
+Current Balance,Loan Balance
+Index,Interest Rate Index
+Market Value,Value
+All-In Rate,All In
+Market Value,Borrower Started Value
+Property Type,Property Description
+LTV,Loan To Value
+Address,Property Address
+Market Value,Market Value
+Market Value,PWC Value
+Rate Type,Type
+Current Balance,Loan Balance
+Occupancy,Current Occupancy (%)
+Rate Type,Loan Type
+Index,Index
+Units,SF/Units
+Rate Type,Interest Rate Type
+Spread,Credit Spread
+Occupancy,Occ. %
+Address,Property Address
+Index,Index
+Maturity Date,Loan Maturity Date
+Index,Rate Index
+Spread,Credit Spread
+Maturity Date,Date Matures
+LTV,Loan To Value
+LTV,Loan-To-Value
+Loan Amount,Original Loan Amount
+Current Balance,Outstanding Loan Amount
+LTV,LTV
+Current Balance,Outstanding Debt
+Lender,Lender
+Index,Index
+Spread,Spread
+Loan Amount,Original Loan Amount
+LTV,Loan To Value
+Rate Type,Loan Type
+LTV,Loan-To-Value
+Index,Index
+Units,#units
+Debt Service,Debt Service Total
+Rate Type,Fixed / Variable
+Loan Amount,OG Loan Amount
+Debt Service,Debt Service Value
+Lender,Lender
+Units,Units
+Units,#units
+Acquisition Date,Year Acquired
+Current Balance,Outstanding Loan(s)
+LTV,Loan-To-Value
+Units,Multifamily Units (#)
+Spread,Spread
+Rate Type,Fixed or Floating
+Property Type,Asset Type
+Units,Multifamily Units (#)
+Debt Service,Debt Service
+All-In Rate,All In Rate
+Spread,Credit Spread
+Occupancy,Occ. %
+State,Property State
+Property Type,Type
+Spread,Spread
+DSCR,Total DSCR
+Maturity Date,Loan Maturity Date
+Square Feet,Square Footage
+Units,Units / Sq. Ft.
+City,Location
+Units,Unit Count
+Spread,Spread
+Acquisition Date,Owned Since
+Square Feet,Square Footage
+Amort Start Date,Amort Start Date
+State,State
+Amort Start Date,Amortization Date
+Spread,Credit Spread
+Square Feet,Feet
+LTV,Loan To Value
+Current Balance,Current Balance
+Rate Type,Type
+Units,# Units / SF
+Lender,Lender
+LTV,Loan-To-Value
+Loan Amount,Orig. Loan Amount
+Address,Full Property Address
+Rate Type,Type
+Address,Street Address
+Property Name,Building Name
+Units,# Units / SF
+All-In Rate,Current Rate
+City,Town
+Acquisition Date,Year Originated
+Acquisition Date,Acquistion
+Property Type,Property Type
+Index,Interest Rate Index
+Debt Service,Annual Debt Service
+Spread,Spread
+Occupancy,Current Occupancy (%)
+Debt Service,Debt Service
+Spread,Credit Spread
+Acquisition Date,Acquisition Date
+Square Feet,Sq. Ft.
+Lender,Lender
+Property Type,Description
+Debt Service,Debt Service Total
+Current Balance,OPB
+City,Location
+Address,Property Location
+DSCR,Debt Coverage
+Index,Index
+Maturity Date,Loan Matures
+Spread,Credit Spread
+City,Location
+LTV,Loan To Value
+Lender,Lender
+Current Balance,Balance
+Units,#units
+State,Location
+Occupancy,% Occupied
+Square Feet,Sq. Feet
+Address,Street Location
+Property Type,Property Description
+Lender,Mortgage Holder
+Loan Amount,Original Loan Amount
+Units,SF/Units
+LTV,Loan To Value
+City,Town
+DSCR,Total DSCR
+State,State
+City,Town
+Amort Start Date,Amort Start Date
+Current Balance,Outstanding Principal Balance
+NOI,Current Net Operating Income
+Maturity Date,Maturity Date
+Market Value,PWC Value
+Maturity Date,Matures
+Occupancy,Occupancy at end of quarter
+NOI,Net Operating Income
+Maturity Date,Loan Maturity Date
+Lender,Lender
+Lender,Lender
+City,Property City
+Amort Start Date,Amort Start
+Property Name,Building
+State,ST
+Acquisition Date,Year of Initial Ownership
+Lender,Mortgage Holder
+Occupancy,Occupancy Status
+Current Balance,Outstanding Debt (YE)
+Occupancy,Current Occupancy
+All-In Rate,All-In Rate
+All-In Rate,Current Rate
+Address,Property Street Address
+Current Balance,Balance
+Amort Start Date,Amort Start
+Lender,Mortgage Holder
+NOI,Net Income
+Property Type,Asset Type
+Spread,Spread
+Loan Amount,Original Loan Amount
+Units,Number of Units
+Rate Type,Rate Type
+Maturity Date,Loan Matures
+LTV,LTV
+DSCR,Debt Coverage Ratio
+Units,#units
+Spread,Credit Spread
+Square Feet,Feet
+Address,Property Street Address
+Loan Amount,Orig. Loan Amount
+Occupancy,Occupancy
+Square Feet,Sq. Footage
+NOI,NOI
+Units,Number of Units
+Property Type,Type
+Market Value,Market Value
+Occupancy,Occ. %
+Debt Service,Debt Service Total
+DSCR,Debt Coverage
+DSCR,Debt Coverage
+Market Value,Market Total Value
+Property Name,Name
+City,Location
+Maturity Date,Maturity Date
+NOI,Current NOI
+Amort Start Date,Amort Start Date
+Lender,Mortgage Lender
+Amort Start Date,Amortization Start Date
+Spread,Credit Spread
+Loan Amount,Original Loan Amount
+NOI,Current Net Operating Income
+Units,# of Units
+Occupancy,Occupancy %
+All-In Rate,All-In Rate
+All-In Rate,Interest Rate
+DSCR,Debt Coverage
+Index,Rate Index
+Occupancy,% Occupancy
+Property Type,Type of Property
+NOI,N.O.I.
+Property Name,Building
+DSCR,Total DCR
+Loan Amount,Original Loan Amount
+LTV,Loan To Value
+NOI,Net Rental Income
+Current Balance,Current Debt
+NOI,NOI
+Debt Service,Debt Service
+Maturity Date,Maturity
+Property Name,Building Name
+State,State
+Maturity Date,Date Matures
+All-In Rate,Rate
+Property Name,Property
+NOI,NOI
+Rate Type,Rate Type
+Lender,Mortgage Lender
+Rate Type,Loan Type
+Address,Location
+LTV,LTV
+State,Location
+State,Territory
+Lender,Lender
+Index,Index
+Square Feet,Sq. Ft.
+State,Location
+Amort Start Date,Amort Date
+NOI,N.O.I.
+Index,Index
+DSCR,DCR
+Loan Amount,Orig. Loan Amount
+DSCR,Debt Coverage Ratio
+Acquisition Date,Acquistion
+Address,Full Property Address
+City,Town
+State,Location
+Property Name,Building
+Loan Amount,Original Loan Amount
+Spread,Credit Spread
+Loan Amount,Orig. Loan Amount
+Lender,Mortgage Holder
+Loan Amount,Original Loan Amount
+City,Town
+Address,Street
+Current Balance,Outstanding Loan(s)
+Property Name,Property
+Property Type,Description
+DSCR,Debt Coverage Ratio
+Rate Type,Type of Interest Rate
+Amort Start Date,Amort Start
+Property Name,Property
+Current Balance,Outstanding
+State,State
+Current Balance,Outstanding
+Spread,Spread
+Debt Service,Debt Service Total
+Lender,Mortgage Holder
+Acquisition Date,Owned Since
+Maturity Date,Maturity
+Address,Address
+All-In Rate,All-in
+Loan Amount,Orig. Loan Amount
+City,Location
+State,Property State
+Lender,Mortgage Holder
+Square Feet,Square Feet
+Maturity Date,Loan Maturity Date
+Address,Address
+Current Balance,Mortgage Outstanding
+LTV,Loan To Value
+Lender,Mortgage Holder
+Market Value,PWC Value
+Property Type,Prop. Type
+Square Feet,Square Footage
+Current Balance,Loan Balance
+Market Value,Market Total Value
+LTV,LTV
+All-In Rate,Interest
+Address,Full Property Address
+Units,#units
+Maturity Date,Date Matures
+Current Balance,Mortgage Liens as of 
+Loan Amount,Orig. Loan Amount
+Property Type,Type of Property
+Square Feet,Square Feet
+Maturity Date,Due Date
+Address,Property Address
+Current Balance,Outstanding Principal Balance
+Lender,Lender
+DSCR,DSCR
+State,Location
+LTV,Loan-To-Value
+DSCR,Debt Service Ratio
+LTV,Loan To Value
+NOI,N.O.I.
+Acquisition Date,Year Acquired
+Units,#units
+All-In Rate,Interest
+Index,Index
+Amort Start Date,Amortization Start Date
+Rate Type,Floating (Y/N)
+NOI,Current NOI
+LTV,Loan-To-Value
+Units,# Units / SF
+All-In Rate,All-in
+Rate Type,Type of Rate
+Property Type,Type of Community
+Debt Service,Debt Service Value
+Market Value,Market Total Value
+Property Name,Name
+Debt Service,Debt Service Value
+LTV,Loan-To-Value
+Maturity Date,Maturation Date
+Amort Start Date,Amort Start
+State,Territory
+Square Feet,Sq. Ft.
+Acquisition Date,Acquisition Date (yr)
+Rate Type,Type
+Maturity Date,Final Maturity
+Property Type,Property Description
+Debt Service,Debt Service Total
+Acquisition Date,Purchase Date
+Loan Amount,OG Loan Amount
+DSCR,Debt Service Ratio
+City,Property City
+Current Balance,Outstanding Loan(s)
+State,State
+Market Value,Full Market Value
+Occupancy,Occupancy at end of quarter
+Amort Start Date,Commence Date
+Debt Service,Annual Debt Service
+Property Type,Type
+Occupancy,Occupancy at end of quarter
+Lender,Mortgage Holder
+Market Value,Borrower Started Value
+Amort Start Date,Amort Date
+Property Name,Legal Name
+Address,Location
+LTV,Loan-To-Value
+State,ST
+Units,Number of Units
+Current Balance,Current Debt
+Occupancy,Occupancy at end of quarter
+Square Feet,Sq. Feet
+Market Value,Internal Valuation
+Debt Service,Debt Service
+Acquisition Date,Acquired
+Units,Units
+Occupancy,% Occupancy
+Acquisition Date,Origination Date
+Index,Index
+Loan Amount,OG Loan Amount
+Units,Unit Count
+All-In Rate,All In
+NOI,N.O.I.
+Maturity Date,Loan Maturity Date
+Debt Service,Total Debt Service
+Current Balance,Balance
+Property Name,ID
+Address,Street Address
+Maturity Date,Maturity Date
+Amort Start Date,Amortization Start Date
+Debt Service,Debt Service Total
+Debt Service,Debt Service Total
+Maturity Date,Maturation Date
+State,Providence
+DSCR,DSCR
+City,Location
+Amort Start Date,Commence Date
+State,ST
+Lender,Mortgage Lender
+Units,#units
+Maturity Date,Final Maturity
+LTV,LTV
+Rate Type,Fixed or Floating
+Loan Amount,OG Loan Amount
+Address,Full Property Address
+City,City
+City,Town
+Spread,Spread
+Current Balance,OPB
+Maturity Date,Loan Matures
+State,ST
+Current Balance,Outstanding Principal Balance
+Units,# of Units
+Lender,Lender
+Property Name,Property Number
+Occupancy,Occupancy at end of quarter
+Lender,Lender
+Address,Street Location
+Amort Start Date,Amortization Start Date
+Spread,Spread
+Units,Units / Sq. Ft.
+Maturity Date,Loan Maturity Date
+Index,Interest Rate Index
+Rate Type,Type of Interest Rate
+Maturity Date,Maturity
+Spread,Spread
+Amort Start Date,Amortization Start Date
+Lender,Mortgage Holder
+Address,Property Address
+Index,Rate Index
+City,Property City
+DSCR,DCR
+Address,Property Address
+Lender,Mortgage Holder
+Property Type,Property Description
+Amort Start Date,Amort Start
+DSCR,DCR
+Loan Amount,OG Loan Amount
+Address,Address
+Market Value,PWC Value
+Lender,Mortgage Holder
+Loan Amount,Orig. Loan Amount
+Amort Start Date,Amort Start Date
+Occupancy,Occ. %
+State,Property State
+Property Type,Prop. Type
+LTV,Loan To Value
+Current Balance,Mortgage Liens as of 
+DSCR,Debt Service Ratio
+Occupancy,Current Occupancy (%)
+Square Feet,Feet
+Loan Amount,Loan Amount
+Index,Index
+Occupancy,% Occupancy
+Market Value,Value
+Current Balance,Outstanding Principal Balance
+Acquisition Date,Year Originated
+Property Name,Building Name
+Square Feet,Sq. Ft.
+City,Property City
+Rate Type,Type
+Lender,Mortgage Lender
+Address,Address
+Units,Units
+Property Type,Property Type
+All-In Rate,Interest Rate
+Maturity Date,Final Maturity
+Square Feet,Square Footage
+Acquisition Date,Origination Date
+State,Territory
+LTV,LTV
+City,Town
+Address,Property Address
+Spread,Credit Spread
+Square Feet,Sq. Ft.
+City,Property City
+Acquisition Date,Year of Initial Ownership
+State,ST
+Lender,Mortgage Lender
+LTV,Loan To Value
+LTV,LTV
+Current Balance,Outstanding Loan(s)
+LTV,Loan-To-Value
+NOI,Current Net Operating Income
+Maturity Date,Maturity Date(s)
+Index,Index
+Debt Service,Total Debt Service
+Index,Interest Rate Index
+State,ST
+NOI,NOI
+Lender,Mortgage Lender
+DSCR,Debt Coverage Ratio
+Lender,Lender
+DSCR,Debt Service Ratio
+Square Feet,Feet
+Square Feet,Sq. Ft.
+Square Feet,Square Footage
+Current Balance,OPB
+Index,Rate Index
+Property Type,Property Type
+Lender,Mortgage Holder
+Index,Interest Rate Index
+Index,Rate Index
+Spread,Spread
+NOI,Current Net Operating Income
+LTV,Loan To Value
+DSCR,Debt Coverage
+Address,Property Location
+Occupancy,Occupancy
+NOI,Current NOI
+Debt Service,Debt Service
+Occupancy,Occupancy at end of quarter
+Debt Service,Debt Service Total
+Property Name,Building Name
+Property Name,Property ID
+Property Name,Building Number
+Units,Number of Units
+Amort Start Date,Amort Start Date
+Spread,Credit Spread
+Acquisition Date,Date Acquired
+State,Location
+Current Balance,Mortgage Outstanding
+NOI,Net Income
+Lender,Mortgage Holder
+Address,Full Property Address
+DSCR,Debt Service Ratio
+NOI,Current NOI
+Spread,Spread
+Spread,Credit Spread
+All-In Rate,Interest Rate
+Rate Type,Interest Rate Type
+All-In Rate,Rate
+DSCR,Debt Coverage Ratio
+All-In Rate,Interest
+DSCR,DSCR
+Acquisition Date,Year Acquired
+Square Feet,Square Feet
+Index,Rate Index
+Amort Start Date,Amort Date
+Property Name,Property ID
+Acquisition Date,Year Originated
+Maturity Date,Maturity Date(s)
+Amort Start Date,Amort Start Date
+Lender,Lender
+Lender,Mortgage Lender
+Acquisition Date,Acquired
+Property Name,Property Number
+Loan Amount,Original Loan Amount
+LTV,LTV
+Spread,Spread
+Market Value,Market Total Value
+Amort Start Date,Amort Date
+Property Name,Building Name
+Debt Service,Debt Service Total
+Property Type,Type of Property
+City,Location
+Property Name,Property Name
+Property Type,Asset Type
+Property Name,Property
+Units,Units / Sq. Ft.
+Square Feet,Sq. Footage
+Spread,Credit Spread
+Index,Rate Index
+Property Type,Type of Community
+Rate Type,Type
+Address,Street
+All-In Rate,All-in
+Units,Multifamily Units
+Loan Amount,Orig. Loan Amount
+All-In Rate,All In
+Occupancy,Occupancy
+Current Balance,Balance
+Loan Amount,Loan Amount
+Property Name,Building Number
+All-In Rate,All-In
+Spread,Spread
+Units,SF/Units
+All-In Rate,Rate
+Amort Start Date,Commence Date
+Rate Type,Type of Interest Rate
+Rate Type,Type of Interest Rate
+City,Location
+Property Name,Name
+Current Balance,Balance of Mortgages
+Occupancy,Occupancy at end of quarter
+LTV,LTV
+Spread,Credit Spread
+Units,Unit Count
+Market Value,Market Total Value
+City,City
+Current Balance,Mortgage Liens as of 
+Acquisition Date,Purchase Date
+Property Name,Property Name
+Current Balance,OPB
+DSCR,Debt Coverage Ratio
+Current Balance,Current Debt
+Spread,Credit Spread
+Market Value,Market Value
+State,Property State
+Square Feet,Sq. Footage
+Amort Start Date,Amortization Start Date
+LTV,Loan-To-Value
+DSCR,Total DSCR
+Square Feet,Square Feet
+Square Feet,Sq. Ft.
+NOI,NOI
+DSCR,Debt Coverage
+DSCR,DCR
+Property Name,Building Name
+Amort Start Date,Amortization Start
+NOI,N.O.I.
+Property Type,Prop. Type
+Rate Type,Floating (Y/N)
+Loan Amount,Original Loan Amount
+Loan Amount,Original Loan Amount
+Market Value,Internal Valuation
+State,Location
+Acquisition Date,Purchase Date
+All-In Rate,All In Rate
+Acquisition Date,Origination Date
+Address,Property Address
+Units,Units / Sq. Ft.
+Units,# of Units
+Occupancy,Occupancy %
+Maturity Date,Maturity Date(s)
+City,Town
+Property Type,Type
+Spread,Spread
+Debt Service,Debt Service
+NOI,Current Net Operating Income
+Debt Service,Debt Service
+Spread,Credit Spread
+Amort Start Date,Amortization Date
+Spread,Spread
+DSCR,DCR
+Occupancy,Physical Occupancy
+State,ST
+Maturity Date,Due Date
+NOI,Current NOI
+Rate Type,Floating (Y/N)
+Current Balance,Balance
+Units,Units / Sq. Ft.
+State,Property State
+NOI,Current N.O.I.
+Market Value,Value
+State,Territory
+NOI,N.O.I.
+Occupancy,Occupancy at end of quarter
+Address,Address
+Maturity Date,Date of Maturity
+NOI,Net Operating Income
+All-In Rate,All In
+Rate Type,Type of Loan
+City,Location
+NOI,NOI (Period Ending YTD)
+Maturity Date,Maturation Date
+Address,Property Location
+Spread,Credit Spread
+Property Type,Property Type
+Maturity Date,Maturity
+Current Balance,Current Balance
+Market Value,Borrower Started Value
+Address,Property Address
+Square Feet,Feet
+Market Value,PWC Value
+LTV,Loan To Value
+Rate Type,Type
+Square Feet,Square Feet
+City,Town
+DSCR,Total DCR
+Spread,Credit Spread
+State,Providence
+Index,Index
+NOI,Net Operating Income
+DSCR,DSCR
+Property Name,Name
+Address,Location
+LTV,Loan To Value
+NOI,Current Net Operating Income
+Acquisition Date,Date of Acquisition
+Occupancy,Occupancy
+Current Balance,Outstanding Loans
+Occupancy,Current Occupancy (%)
+Units,Units
+Spread,Spread
+Maturity Date,Maturity Date(s)
+Lender,Mortgage Holder
+NOI,Net Rental Income
+NOI,N.O.I.
+City,Location
+Market Value,Value
+All-In Rate,All In Rate
+Property Type,Prop. Type
+All-In Rate,All In Rate
+Occupancy,Physical Occupancy
+Debt Service,Annual Debt Service
+Spread,Credit Spread
+Address,Full Property Address
+Market Value,MV
+Acquisition Date,Acquired
+All-In Rate,All-In
+Spread,Credit Spread
+All-In Rate,Current Rate
+Spread,Spread
+All-In Rate,Interest Rate
+Current Balance,Outstanding Debt (YE)
+Debt Service,Total Debt Service
+NOI,Net Income
+Amort Start Date,Amort Start Date
+Acquisition Date,Purchase Date
+Acquisition Date,Acq. Date Cost
+State,Location
+Square Feet,Square Feet
+Occupancy,Physical Occupancy
+Index,Rate Index
+All-In Rate,All-In
+Rate Type,Type of Rate
+Index,Interest Rate Index
+Square Feet,Sq. Ft.
+Square Feet,Square Feet
+Property Name,Building
+Address,Address
+Market Value,Full Market Value
+Market Value,Value
+Spread,Credit Spread
+Square Feet,Sq. Feet
+Square Feet,Square Footage
+Units,Units / Sq. Ft.
+Maturity Date,Maturity
+Rate Type,Type of Loan
+Address,Address
+Index,Interest Rate Index
+Property Name,Property
+Current Balance,Loan Balance
+Address,Property Address
+Property Name,Building Name/Number
+Rate Type,Floating (Y/N)
+Square Feet,Square Footage
+Market Value,Internal Valuation
+Square Feet,Sq. Ft.
+Rate Type,Type
+Market Value,Value
+Occupancy,Current Occupancy
+Maturity Date,Maturity Date(s)
+Occupancy,% Occupancy
+City,Property City
+Spread,Credit Spread
+Rate Type,Floating (Y/N)
+State,ST
+NOI,NOI
+Current Balance,Balance of Mortgages
+Address,Street Location
+Square Feet,Sq. Feet
+Current Balance,Mortgage Outstanding
+LTV,Loan To Value
+NOI,Net Income
+Rate Type,Interest Rate Type
+Address,Street
+Amort Start Date,Amort Start Date
+Debt Service,Debt Service Total
+City,City
+Rate Type,Fixed or Floating
+Spread,Credit Spread
+Acquisition Date,Date Acquired
+DSCR,Debt Coverage
+NOI,Current N.O.I.
+Index,Rate Index
+DSCR,Debt Coverage Ratio
+LTV,LTV
+Maturity Date,Maturity Date(s)
+Occupancy,Current Occupancy
+Units,Units
+Rate Type,Type of Loan
+Amort Start Date,Commence Date
+LTV,LTV
+LTV,Loan To Value
+Acquisition Date,Year Acquired
+Rate Type,Type of Loan
+City,Property City
+NOI,Current Net Operating Income
+All-In Rate,Current Rate
+Property Name,Property Name
+Loan Amount,Original Loan Amount
+Property Name,Property ID
+Market Value,Internal Valuation
+State,Providence
+Maturity Date,Matures
+Acquisition Date,Origination Date
+All-In Rate,Interest Rate
+LTV,LTV
+Rate Type,Fixed / Variable
+Occupancy,Current Occupancy (%)
+All-In Rate,Interest
+Amort Start Date,Amortization Start Date
+Units,#units
+Lender,Mortgage Holder
+Loan Amount,OG Loan Amount
+Square Feet,Square Footage
+DSCR,DCR
+Index,Index
+Square Feet,Square Footage
+All-In Rate,All-In
+City,Town
+Property Name,Building Name/Number
+Current Balance,Outstanding Loan(s)
+Property Name,Name
+Debt Service,Debt Service
+NOI,Current N.O.I.
+LTV,Loan To Value
+Index,Interest Rate Index
+Current Balance,Outstanding Loan(s)
+State,Territory
+Acquisition Date,Year Originated
+Index,Interest Rate Index
+Rate Type,Fixed or Floating
+Units,Multifamily Units
+Lender,Mortgage Lender
+Current Balance,Mortgage Outstanding
+DSCR,Total DCR
+Maturity Date,Loan Maturity Date
+DSCR,DSCR
+Index,Rate Index
+Lender,Mortgage Holder
+Spread,Credit Spread
+Index,Interest Rate Index
+Debt Service,Debt Service
+Property Type,Type of Property
+DSCR,Debt Coverage Ratio
+City,Location
+Lender,Mortgage Holder
+Loan Amount,Original Loan Amount
+Lender,Mortgage Lender
+State,ST
+Lender,Mortgage Holder
+Maturity Date,Maturity
+Occupancy,Occupancy at end of quarter
+Property Type,Prop. Type
+Occupancy,Occ. %
+Rate Type,Loan Type
+All-In Rate,All In Rate
+Occupancy,Current Occupancy
+Property Type,Asset Type
+Address,Property Address
+Market Value,PWC Value
+Square Feet,Square Footage
+Maturity Date,Loan Maturity Date
+Address,Location
+State,Territory
+State,Location
+Spread,Credit Spread
+Square Feet,Sq. Feet
+Maturity Date,Date Matures
+Index,Index
+Property Type,Type of Property
+Property Name,Building Name/Number
+Index,Interest Rate Index
+NOI,Net Income
+Current Balance,Outstanding Principal Balance
+Maturity Date,Maturity
+Units,Unit Count
+Units,Multifamily Units (#)
+Property Type,Description
+Market Value,PWC Value
+Amort Start Date,Amort Start Date
+Occupancy,Occ. %
+Occupancy,% Occupancy
+NOI,Current NOI
+All-In Rate,All-in
+Property Type,Description
+Spread,Credit Spread
+Index,Interest Rate Index
+Property Name,ID
+Market Value,Value
+Market Value,MV
+Amort Start Date,Amortization Date
+Square Feet,Square Footage
+Maturity Date,Loan Maturity Date
+Rate Type,Type of Interest Rate
+Amort Start Date,Commence Date
+LTV,Loan-To-Value
+Property Type,Type
+Current Balance,Outstanding Loan(s)
+Index,Interest Rate Index
+Loan Amount,Orig. Loan Amount
+Rate Type,Loan Type
+State,Property State
+Units,Units / Sq. Ft.
+Property Type,Type of Community
+Acquisition Date,Year Originated
+NOI,NOI
+DSCR,Debt Coverage
+Amort Start Date,Amortization Start Date
+All-In Rate,All-In Rate
+Units,# Units / SF
+Index,Interest Rate Index
+LTV,Loan-To-Value
+Square Feet,Square Feet
+Address,Property Location
+State,Providence
+Amort Start Date,Amortization Start Date
+Index,Rate Index
+Rate Type,Interest Rate Type
+Property Type,Description
+Maturity Date,Due Date (year)
+Occupancy,Occupancy Status
+State,Territory
+Property Name,Building Name/Number
+LTV,Loan To Value
+Acquisition Date,Acquired
+Spread,Credit Spread
+Square Feet,Square Feet
+Debt Service,Debt Service
+NOI,Net Rental Income
+Debt Service,Total Debt Service
+Address,Street Location
+Address,Street Location
+LTV,LTV
+Lender,Mortgage Lender
+Property Name,Property
+Rate Type,Interest Rate Type
+Units,SF/Units
+Index,Rate Index
+Debt Service,Annual Debt Service
+Square Feet,Square Footage
+All-In Rate,Interest Rate
+LTV,Loan-To-Value
+Property Name,ID
+NOI,NOI
+City,Town
+Current Balance,Loan Balance
+Maturity Date,Due Date
+Property Name,Property Number
+Acquisition Date,Owned Since
+Square Feet,Square Feet
+NOI,N.O.I.
+Amort Start Date,Amort Start Date
+Maturity Date,Maturity Date
+Occupancy,Occupancy
+LTV,LTV
+Units,Multifamily Units
+Current Balance,Loan Balance
+Debt Service,Total Debt Service
+Maturity Date,Loan Maturity Date
+Property Type,Description
+NOI,NOI
+City,Location
+NOI,NOI (Period Ending YTD)
+Debt Service,Total Debt Service
+Square Feet,Sq. Ft.
+NOI,Net Operating Income
+DSCR,DSCR
+Maturity Date,Date of Maturity
+City,City
+LTV,LTV
+Current Balance,Current Balance
+Lender,Mortgage Holder
+Amort Start Date,Amortization Date
+Square Feet,Sq. Footage
+City,Location
+City,City
+Current Balance,Mortgage Liens as of 
+All-In Rate,Rate
+Occupancy,% Occupied
+Address,Property Location
+DSCR,DCR
+Address,Address
+Market Value,PWC Value
+State,State
+Acquisition Date,Acq. Date Cost
+Current Balance,Loan Balance
+Property Type,Asset Type
+Loan Amount,Orig. Loan Amount
+Current Balance,Outstanding Loan Amount
+Loan Amount,Orig. Loan Amount
+Property Name,Legal Name
+City,City
+Occupancy,Occupancy at end of quarter
+All-In Rate,Rate
+Spread,Credit Spread
+Market Value,Value
+Address,Street
+Debt Service,Total Debt Service
+Loan Amount,OG Loan Amount
+Index,Interest Rate Index
+NOI,Current Net Operating Income
+Spread,Spread
+Rate Type,Fixed / Variable
+Square Feet,Square Footage
+Acquisition Date,Date of Acquisition
+State,Providence
+LTV,Loan To Value
+All-In Rate,All In
+Occupancy,Current Occupancy (%)
+Lender,Lender
+NOI,NOI
+State,ST
+Maturity Date,Date Matures
+Current Balance,Loan Balance
+Spread,Spread
+State,Location
+Spread,Credit Spread
+Property Type,Property Type
+Debt Service,Debt Service
+Units,# of Units
+Rate Type,Rate Type
+Rate Type,Rate Type
+NOI,NOI
+Occupancy,Occ. %
+Loan Amount,OG Loan Amount
+Maturity Date,Date of Maturity
+Loan Amount,OG Loan Amount
+Rate Type,Rate Type
+DSCR,Debt Service Coverage
+Address,Street Address
+Amort Start Date,Amortization Start
+Occupancy,Occupancy
+Index,Index
+City,Location
+Index,Interest Rate Index
+Amort Start Date,Amortization Date
+DSCR,DSCR
+Lender,Lender
+Maturity Date,Date of Maturity
+Maturity Date,Maturity Date(s)
+Spread,Spread
+LTV,Loan To Value
+State,Territory
+Acquisition Date,Origination
+Property Type,Description
+Address,Street Address
+Spread,Credit Spread
+Market Value,Full Market Value
+Current Balance,Outstanding Principal Balance
+Rate Type,Type of Interest Rate
+Property Name,Building Name
+Current Balance,Current Amount
+Address,Full Property Address
+Amort Start Date,Amortization Date
+Loan Amount,Original Loan Amount
+Occupancy,Occupancy Status
+City,City
+State,Territory
+Loan Amount,Orig. Loan Amount
+Occupancy,Current Occupancy (%)
+Property Type,Property Type
+Square Feet,Square Footage
+City,Property City
+Loan Amount,Loan Amount
+Lender,Lender
+City,Location
+Maturity Date,Due Date
+City,Town
+Property Name,Property Name
+State,ST
+NOI,NOI (Period Ending YTD)
+Loan Amount,Orig. Loan Amount
+Square Feet,Feet
+City,Town
+LTV,Loan-To-Value
+Spread,Credit Spread
+Market Value,Market Total Value
+Index,Interest Rate Index
+Current Balance,Current Debt
+Maturity Date,Maturation Date
+Lender,Lender
+Lender,Mortgage Holder
+Lender,Mortgage Holder
+Amort Start Date,Amort Start
+Units,Multifamily Units
+NOI,Current N.O.I.
+Debt Service,Debt Service Total
+City,Location
+LTV,Loan-To-Value
+Maturity Date,Due Date (year)
+City,Location
+Spread,Spread
+Loan Amount,Original Loan Amount
+Address,Street Location
+City,Town
+Property Name,Property
+Address,Full Property Address
+Property Type,Property Type
+Property Name,Building Name/Number
+Address,Property Address
+Square Feet,Square Feet
+Current Balance,Current Amount
+Market Value,MV
+Index,Index
+Units,#units
+Loan Amount,Original Loan Amount
+Acquisition Date,Year of Initial Ownership
+Acquisition Date,Acq. Date Cost
+Current Balance,OPB
+Square Feet,Sq. Footage
+City,Town
+NOI,Net Rental Income
+Square Feet,Sq. Footage
+DSCR,Debt Coverage
+NOI,Net Operating Income
+City,Town
+Square Feet,Square Footage
+Square Feet,Sq. Feet
+Loan Amount,OG Loan Amount
+Loan Amount,Original Loan Amount
+Lender,Mortgage Holder
+Rate Type,Fixed or Floating
+Square Feet,Sq. Ft.
+Debt Service,Annual Debt Service
+NOI,Net Rental Income
+Occupancy,Occ. %
+Units,SF/Units
+DSCR,DSCR
+Address,Property Address
+Occupancy,Current Occupancy
+DSCR,Debt Service Ratio
+Property Name,Building Number
+Occupancy,Occupancy at end of quarter
+Maturity Date,Date of Maturity
+Debt Service,Debt Service
+Rate Type,Type of Loan
+NOI,Net Income
+Property Type,Property Description
+Square Feet,Square Footage
+Property Type,Type
+Property Name,Legal Name
+Square Feet,Sq. Ft.
+All-In Rate,Current Rate
+DSCR,Total DSCR
+Lender,Mortgage Lender
+Units,Multifamily Units (#)
+Current Balance,Outstanding Debt (YE)
+All-In Rate,All-in
+NOI,Current N.O.I.
+Address,Property Address
+Amort Start Date,Amort Start
+Acquisition Date,Year of Initial Ownership
+Maturity Date,Loan Maturity Date
+Acquisition Date,Owned Since
+Property Type,Asset Type
+Acquisition Date,Year Acquired
+Spread,Credit Spread
+City,Town
+Property Name,Legal Name
+Property Type,Property Description
+Lender,Mortgage Holder
+Spread,Spread
+Address,Property Address
+NOI,N.O.I.
+Index,Interest Rate Index
+LTV,LTV
+Loan Amount,Loan Amount
+Market Value,Value
+Property Type,Type of Community
+Spread,Credit Spread
+Amort Start Date,Amort Date
+Property Type,Property Description
+Current Balance,Outstanding Loan Amount
+Address,Address
+Debt Service,Debt Service Value
+Market Value,MV
+Maturity Date,Maturity Date(s)
+Current Balance,Principal Balance
+Lender,Mortgage Holder
+Current Balance,Current Amount
+State,ST
+Property Type,Description
+City,Town
+All-In Rate,All-in
+Property Type,Type of Property
+Current Balance,Balance
+Property Name,Property Number
+Acquisition Date,Origination
+Rate Type,Type
+City,Town
+Occupancy,Current Occupancy
+Lender,Mortgage Holder
+Square Feet,Sq. Feet
+All-In Rate,All-In Rate
+Index,Interest Rate Index
+Index,Index
+LTV,LTV
+Property Name,Property
+Spread,Credit Spread
+Units,Multifamily Units
+Lender,Mortgage Holder
+Acquisition Date,Acquistion
+Square Feet,Sq. Ft.
+DSCR,Total DSCR
+Rate Type,Loan Type
+Units,# of Units
+Square Feet,Feet
+State,Property State
+Current Balance,Current Amount
+Spread,Spread
+State,Location
+Address,Address
+Property Name,Building Name/Number
+Index,Index
+LTV,Loan To Value
+NOI,NOI
+Current Balance,Outstanding
+Current Balance,Outstanding Loan Amount
+Rate Type,Fixed or Floating
+Units,Number of Units
+City,Town
+Amort Start Date,Commence Date
+Units,#units
+Square Feet,Sq. Footage
+Loan Amount,Loan Amount
+LTV,LTV
+DSCR,DCR
+Market Value,Value
+Current Balance,Outstanding
+DSCR,Debt Coverage Ratio
+Market Value,Market Value
+Square Feet,Square Feet
+Current Balance,Outstanding Debt
+All-In Rate,Current Rate
+Property Type,Type of Property
+Amort Start Date,Amortization Date
+LTV,LTV
+Spread,Credit Spread
+DSCR,Debt Coverage Ratio
+Rate Type,Type of Rate
+Amort Start Date,Commence Date
+Property Name,Property Name
+NOI,Net Operating Income
+LTV,LTV
+City,Town
+Acquisition Date,Date of Acquisition
+Rate Type,Fixed / Variable
+Spread,Spread
+Rate Type,Type
+Index,Index
+Spread,Credit Spread
+Debt Service,Debt Service Value
+Loan Amount,Loan Amount
+Lender,Lender
+Property Type,Type of Property
+Units,# of Units
+NOI,Net Income
+Index,Interest Rate Index
+Current Balance,OPB
+Rate Type,Rate Type
+State,ST
+Maturity Date,Matures
+Address,Address
+Debt Service,Annual Debt Service
+Rate Type,Type of Interest Rate
+Square Feet,Sq. Feet
+Square Feet,Sq. Feet
+Occupancy,% Occupancy
+State,State
+NOI,Current NOI
+Loan Amount,Orig. Loan Amount
+Units,# of Units
+Rate Type,Type
+Acquisition Date,Acquisition Date
+Maturity Date,Maturation Date
+City,Location
+Acquisition Date,Origination
+Units,Units
+Loan Amount,Orig. Loan Amount
+Index,Rate Index
+Square Feet,Sq. Footage
+Spread,Credit Spread
+City,Town
+Amort Start Date,Amort Start Date
+Amort Start Date,Amortization Date
+Current Balance,Outstanding Loans
+Loan Amount,Original Loan Amount
+Property Type,Type
+Address,Property Street Address
+NOI,Net Rental Income
+Spread,Credit Spread
+Amort Start Date,Amort Date
+City,City
+Loan Amount,Original Loan Amount
+Index,Interest Rate Index
+Debt Service,Debt Service Value
+State,Property State
+Index,Rate Index
+Property Type,Property Type
+NOI,Net Income
+Address,Location
+Current Balance,Outstanding Loan Amount
+State,Providence
+LTV,LTV
+DSCR,Debt Service Coverage
+NOI,Net Income
+DSCR,DCR
+Address,Street Address
+Acquisition Date,Date Acquired
+Market Value,Borrower Started Value
+Amort Start Date,Amortization Start Date
+DSCR,DCR
+State,Territory
+Acquisition Date,Acquisition Date
+Maturity Date,Maturation Date
+Square Feet,Feet
+Spread,Credit Spread
+DSCR,Debt Coverage Ratio
+Lender,Lender
+State,Territory
+Units,# of Units
+City,Property City
+Square Feet,Sq. Ft.
+DSCR,Total DCR
+State,State
+Rate Type,Rate Type
+City,City
+City,Town
+City,Town
+Loan Amount,Original Loan Amount
+Debt Service,Annual Debt Service
+NOI,Current N.O.I.
+LTV,Loan-To-Value
+Maturity Date,Maturity Date
+Rate Type,Floating (Y/N)
+Acquisition Date,Acquistion
+LTV,Loan-To-Value
+Occupancy,Occupancy at end of quarter
+Market Value,PWC Value
+Index,Interest Rate Index
+Lender,Mortgage Holder
+Amort Start Date,Commence Date
+Lender,Mortgage Lender
+Market Value,MV
+Property Type,Type of Community
+Occupancy,Current Occupancy
+Current Balance,Mortgage Outstanding
+Lender,Lender
+Amort Start Date,Amort Start Date
+Square Feet,Square Footage
+Occupancy,Physical Occupancy
+Units,Units / Sq. Ft.
+Rate Type,Floating (Y/N)
+Property Name,ID
+Debt Service,Debt Service Value
+Address,Street
+Property Name,Building Name/Number
+NOI,N.O.I.
+City,Town
+Square Feet,Sq. Footage
+Property Name,Building
+Maturity Date,Loan Matures
+All-In Rate,All-In Rate
+Debt Service,Total Debt Service
+Spread,Spread
+Current Balance,Loan Balance
+Amort Start Date,Amort Date
+Property Name,Name
+Acquisition Date,Acq. Date Cost
+All-In Rate,Interest Rate
+All-In Rate,All-In Rate
+Maturity Date,Date of Maturity
+City,Town
+Occupancy,Physical Occupancy
+Property Type,Property Description
+Debt Service,Annual Debt Service
+Debt Service,Debt Service Value
+DSCR,DCR
+Units,Number of Units
+Current Balance,Outstanding
+NOI,Net Operating Income
+Market Value,MV
+Spread,Spread
+Square Feet,Sq. Feet
+Debt Service,Debt Service Value
+Market Value,PWC Value
+Debt Service,Debt Service Total
+Rate Type,Interest Rate Type
+City,Property City
+State,Providence
+State,Territory
+Loan Amount,Orig. Loan Amount
+Amort Start Date,Amort Start
+Occupancy,Occupancy at end of quarter
+Maturity Date,Due Date
+Rate Type,Fixed / Variable
+Rate Type,Loan Type
+Index,Index
+Property Name,Property Name
+Index,Index
+Lender,Mortgage Holder
+Index,Rate Index
+Debt Service,Debt Service Total
+State,State
+NOI,Net Income
+Address,Street Address
+City,Location
+Units,Unit Count
+Property Type,Type of Community
+Square Feet,Square Feet
+Acquisition Date,Acquistion
+Lender,Mortgage Holder
+Spread,Credit Spread
+Acquisition Date,Acquisition Date
+Lender,Mortgage Lender
+Occupancy,% Occupied
+DSCR,Debt Coverage Ratio
+Address,Street
+Rate Type,Type
+Lender,Mortgage Lender
+Loan Amount,Original Loan Amount
+Acquisition Date,Purchase Date
+Spread,Credit Spread
+Lender,Mortgage Lender
+All-In Rate,All In
+Index,Interest Rate Index
+Units,# Units / SF
+NOI,N.O.I.
+Debt Service,Debt Service Total
+Acquisition Date,Acq. Date Cost
+Spread,Credit Spread
+Occupancy,Occupancy
+DSCR,Debt Coverage
+Occupancy,Occupancy at end of quarter
+Debt Service,Annual Debt Service
+Rate Type,Type of Interest Rate
+Occupancy,Occupancy
+LTV,Loan-To-Value
+Debt Service,Annual Debt Service
+Lender,Mortgage Lender
+Square Feet,Sq. Footage
+All-In Rate,All-in
+Property Type,Asset Type
+Address,Property Address
+Square Feet,Square Feet
