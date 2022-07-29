@@ -1,6 +1,7 @@
-from pickle import TRUE
+#from pickle import TRUE
+#from re import A
 from PyQt5 import QtCore, QtGui, QtWidgets
-import ExtractSREO as ExtractSREO
+import fileExtraction as fileExtraction
 from prepareData import *
 import trainModel as trainModel
 import ctypes
@@ -15,6 +16,8 @@ trainColumn = True
 modelName = ""
 controller = None
 
+BUTTON_STYLE_SHEET = "QPushButton { background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(0, 103, 254, 255), stop:1 rgba(0, 125, 255, 255)); color:rgb(240, 240, 240); border-style: outset; border-width: 2px; border-radius: 16px; border-color: rgba(0,0,0,0); font: bold 22px; padding: 6px; } QPushButton::pressed { background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(0, 113, 254, 255), stop:1 rgba(0, 135, 255, 255)); border-style: inset } QPushButton::disabled { background-color:rgb(185, 205, 255) }"
+LINE_EDIT_STYLE_SHEET = "border-style: outset; border-width: 1px; border-radius: 8px; border-color: rgb(122,122,122)"
 
 class chooseModelWindow(QtWidgets.QWidget):
 	def __init__(self):
@@ -23,11 +26,13 @@ class chooseModelWindow(QtWidgets.QWidget):
 		self.buttonBox = QtWidgets.QHBoxLayout()
 
 		self.newModelButton = QtWidgets.QPushButton("Create New Model")
+		self.newModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.buttonBox.addWidget(self.newModelButton)
 		self.newModelButton.clicked.connect(self.createNewModel)
 
 		self.oldModelButton = QtWidgets.QPushButton("Use Existing Model")
 		self.oldModelButton.clicked.connect(self.useOldModel)
+		self.oldModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.buttonBox.addWidget(self.oldModelButton)
 		layout.addLayout(self.buttonBox)
 		self.setLayout(layout)
@@ -52,15 +57,24 @@ class createBetterModelPopup(QtWidgets.QWidget):
 		super().__init__()
 		self.layout = QtWidgets.QVBoxLayout()
 		self.buttonRow = QtWidgets.QHBoxLayout()
-		self.topLabel = QtWidgets.QLabel("Make model with certain errors or make model better than current?")
-		self.certainErrorsButton = QtWidgets.QPushButton("Certain Errors")
+		self.topLabel = QtWidgets.QLabel("Generate model below a certain percentage of errors or generate model better than an existing model?")
+		self.certainErrorsButton = QtWidgets.QPushButton("<= % Errors")
+		self.certainErrorsButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.certainErrorsButton.clicked.connect(self.certainErrorsButtonPressed)
-		self.betterThanCurrentButton = QtWidgets.QPushButton("Better Than Current")
+
+		self.betterThanCurrentButton = QtWidgets.QPushButton("Better Than Existing Model")
+		self.betterThanCurrentButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.betterThanCurrentButton.clicked.connect(self.betterThanCurrentButtonPressed)
+
+		self.trainAgainstSolvedCSVsButton = QtWidgets.QPushButton("Train with Solved CSVs")
+		self.trainAgainstSolvedCSVsButton.setStyleSheet(BUTTON_STYLE_SHEET)
+		self.trainAgainstSolvedCSVsButton.clicked.connect(self.trainAgainstSolvedCSVButtonPressed)
+		self.trainCount = 0
 
 		self.layout.addWidget(self.topLabel)
 		self.buttonRow.addWidget(self.certainErrorsButton)
 		self.buttonRow.addWidget(self.betterThanCurrentButton)
+		self.buttonRow.addWidget(self.trainAgainstSolvedCSVsButton)
 		self.layout.addLayout(self.buttonRow)
 		
 		self.setLayout(self.layout)
@@ -69,7 +83,9 @@ class createBetterModelPopup(QtWidgets.QWidget):
 		newLayout = QtWidgets.QHBoxLayout()
 		self.numberOfErrorsLabel = QtWidgets.QLabel("Number of errors to beat:")
 		self.numberOfErrorsInput = QtWidgets.QLineEdit()
+		self.numberOfErrorsInput.setStyleSheet(LINE_EDIT_STYLE_SHEET)
 		self.generateButton = QtWidgets.QPushButton("Generate")
+		self.generateButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.generateButton.clicked.connect(self.generateButtonPressed)
 		newLayout.addWidget(self.numberOfErrorsLabel)
 		newLayout.addWidget(self.numberOfErrorsInput)
@@ -79,33 +95,41 @@ class createBetterModelPopup(QtWidgets.QWidget):
 
 	def generateButtonPressed(self):
 		self.goal = int(self.numberOfErrorsInput.text())
-		self.createModel()
+		self.autoCreateModel()
 
 	def betterThanCurrentButtonPressed(self):
-		ExtractSREO.setModelName(filedialog.askopenfilename().split(".")[0])
-		self.goal = ExtractSREO.testOnSolvedCSV()
-		self.createModel
+		fileExtraction.setModelName(filedialog.askopenfilename().split(".")[0])
+		self.goal = fileExtraction.testOnSolvedCSV() - 1
+		self.autoCreateModel()
 
-	def createModel(self):
+	def trainAgainstSolvedCSVButtonPressed(self):
+		fakeframe = pd.read_csv("SREOs/CSVs/usethisone.csv")
+		print(fakeframe.to_string())
+		print(fakeframe)
+		fileExtraction.trainAgainstSolvedCSV(True, "Model/trainingWithSolved")
+		for i in range(100):
+			fileExtraction.trainAgainstSolvedCSV(False, "Model/trainingWithSolved")
+
+	def autoCreateModel(self):
 		trainingData = pd.DataFrame(columns=['label','text'])
 		count = 1
-		numReps = random.randint(1, 100) * 100
-		modelName = "newTrial1-" + str(numReps)
-		ExtractSREO.setModelName(modelName)
-		for i in range(numReps):
-			randVal = random.randint(0,23)
-			trainingData = pd.concat([trainingData, generateData(randVal)],ignore_index=True)
-		trainModel.trainModel(True, True, modelName,"trainingData.csv")
-		while ExtractSREO.testOnSolvedCSV() < self.goal:
+		errors = sys.maxsize
+		while errors > self.goal:
 			print("----------------------------------------------------------------------------------")
-			numReps = random.randint(10, 100) * 100
+			trainingData = pd.DataFrame(columns=['label','text'])
+			numReps = random.randint(35, 55) * 100
+			LR = float(random.randint(35,50)) / 10.0
+			print("Number of Repeats: " + str(numReps) + " Learning Rate: " + str(LR))
 			modelName = "newTrial" + str(count) + "-" + str(numReps)
-			ExtractSREO.setModelName(modelName)
-			for i in range(numReps):
-				randVal = random.randint(0,23)
-				trainingData = pd.concat([trainingData, generateData(randVal)],ignore_index=True)
-			trainModel.trainModel(True,True,modelName,"trainingData.csv")
+			fileExtraction.setModelName(modelName)
+			trainingData = pd.concat([trainingData, generateData(numReps)],ignore_index=True)
+			trainingData.to_csv("trainingData.csv",index=False)
+			trainModel.trainModel(True,True,modelName,"trainingData.csv", LR)
 			count += 1
+			errors = fileExtraction.testOnSolvedCSV(self.goal)
+			if errors > self.goal:
+				os.remove(modelName + ".pt")
+				os.remove(modelName + "Vocab.pt")
 		print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		print("New Best Model = " + modelName)
 
@@ -117,7 +141,9 @@ class newModelPopup(QtWidgets.QWidget):
 		self.textLabel = QtWidgets.QLabel("Enter Model Name:")
 		self.hbox = QtWidgets.QHBoxLayout()
 		self.input = QtWidgets.QLineEdit()
+		self.input.setStyleSheet(LINE_EDIT_STYLE_SHEET)
 		self.createButton = QtWidgets.QPushButton("Create")
+		self.createButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.createButton.clicked.connect(self.createModel)
 		layout.addWidget(self.textLabel)
 		layout.addLayout(self.hbox)
@@ -155,6 +181,8 @@ class trainTestWindow(QtWidgets.QWidget):
 		self.tabs.addTab(self.testTab,"Test")
 		self.extractTab = extractTabUI()
 		self.tabs.addTab(self.extractTab,"Extract")
+		self.extractTab.maximize_window.connect(self.showMaximized)
+		
 		layout.addWidget(self.tabs)
 
 class trainTabUI(QtWidgets.QWidget):
@@ -167,6 +195,7 @@ class trainTabUI(QtWidgets.QWidget):
 		super().__init__()
 		self.layout = QtWidgets.QVBoxLayout()
 		self.trainText = QtWidgets.QLabel("Train Column Classification or Header Classification Model?")
+		self.trainText.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
 		self.checkRow = QtWidgets.QHBoxLayout()
 		self.buttonRow = QtWidgets.QHBoxLayout()
 
@@ -182,14 +211,18 @@ class trainTabUI(QtWidgets.QWidget):
 		self.newDatasetButton = QtWidgets.QPushButton("Generate New Dataset")
 		self.buttonRow.addWidget(self.newDatasetButton)
 		self.newDatasetButton.clicked.connect(self.changeToGenerateDataWindow)
+		self.newDatasetButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.oldDatasetButton = QtWidgets.QPushButton("Use Existing Dataset")
 		self.buttonRow.addWidget(self.oldDatasetButton)
-		self.oldDatasetButton.clicked.connect(self.chooseTrainModel)
-		self.createBetterModelButton = QtWidgets.QPushButton("Experimental Data Eval")
+		self.oldDatasetButton.clicked.connect(self.oldDatasetButtonPressed)
+		self.oldDatasetButton.setStyleSheet(BUTTON_STYLE_SHEET)
+		self.createBetterModelButton = QtWidgets.QPushButton("Auto-Generate Model")
 		self.createBetterModelButton.clicked.connect(self.createBetterModelButtonPressed)
+		self.createBetterModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.buttonRow.addWidget(self.createBetterModelButton)
 
 		self.trainModelButton = QtWidgets.QPushButton("Train Model")
+		self.trainModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
 
 		self.layout.addWidget(self.trainText)
 		self.layout.addLayout(self.checkRow)
@@ -201,7 +234,7 @@ class trainTabUI(QtWidgets.QWidget):
 		self.betterModelPopup = createBetterModelPopup()
 		self.betterModelPopup.show()
 
-	def chooseTrainModel(self):
+	def oldDatasetButtonPressed(self):
 		self.chooseModelPopup = chooseModelWindow()
 		self.chooseModelPopup.show()
 
@@ -215,20 +248,16 @@ class trainTabUI(QtWidgets.QWidget):
 		self.headerCheck.setChecked(not trainColumn)
 
 class testTabUI(QtWidgets.QWidget):
-	switch_window = QtCore.pyqtSignal()
-
-	def changeToGenerateDataWindow(self):
-		self.switch_window.emit()
-
 	def __init__(self):
 		super().__init__()
+		self.models = None
 		self.layout = QtWidgets.QVBoxLayout()
-		self.textInputRow = QtWidgets.QHBoxLayout()
 		self.chooseFilesRow = QtWidgets.QHBoxLayout()
 		self.topRow = QtWidgets.QHBoxLayout()
 
-		self.chooseModelButton = QtWidgets.QPushButton("Choose Model")
-		self.chooseModelButton.clicked.connect(self.chooseTestModel)
+		self.chooseModelButton = QtWidgets.QPushButton("Choose Model(s)")
+		self.chooseModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
+		self.chooseModelButton.clicked.connect(self.chooseModelButtonPressed)
 		self.topRow.addWidget(self.chooseModelButton)
 		self.modelLabel = QtWidgets.QLabel("No Model Chosen")
 		self.topRow.addWidget(self.modelLabel)
@@ -236,66 +265,60 @@ class testTabUI(QtWidgets.QWidget):
 		self.invalidFileTypeLabel = QtWidgets.QLabel("Invalid File Type: ")
 		self.invalidFileTypeLabel.hide()
 
-		self.testText = QtWidgets.QLabel("Test Inputted Text")
 		self.testSREOs = QtWidgets.QLabel("Test SREOs")
 
-		self.textInput = QtWidgets.QLineEdit()
-		self.textInputRow.addWidget(self.textInput)
-
-		self.testInputButton = QtWidgets.QPushButton("Test Input")
-		self.textInputRow.addWidget(self.testInputButton)
-		self.testInputButton.setDisabled(True)
-
 		self.singleFileButton = QtWidgets.QPushButton("Choose Individual File(s)")
-		self.singleFileButton.clicked.connect(self.useExistingFile)
+		self.singleFileButton.setStyleSheet(BUTTON_STYLE_SHEET)
+		self.singleFileButton.clicked.connect(self.useSelectedFiles)
 		self.chooseFilesRow.addWidget(self.singleFileButton)
 		self.singleFileButton.setDisabled(True)
 
 		self.allFilesButton = QtWidgets.QPushButton("Test All Files")
+		self.allFilesButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.chooseFilesRow.addWidget(self.allFilesButton)
 		self.allFilesButton.setDisabled(True)
 		self.allFilesButton.clicked.connect(self.useAllFiles)
 
-		self.testOnSolvedCSVButton = QtWidgets.QPushButton("Test on Solved CSV")
+		self.testOnSolvedCSVButton = QtWidgets.QPushButton("Test on Solved CSVs")
+		self.testOnSolvedCSVButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.chooseFilesRow.addWidget(self.testOnSolvedCSVButton)
 		self.testOnSolvedCSVButton.setDisabled(True)
-		self.testOnSolvedCSVButton.clicked.connect(ExtractSREO.testOnSolvedCSV)
+		self.testOnSolvedCSVButton.clicked.connect(self.testOnSolvedCSV)
 
 		self.layout.addLayout(self.topRow)
-		self.layout.addWidget(self.testText)
-		self.layout.addLayout(self.textInputRow)
 		self.layout.addWidget(self.testSREOs)
 		self.layout.addLayout(self.chooseFilesRow)
 		self.layout.addWidget(self.invalidFileTypeLabel)
 
 		self.setLayout(self.layout)
 
-	def columnOrHeaderCheck(self):
-		global trainColumn
-		if(trainColumn):
-			trainColumn = False
-		else:
-			trainColumn = True
-		self.columnCheck.setChecked(trainColumn)
-		self.headerCheck.setChecked(not trainColumn)
-
-	def chooseTestModel(self):
-		fileName = filedialog.askopenfilename()
-		if(fileName == ""):
+	def chooseModelButtonPressed(self):
+		fileName = filedialog.askopenfilenames()
+		if(len(fileName) == 0):
 			self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 			self.invalidFileTypeLabel.show()
-		elif(fileName.split(".")[len(fileName.split(".")) - 1] != "pt"):
-			self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
-			self.invalidFileTypeLabel.show()
+			return
+		elif(len(fileName) == 1):
+			fileName = fileName[0]
+			if(fileName.split(".")[len(fileName.split(".")) - 1] != "pt"):
+				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
+				self.invalidFileTypeLabel.show()
+				return
+			else: 
+				fileName = fileName.split(".")[0]
+				modelName = fileName.split("/")[len(fileName.split("/")) - 1].split(".")[0]
+				self.modelLabel.setText(modelName + " Selected")
 		else:
-			self.invalidFileTypeLabel.hide()
-			modelName = fileName.split("/")[len(fileName.split("/")) - 1]
-			ExtractSREO.setModelName(fileName.split(".")[0])
-			self.modelLabel.setText(modelName.split(".")[0] + " Selected")
-			self.testInputButton.setDisabled(False)
-			self.singleFileButton.setDisabled(False)
-			self.allFilesButton.setDisabled(False)
-			self.testOnSolvedCSVButton.setDisabled(False)
+			fileName = list(fileName)
+			for i in range(len(fileName)):
+				fileName[i] = fileName[i].split(".")[0]
+			self.modelLabel.setText("Multiple Models Selected")
+		self.invalidFileTypeLabel.hide()
+		fileExtraction.setModelName(fileName)
+		self.models = fileName
+		self.singleFileButton.setDisabled(False)
+		self.allFilesButton.setDisabled(False)
+		self.testOnSolvedCSVButton.setDisabled(False)
 
 	def useAllFiles(self):
 		#showConsole()
@@ -303,12 +326,12 @@ class testTabUI(QtWidgets.QWidget):
 		for fileName in os.listdir("SREOs/CSVs/"):
 			print(fileName)
 			print('------------------------------------------------------------')
-			data = ExtractSREO.extractSREO("SREOs/CSVs/" + fileName)
+			data = fileExtraction.extractSREO("SREOs/CSVs/" + fileName)
 			print(data.to_string())
-			ExtractSREO.testConfidence(True, data)
+			fileExtraction.testConfidence(True, data)
 			print('------------------------------------------------------------')
 	
-	def useExistingFile(self):
+	def useSelectedFiles(self):
 		fileName = filedialog.askopenfilenames()
 		if type(fileName) is tuple:
 			for file in fileName:
@@ -316,8 +339,8 @@ class testTabUI(QtWidgets.QWidget):
 				fileType = file.split(".")[len(file.split(".")) - 1]
 				if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
 					self.invalidFileTypeLabel.hide()
-					data = ExtractSREO.extractSREO(file)
-					ExtractSREO.testConfidence(True, data)
+					data = fileExtraction.extractSREO(file)
+					fileExtraction.testConfidence(True, data)
 					print()
 				else:
 					self.invalidFileTypeLabel.setText("Invalid File Type: " + file)
@@ -325,226 +348,187 @@ class testTabUI(QtWidgets.QWidget):
 		else:
 			fileType = fileName.split(".")[len(fileName.split(".")) - 1]
 			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
-				data = ExtractSREO.extractSREO(fileName)
-				ExtractSREO.testConfidence(True, data)
+				data = fileExtraction.extractSREO(fileName)
+				print(data.columns)
+				print()
+				fileExtraction.testConfidence(True, data)
 			else:
 				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
 				self.invalidFileTypeLabel.show()
 
+	def testOnSolvedCSV(self):
+		if type(self.models) is str:
+			fileExtraction.testOnSolvedCSV()
+		else:
+			fileExtraction.testOnSolvedCSVMultiModel(len(self.models), self.models)
+
 class extractTabUI(QtWidgets.QWidget):
+	maximize_window = QtCore.pyqtSignal()
+
 	def __init__(self):
 		super().__init__()
-		self.layout = QtWidgets.QHBoxLayout()
+		self.layout = QtWidgets.QVBoxLayout()
+		self.mainColumns = QtWidgets.QHBoxLayout()
 		self.leftColumn = QtWidgets.QVBoxLayout()
 		self.rightColumn = QtWidgets.QVBoxLayout()
 		self.backNextButtonsRow = QtWidgets.QHBoxLayout()
 
+		self.invalidFileTypeLabel = QtWidgets.QLabel("Invalid File Type")
+		self.invalidFileTypeLabel.hide()
 		self.table = QtWidgets.QTableWidget()
 		self.chooseModelButton = QtWidgets.QPushButton("Choose Model")
+		self.chooseModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.chooseFileButton = QtWidgets.QPushButton("Choose File(s)")
-		self.chooseFileButton.clicked.connect(self.extractFile)
-		self.backButton = QtWidgets.QPushButton("Back")
-		self.backNextButtonsRow.addWidget(self.backButton)
-		self.nextButton = QtWidgets.QPushButton("Next")
-		self.backNextButtonsRow.addWidget(self.nextButton)
+		self.chooseFileButton.setStyleSheet(BUTTON_STYLE_SHEET)
+		self.chooseFileButton.clicked.connect(self.validateFiles)
 
-		self.layout.addLayout(self.leftColumn)
-		self.layout.addLayout(self.rightColumn)
+		self.layout.addWidget(self.invalidFileTypeLabel)
+		self.layout.addLayout(self.mainColumns)
+		self.mainColumns.addLayout(self.leftColumn)
+		self.mainColumns.addLayout(self.rightColumn)
 		self.rightColumn.addWidget(self.table)
 		self.rightColumn.addLayout(self.backNextButtonsRow)
 		self.leftColumn.addWidget(self.chooseFileButton)
+		self.highlightRowsLabelVisible = False
 		
 		self.setLayout(self.layout)
 
-	def extractFile(self):
-		fileName = filedialog.askopenfilename()
-		df = ExtractSREO.extractSREO(fileName)
-		print(df)
-		self.table.setColumnCount(len(df.columns))
-		self.table.setRowCount(len(df.columns[1]))
-		print(str(len(df.columns)) + " " + str(len(df.columns[1])))
-		for i in range(len(df.columns)):
-			cellIndex = 0
-			for column in df.columns:
-				item = QtWidgets.QTableWidgetItem(str(column[cellIndex]))
-				self.table.setItem(i,cellIndex,item)
-				cellIndex += 1
-			
+	def validateFiles(self):
+		self.files = filedialog.askopenfilenames()
+		if len(self.files) == 0:
+			return
+		allValid = True
+		for fileName in self.files:
+			fileType = fileName.split(".")[len(fileName.split(".")) - 1]
+			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx" or fileType == "xls"):
+				self.invalidFileTypeLabel.hide()
+				print()
+			else:
+				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName)
+				self.invalidFileTypeLabel.show()
+				allValid = False
+		if allValid:
+			self.fileIndex = 0
+			self.extractFile()
 
-class generateColumnDataWindow(QtWidgets.QWidget):
+	def extractFile(self):
+		self.fileName = self.files[self.fileIndex]
+		self.dataframe = fileExtraction.extractSREO(self.fileName)
+		print(self.dataframe)
+		self.table.setColumnCount(len(self.dataframe.columns))
+		self.table.setRowCount(len(self.dataframe.index))
+		
+		for i, row in self.dataframe.iterrows():
+			j = 0
+			for columnName, cell in row.items():
+				if str(cell) == "nan": cell = ""
+				item = QtWidgets.QTableWidgetItem(str(cell))
+				columnNameItem = QtWidgets.QTableWidgetItem(str(columnName))
+				self.table.setItem(0,j,columnNameItem)
+				self.table.setItem(i+1,j,item)
+				j += 1
+		if not self.highlightRowsLabelVisible:
+			self.highlightRowsLabelVisible = True
+			self.highlightRowsLabel = QtWidgets.QLabel("Highlight any rows which are not the first row of column titles or a property and click delete to remove")
+			self.deleteButton = QtWidgets.QPushButton("Delete Row")
+			self.deleteButton.setStyleSheet(BUTTON_STYLE_SHEET)
+			self.deleteButton.clicked.connect(self.deleteRows)
+			self.extractButton = QtWidgets.QPushButton("Extract")
+			self.extractButton.setStyleSheet(BUTTON_STYLE_SHEET)
+			self.extractButton.clicked.connect(self.extractRows)
+			self.topRow = QtWidgets.QHBoxLayout()
+			self.topRow.addWidget(self.highlightRowsLabel)
+			self.topRow.addWidget(self.deleteButton)
+			self.topRow.addWidget(self.extractButton)
+			self.backButton = QtWidgets.QPushButton("Back")
+			self.backButton.setStyleSheet(BUTTON_STYLE_SHEET)
+			self.backButton.clicked.connect(self.backButtonPressed)
+			self.backNextButtonsRow.addWidget(self.backButton)
+			self.nextButton = QtWidgets.QPushButton("Next File")
+			self.nextButton.setStyleSheet(BUTTON_STYLE_SHEET)
+			self.nextButton.clicked.connect(self.nextButtonPressed)
+			self.backNextButtonsRow.addWidget(self.nextButton)
+			self.layout.insertLayout(0,self.topRow)
+			self.maximize_window.emit()
+
+	def nextButtonPressed(self):
+		if self.fileIndex < len(self.files) - 1:
+			self.fileIndex += 1
+			self.extractFile()
+	def backButtonPressed(self):
+		if self.fileIndex > 0:
+			self.fileIndex -= 1
+			self.extractFile()
+	def deleteRows(self):
+		rowsRemoved = 0
+		for selectedRows in self.table.selectedRanges():
+			topRowIndex = selectedRows.topRow()
+			numRows = selectedRows.rowCount()
+			for row in range(numRows):
+				self.table.removeRow(topRowIndex + row - rowsRemoved)
+				rowsRemoved += 1
+
+	def extractRows(self):
+		numRows = self.table.rowCount()
+		numColumns = self.table.columnCount()
+		self.dataForExtraction = pd.DataFrame()
+		for columnIndex in range(numColumns):
+			for rowIndex in range(1,numRows):
+				item = self.table.item(rowIndex, columnIndex).text()
+				self.dataForExtraction.at[rowIndex - 1,self.table.item(0,columnIndex).text()] = item
+		fileExtraction.setModelName("Model/currentBest")
+		newFileName = self.fileName.split("/")[len(self.fileName.split("/")) - 1].split(".")[0]
+		sreoTemplate = fileExtraction.fillTemplate(self.dataForExtraction)
+		fileTypes = [("Excel File", "*.xlsx"), ("CSV File", "*.csv")]
+		saveLocation = filedialog.asksaveasfile(initialfile = "Standardized-" + newFileName,filetypes = fileTypes, defaultextension = fileTypes)
+		if saveLocation is None:
+			return ""
+		sreoTemplate.to_excel(saveLocation.name, index=False)
+		if saveLocation.name != "":
+			self.highlightRowsLabel.setText("Extracted data saved to " + saveLocation.name)
+			
+class generateDataWindow(QtWidgets.QWidget):
 	switch_window = QtCore.pyqtSignal()
 	def changeToTrainTestWindow(self):
 		self.switch_window.emit()
 
 	def __init__(self):
 		super().__init__()
-		self.checkValues = [[True,True,True,True],
-							[True,True,True,True],
-							[True,True,True,True],
-							[True,True,True,True],
-							[True,True,True,True],
-							[True,True,True]]
 
 		self.verticalLayout = QtWidgets.QVBoxLayout()
 		self.verticalLayout.setContentsMargins(15, 15, 15, 15)
 		self.topBar = QtWidgets.QHBoxLayout()
-
-		self.checksGrid = QtWidgets.QGridLayout()
-		self.checksGrid.setHorizontalSpacing(15)
-		self.checksGrid.setVerticalSpacing(30)
 
 		self.textInputRow = QtWidgets.QHBoxLayout()
 		self.buttonRow = QtWidgets.QHBoxLayout()
 
 		self.bottomRows = QtWidgets.QVBoxLayout()
 
-		#-------------------------------Check Boxes---------------------------------------
-		self.addressCheck = QtWidgets.QCheckBox("Property Address")
-		self.addressCheck.setChecked(self.checkValues[0][0])
-		self.checksGrid.addWidget(self.addressCheck,0,0)
-		self.addressCheck.clicked.connect(self.boxChecked)
-
-		self.nameCheck = QtWidgets.QCheckBox("Property Name")
-		self.nameCheck.setChecked(self.checkValues[1][0])
-		self.checksGrid.addWidget(self.nameCheck,1,0)
-		self.nameCheck.clicked.connect(self.boxChecked)
-
-
-		self.cityCheck = QtWidgets.QCheckBox("City")
-		self.cityCheck.setChecked(self.checkValues[2][0])
-		self.checksGrid.addWidget(self.cityCheck,2,0)
-		self.cityCheck.clicked.connect(self.boxChecked)
-
-		self.stateCheck = QtWidgets.QCheckBox("State")
-		self.stateCheck.setChecked(self.checkValues[3][0])
-		self.checksGrid.addWidget(self.stateCheck,3,0)
-
-		self.propertyTypeCheck = QtWidgets.QCheckBox("Property Type")
-		self.propertyTypeCheck.setChecked(self.checkValues[4][0])
-		self.checksGrid.addWidget(self.propertyTypeCheck,4,0)
-		self.propertyTypeCheck.clicked.connect(self.boxChecked)
-
-		self.unitsCheck = QtWidgets.QCheckBox("Units")
-		self.unitsCheck.setChecked(self.checkValues[5][0])
-		self.checksGrid.addWidget(self.unitsCheck,5,0)
-
-		self.sqFtCheck = QtWidgets.QCheckBox("Square Feet")
-		self.sqFtCheck.setChecked(self.checkValues[0][1])
-		self.checksGrid.addWidget(self.sqFtCheck,0,1)
-		self.sqFtCheck.clicked.connect(self.boxChecked)
-
-		self.occupancyCheck = QtWidgets.QCheckBox("Occupancy")
-		self.occupancyCheck.setChecked(self.checkValues[1][1])
-		self.checksGrid.addWidget(self.occupancyCheck,1,1)
-		self.occupancyCheck.clicked.connect(self.boxChecked)
-
-		self.indexCheck = QtWidgets.QCheckBox("Index")
-		self.indexCheck.setChecked(self.checkValues[2][1])
-		self.checksGrid.addWidget(self.indexCheck,2,1)
-		self.indexCheck.clicked.connect(self.boxChecked)
-
-		self.lenderCheck = QtWidgets.QCheckBox("Lender")
-		self.lenderCheck.setChecked(self.checkValues[3][1])
-		self.checksGrid.addWidget(self.lenderCheck,3,1)
-		self.lenderCheck.clicked.connect(self.boxChecked)
-
-		self.loanAmountCheck = QtWidgets.QCheckBox("Loan Amount")
-		self.loanAmountCheck.setChecked(self.checkValues[4][1])
-		self.checksGrid.addWidget(self.loanAmountCheck,4,1)
-		self.loanAmountCheck.clicked.connect(self.boxChecked)
-
-		self.marketValueCheck = QtWidgets.QCheckBox("Market Value")
-		self.marketValueCheck.setChecked(self.checkValues[5][1])
-		self.checksGrid.addWidget(self.marketValueCheck,5,1)
-		self.marketValueCheck.clicked.connect(self.boxChecked)
-
-		self.spreadCheck = QtWidgets.QCheckBox("Spread")
-		self.spreadCheck.setChecked(self.checkValues[0][2])
-		self.checksGrid.addWidget(self.spreadCheck,0,2)
-		self.spreadCheck.clicked.connect(self.boxChecked)
-
-		self.debtServiceCheck = QtWidgets.QCheckBox("Debt Service")
-		self.debtServiceCheck.setChecked(self.checkValues[1][2])
-		self.checksGrid.addWidget(self.debtServiceCheck,1,2)
-		self.debtServiceCheck.clicked.connect(self.boxChecked)
-
-		self.NOICheck = QtWidgets.QCheckBox("NOI")
-		self.NOICheck.setChecked(self.checkValues[2][2])
-		self.checksGrid.addWidget(self.NOICheck,2,2)
-		self.NOICheck.clicked.connect(self.boxChecked)
-
-		self.DSCRCheck = QtWidgets.QCheckBox("DSCR")
-		self.DSCRCheck.setChecked(self.checkValues[3][2])
-		self.checksGrid.addWidget(self.DSCRCheck,3,2)
-		self.DSCRCheck.clicked.connect(self.boxChecked)
-
-		self.LTVCheck = QtWidgets.QCheckBox("LTV")
-		self.LTVCheck.setChecked(self.checkValues[4][2])
-		self.checksGrid.addWidget(self.LTVCheck,4,2)
-		self.LTVCheck.clicked.connect(self.boxChecked)
-
-		self.rateTypeCheck = QtWidgets.QCheckBox("Rate Type")
-		self.rateTypeCheck.setChecked(self.checkValues[5][2])
-		self.checksGrid.addWidget(self.rateTypeCheck,5,2)
-		self.rateTypeCheck.clicked.connect(self.boxChecked)
-
-		self.amortDateCheck = QtWidgets.QCheckBox("Amort Start Date")
-		self.amortDateCheck.setChecked(self.checkValues[0][3])
-		self.checksGrid.addWidget(self.amortDateCheck,0,3)
-		self.amortDateCheck.clicked.connect(self.boxChecked)
-
-		self.maturityDateCheck = QtWidgets.QCheckBox("Maturity Date")
-		self.maturityDateCheck.setChecked(self.checkValues[1][3])
-		self.checksGrid.addWidget(self.maturityDateCheck,1,3)
-		self.maturityDateCheck.clicked.connect(self.boxChecked)
-
-		self.acquisitionDateCheck = QtWidgets.QCheckBox("Acquisition Date")
-		self.acquisitionDateCheck.setChecked(self.checkValues[2][3])
-		self.checksGrid.addWidget(self.acquisitionDateCheck,2,3)
-		self.acquisitionDateCheck.clicked.connect(self.boxChecked)
-
-		self.allInRateCheck = QtWidgets.QCheckBox("All-In Rate")
-		self.allInRateCheck.setChecked(self.checkValues[3][3])
-		self.checksGrid.addWidget(self.allInRateCheck,3,3)
-		self.allInRateCheck.clicked.connect(self.boxChecked)
-
-		self.currentBalanceCheck = QtWidgets.QCheckBox("Current Balance")
-		self.currentBalanceCheck.setChecked(self.checkValues[4][3])
-		self.checksGrid.addWidget(self.currentBalanceCheck,4,3)
-		self.currentBalanceCheck.clicked.connect(self.boxChecked)
-
-		self.checkVars = [[self.addressCheck,self.sqFtCheck,self.spreadCheck,self.amortDateCheck],
-						  [self.nameCheck,self.occupancyCheck,self.debtServiceCheck,self.maturityDateCheck],
-						  [self.cityCheck,self.indexCheck,self.NOICheck,self.acquisitionDateCheck],
-						  [self.stateCheck,self.lenderCheck,self.DSCRCheck,self.allInRateCheck],
-						  [self.propertyTypeCheck,self.loanAmountCheck,self.LTVCheck,self.currentBalanceCheck],
-						  [self.unitsCheck,self.marketValueCheck,self.rateTypeCheck]]
-
 		#-------------------------------Labels---------------------------------------
 		self.generateNewDataLabel = QtWidgets.QLabel("Generate New Data for Training")
+		self.generateNewDataLabel.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
 		self.topBar.addWidget(self.generateNewDataLabel)
 
 		self.numberOfDataPointsLabel = QtWidgets.QLabel("Total # of data points created: ")
 		self.textInputRow.addWidget(self.numberOfDataPointsLabel)
 
-		self.createNewModelWarningText = QtWidgets.QLabel("Note: In order to create a new model all data types must be selected")
 		#-------------------------------Buttons---------------------------------------
-		self.toggleAllButton = QtWidgets.QPushButton("Toggle All")
-		self.topBar.addWidget(self.toggleAllButton)
-		self.toggleAllButton.clicked.connect(self.toggleAll)
-
 		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
+		self.generateDataButton.setStyleSheet(BUTTON_STYLE_SHEET)
 
 		self.generateDataButton.clicked.connect(self.generateDataButtonPressed)
 		self.generateDataButton.setDisabled(True)
 
 		self.cancelButton = QtWidgets.QPushButton("Cancel")
+		self.cancelButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.cancelButton.clicked.connect(self.changeToTrainTestWindow)
 
 		self.doneButton = QtWidgets.QPushButton("Done")
+		self.doneButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.doneButton.clicked.connect(self.train)
 		#-------------------------------Misc---------------------------------------
 		self.numRepeatsInput = QtWidgets.QLineEdit()
+		self.numRepeatsInput.setStyleSheet(LINE_EDIT_STYLE_SHEET)
 		self.numRepeatsInput.setMaxLength(7)
 		self.numRepeatsInput.textEdited.connect(self.textInputted)
 		self.textInputRow.addWidget(self.numRepeatsInput)
@@ -560,43 +544,18 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 		self.progressBar.setProperty("value", 0)
 
 		self.verticalLayout.addLayout(self.topBar)
-		self.verticalLayout.addLayout(self.checksGrid)
 		self.bottomRows.addLayout(self.textInputRow)
 		self.bottomRows.addWidget(self.progressBar)
 		self.buttonRow.addWidget(self.cancelButton)
 		self.buttonRow.addWidget(self.doneButton)
 		self.bottomRows.addLayout(self.buttonRow)
-		self.bottomRows.addWidget(self.createNewModelWarningText,stretch=0)
 		self.verticalLayout.addLayout(self.bottomRows)
-
-		self.resize(1280,640)
 		self.setLayout(self.verticalLayout)
 
 	def train(self):
 		self.chooseModelPopup = chooseModelWindow()
 		self.chooseModelPopup.show()
 		#self.chooseModelPopup.switchWindow.connect(lambda:self.switch_window.emit())
-
-	def boxChecked(self):
-		for i in range(len(self.checkVars)):
-			for j in range(len(self.checkVars[i])):
-				self.checkValues[i][j] = self.checkVars[i][j].isChecked()
-		containsTrue = False
-		for row in self.checkValues:
-			if(True in row):
-				containsTrue = True
-				continue
-		self.generateDataButton.setDisabled(not containsTrue)
-
-	def toggleAll(self):
-		containsFalse = False
-		for row in self.checkValues:
-			if False in row: containsFalse = True
-		for i in range(len(self.checkVars)):
-			for j in range(len(self.checkVars[i])):
-				self.checkVars[i][j].setChecked(containsFalse)
-				self.checkValues[i][j] = containsFalse
-				self.generateDataButton.setDisabled(not containsFalse)
 
 	def incrementProgressBar(self, val):
 		self.progressBar.setValue(self.progressBar.value() + val)
@@ -613,158 +572,37 @@ class generateColumnDataWindow(QtWidgets.QWidget):
 	def generateDataButtonPressed(self):
 		self.progressBar.setValue(0)
 		self.doneButton.setDisabled(True)
-		fileName = "trainingData.csv"
+		if trainColumn:
+			fileName = "trainingData.csv"
+		else:
+			fileName = "trainingHeaderData.csv"
 		trainingData = pd.DataFrame(columns=['label','text'])
-		trueValues = []
-		for i in range(len(self.checkValues)):
-			for j in range(len(self.checkValues[i])):
-				if(self.checkValues[i][j]):
-					trueValues.append((4 * i) + j)
-		if(trainColumn):
-			total = 0
-			for i in range(int(self.numRepeats / 1000)):
-				for j in range(1000):
-					randVal = random.randint(0,len(trueValues) - 1)
-					trainingData = pd.concat([trainingData, generateData(trueValues[randVal])],ignore_index=True)
-					total += 1
-					if(total % (self.numRepeats / 100) == 0):
-						self.incrementProgressBar(1)
-			for i in range(self.numRepeats % 1000):
-				randVal = random.randint(0,len(trueValues) - 1)
-				trainingData = pd.concat([trainingData, generateData(trueValues[randVal])],ignore_index=True)
-				total += 1
-				if(total % (self.numRepeats / 100) == 0):
-					self.incrementProgressBar(1)
+		total = 0
+		for i in range(self.numRepeats):
+			if trainColumn:
+				trainingData = pd.concat([trainingData, generateData(1)],ignore_index=True)
+			else:
+				trainingData = pd.concat([trainingData, generateHeaderData(1)],ignore_index=True)
+			total += 1
+			if total % (self.numRepeats / 100) == 0:
+				self.incrementProgressBar(1)
 		trainingData.to_csv(fileName, index=False)
 		self.doneButton.setDisabled(False)
 
-class generateHeaderDataWindow(QtWidgets.QWidget):
-	switch_window = QtCore.pyqtSignal()
-
-	def changeToTrainTestWindow(self):
-		self.switch_window.emit()
-
-	def __init__(self):
-		super().__init__()
-
-		self.generateValid = True
-		self.generateInvalid = True
-
-		self.verticalLayout = QtWidgets.QVBoxLayout()
-		self.verticalLayout.setContentsMargins(15, 15, 15, 15)
-		self.checksRow = QtWidgets.QHBoxLayout()
-		self.textInputRow = QtWidgets.QHBoxLayout()
-		self.buttonRow = QtWidgets.QHBoxLayout()
-		self.bottomRows = QtWidgets.QVBoxLayout()
-
-		self.topLabel = QtWidgets.QLabel("Generate Header Data")
-		self.validCheck = QtWidgets.QCheckBox("Valid")
-		self.validCheck.setChecked(self.generateValid)
-		self.validCheck.clicked.connect(self.validChecked)
-		self.checksRow.addWidget(self.validCheck)
-		self.invalidCheck = QtWidgets.QCheckBox("Invalid")
-		self.invalidCheck.setChecked(self.generateInvalid)
-		self.invalidCheck.clicked.connect(self.invalidChecked)
-		self.checksRow.addWidget(self.invalidCheck)
-
-		self.inputLabel = QtWidgets.QLabel("Total # of data points created: ")
-		self.textInputRow.addWidget(self.inputLabel)
-		self.numRepeatsInput = QtWidgets.QLineEdit()
-		self.numRepeatsInput.textEdited.connect(self.textInputted)
-		self.textInputRow.addWidget(self.numRepeatsInput)
-		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
-		self.generateDataButton.clicked.connect(self.generateData)
-		self.textInputRow.addWidget(self.generateDataButton)
-
-		self.progressBar = QtWidgets.QProgressBar()
-		palette = QtGui.QPalette()
-		brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
-		brush.setStyle(QtCore.Qt.SolidPattern)
-		palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-		self.progressBar.setPalette(palette)
-		self.progressBar.setStyleSheet("QProgressBar { border: 2px solid grey; border-radius: 0px; text-align: center; } QProgressBar::chunk {background-color: #16aff0; width: 1px;}")
-		self.progressBar.setProperty("value", 0)
-
-		self.cancelButton = QtWidgets.QPushButton("Cancel")
-		self.cancelButton.clicked.connect(self.changeToTrainTestWindow)
-
-		self.doneButton = QtWidgets.QPushButton("Done")
-		self.doneButton.clicked.connect(self.train)
-
-		self.verticalLayout.addWidget(self.topLabel)
-		self.verticalLayout.addLayout(self.checksRow)
-		self.verticalLayout.addLayout(self.textInputRow)
-		self.verticalLayout.addWidget(self.progressBar)
-		self.buttonRow.addWidget(self.cancelButton)
-		self.buttonRow.addWidget(self.doneButton)
-		self.verticalLayout.addLayout(self.buttonRow)
-
-		self.setLayout(self.verticalLayout)
-
-	def incrementProgressBar(self, val):
-		self.progressBar.setValue(self.progressBar.value() + val)
-
-	def validChecked(self):
-		self.generateValid = not self.generateValid
-		self.validCheck.setChecked(self.generateValid)
-
-	def invalidChecked(self):
-		self.generateInvalid = not self.generateInvalid
-		self.invalidCheck.setChecked(self.generateInvalid)
-
-	def textInputted(self):
-		if self.numRepeatsInput.text().isnumeric():
-			self.numRepeats = int(self.numRepeatsInput.text())
-			self.inputLabel.setText("Total # of data points created: ")
-			self.generateDataButton.setDisabled(False)
-		else:
-			self.generateDataButton.setDisabled(True)
-			self.inputLabel.setText("Please enter a number           ")
-		
-	def generateData(self):
-		self.doneButton.setDisabled(True)
-		fileName = "trainingHeaderData.csv"
-		trainingData = pd.DataFrame(columns=['label','text'])
-		numRepeats = int(self.numRepeatsInput.text())
-		for i in range(numRepeats):
-			if self.generateValid and self.generateInvalid:
-				rand = random.randint(0,1)
-				if rand == 0:
-					trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
-				else:
-					trainingData = pd.concat([trainingData, createInvalidHeader()], ignore_index = True)
-			elif self.generateValid:
-				trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
-			elif self.generateInvalid:
-				trainingData = pd.concat([trainingData, createValidHeader()], ignore_index = True)
-			if(i % (numRepeats / 100) == 0):
-					self.incrementProgressBar(1)
-		trainingData.to_csv(fileName,index=False)
-		self.doneButton.setDisabled(False)
-
-	def train(self):
-		self.chooseModelPopup = chooseModelWindow()
-		self.chooseModelPopup.show()
-		#self.chooseModelPopup.switchWindow.connect(lambda:self.switch_window.emit())
-
 class Controller:
-	
 	def __init__(self):
 		self.trainTest = trainTestWindow()
-		self.generateData = generateColumnDataWindow()
+		self.generateData = generateDataWindow()
 		pass
 
 	def showTrainTestWindow(self):
-		self.trainTest.switch_window.connect(self.showgenerateColumnDataWindow)
+		self.trainTest.switch_window.connect(self.showGenerateDataWindow)
 		self.generateData.close()
 		self.trainTest.show()
 
-	def showgenerateColumnDataWindow(self):
+	def showGenerateDataWindow(self):
 		self.trainTest.close()
-		if trainColumn:
-			self.generateData = generateColumnDataWindow()
-		else:
-			self.generateData = generateHeaderDataWindow()
+		self.generateData = generateDataWindow()
 		self.generateData.show()
 		self.generateData.switch_window.connect(self.showTrainTestWindow)
 
@@ -773,6 +611,7 @@ def showConsole():
 
 if __name__ == "__main__":
 	import sys
+	#fileExtraction.extractFromPDF("SREOs/James P. Knell - Certified RE Schedule 12.31.19.pdf")
 	#ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 	app = QtWidgets.QApplication(sys.argv)
 	controller = Controller()

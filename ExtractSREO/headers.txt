@@ -1,0 +1,179 @@
+Loan Amount
+Orig. Loan Amount
+Original Loan Amount
+OG Loan Amount
+Debt Service
+Debt Service Value
+Total Debt Service
+Annual Debt Service
+Debt Service Total
+NOI
+Net Operating Income
+Net Income
+Current NOI
+N.O.I.
+Current N.O.I.
+Current Net Operating Income
+Net Rental Income
+NOI
+NOI (Period Ending YTD)
+Market Value
+MV
+Value
+Internal Valuation
+PWC Value
+Market Total Value
+Borrower Started Value
+Full Market Value
+Outstanding Loan Amount
+Principal Balance
+OPB
+Outstanding Principal Balance
+Current Balance
+Balance
+Current Debt
+Loan Balance
+Current Amount
+Outstanding
+Outstanding Loan(s)
+Outstanding Loans
+Outstanding Debt (YE)
+Outstanding Debt
+Balance of Mortgages
+Mortgage Outstanding
+Mortgage Liens as of 
+Occupancy
+Current Occupancy
+Occupancy Status
+Current Occupancy (%)
+% Occupied
+% Occupancy
+Occupancy %
+Occupancy at end of quarter
+Occ. %
+Occupancy at end of quarter
+Physical Occupancy
+LTV
+Loan-To-Value
+Loan To Value
+All-In
+All-In Rate
+Rate
+All In
+All In Rate
+All-in
+Interest
+Interest Rate
+Current Rate
+Acquisition Date
+Purchase Date
+Date of Acquisition
+Acquistion
+Acquired
+Year Acquired
+Date Acquired
+Origination Date
+Origination
+Year Originated
+Acquisition Date (yr)
+Year of Initial Ownership
+Owned Since
+Acq. Date Cost
+Maturity Date
+Maturity
+Loan Matures
+Matures
+Date of Maturity
+Date Matures
+Maturation Date
+Loan Maturity Date
+Final Maturity
+Maturity Date(s)
+Due Date (year)
+Due Date
+Amort Start Date
+Amortization Start Date
+Amort Date
+Amortization Date
+Amort Start
+Amortization Start
+Commence Date
+DSCR
+Debt Service Coverage
+Total DCR
+DCR
+Total DSCR
+Debt Coverage Ratio
+Debt Service Ratio
+Debt Coverage
+Units
+#units
+# of Units
+Number of Units
+Unit Count
+Multifamily Units (#)
+Multifamily Units
+SF / # of Units
+Units / Sq. Ft.
+SF/Units
+# Units / SF
+Square Footage
+Square Feet
+Sq. Feet
+Sq. Ft.
+Feet
+Sq. Footage
+Spread
+Credit Spread
+Property Location
+Location
+Address
+Street Location
+Street Address
+Property Address
+Street
+Full Property Address
+Property Street Address
+City
+Town
+Property City
+Location
+Property Type
+Type of Property
+Type
+Asset Type
+Property Description
+Prop. Type
+Description
+Type of Community
+State
+Providence
+Territory
+Location
+Property State
+ST
+Index
+Interest Rate Index
+Rate Index
+Lender
+Mortgage Holder
+Mortgage Lender
+Lender(s)
+Property Name
+Name
+Property
+Property Number
+ID
+Property ID
+Building
+Building Number
+Building Name/Number
+Building Name
+Legal Name
+Loan Type
+Type of Loan
+Type
+Rate Type
+Type of Rate
+Interest Rate Type
+Type of Interest Rate

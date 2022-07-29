@@ -1,7 +1,7 @@
 from collections import Counter
-from tkinter.tix import COLUMN
+#from tkinter.tix import COLUMN
 import pandas as pd
-import numpy as np
+#import numpy as np
 import time
 from sklearn.model_selection import train_test_split
 import torch
@@ -13,9 +13,9 @@ from torchtext.vocab import build_vocab_from_iterator
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines whether the user is using CPU or GPU processing
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
-emsize = 256
+emsize = 128
 EPOCHS = 5
-LR = 10 #The learning rate of the model
+LR = 1 #The learning rate of the model
 BATCH_SIZE = 16 #Number of data points in each batch
 vocab = None
 text_pipeline = None
@@ -24,11 +24,11 @@ model = None
 COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
 				 7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount", 
 				 12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
-				 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
+				 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"} #loan type
 HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 
 # Gets Number of Labels
-def getNumLabels():
+def get_num_labels():
 	 return len(COLUMN_LABELS) - 1
 
 
@@ -66,20 +66,20 @@ class TextClassificationModel(nn.Module):
 		super().__init__()
 		self.embedding = nn.EmbeddingBag(vocab_size, embed_dim, sparse=True) #The model's embedding bag
 		#self.fc1 = nn.Linear(512, 256)
-		self.fc2 = nn.Linear(256, 128)
+		#self.fc2 = nn.Linear(256, 128)
 		self.fc3 = nn.Linear(128, 64)
 		self.fc4 = nn.Linear(64, 16)
 		self.fc5 = nn.Linear(16, num_class)
 		self.init_weights()
 
-	#Assigns inital weights for the layers and embedding bag
+	#Assigns initial weights for the layers and embedding bag
 	def init_weights(self):
 		initrange = 0.5
 		self.embedding.weight.data.uniform_(-initrange,initrange)
 		#self.fc1.weight.data.uniform_(-initrange,initrange)
 		#self.fc1.bias.data.zero_()
-		self.fc2.weight.data.uniform_(-initrange,initrange)
-		self.fc2.bias.data.zero_()
+		#self.fc2.weight.data.uniform_(-initrange,initrange)
+		#self.fc2.bias.data.zero_()
 		self.fc3.weight.data.uniform_(-initrange,initrange)
 		self.fc3.bias.data.zero_()
 		self.fc4.weight.data.uniform_(-initrange,initrange)
@@ -91,8 +91,8 @@ class TextClassificationModel(nn.Module):
 	def forward(self, text, offsets):
 		embedded = self.embedding(text, offsets)
 		#x = F.relu(self.fc1(embedded))
-		x = F.relu(self.fc2(embedded))
-		x = F.relu(self.fc3(x))
+		#x = F.relu(self.fc2(embedded))
+		x = F.relu(self.fc3(embedded))
 		x = F.relu(self.fc4(x))
 		x = self.fc5(x)
 		return x
@@ -138,7 +138,9 @@ def predict(text, text_pipeline):
 		output = model(text, torch.tensor([0]))
 		return output
 	
-def trainModel(trainColumn, createNewModel, modelName, trainingFilePath):
+def trainModel(trainColumn, createNewModel, modelName, trainingFilePath, learningRate=1):
+	global LR
+	LR = learningRate
 	if not createNewModel:
 		loadModel(modelName)
 
@@ -221,7 +223,7 @@ def loadModel(modelName):
 	text_pipeline = lambda x: vocab(tokenizer(x))
 	label_pipeline = lambda x: int(x)
 
-def outputConfidence(testColumn, modelName, textInput, print):
+def outputConfidence(testColumn, modelName, textInput, confidenceThreshold=.95):
 	loadModel(modelName)
 	#Set of numerical labels and their text values
 	if testColumn:
@@ -236,26 +238,6 @@ def outputConfidence(testColumn, modelName, textInput, print):
 		if maxVal < probs[0][i]:
 			maxVal = probs[0][i]
 			maxIndex = i
-	if maxVal > .95:
+	if maxVal > confidenceThreshold:
 		return labels[maxIndex], maxVal
 	else: return "N/A", maxVal
-
-	######################################################### Testing Below #########################################################
-def testInput(testColumn, modelName, testString, print):
-	loadModel(modelName)
-	#Set of numerical labels and their text values
-	if testColumn:
-		labels = COLUMN_LABELS
-	else:
-		labels = HEADER_LABELS
-	output = predict(testString, text_pipeline)
-	probs = torch.nn.functional.softmax(output, dim=1).tolist()
-	#Some test text to see how well the model performs
-	if(print == 1): 
-		print("[N/A, Units, City, State, Address, Rate Type, Acquisition Date, Maturity Date, Property Name]")
-		probsString = ""
-		for i in range(len(probs[0])):
-			probsString += labels[i] + " " + str(float(probs[0][i])) + " | "  
-		print(probsString)
-		print(testString + " is a %s" %labels[predict(testString, text_pipeline).argmax(1).item()])
-	return labels[output.argmax(1).item()]

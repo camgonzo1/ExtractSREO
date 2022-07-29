@@ -23,9 +23,13 @@
   <ItemGroup>
     <Compile Include="class1.py" />
     <Compile Include="ExtractSREO.py" />
+    <Compile Include="fileExtraction.py" />
     <Compile Include="prepareData.py" />
     <Compile Include="trainModel.py" />
     <Compile Include="userInterface.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="pdfExtraction.js" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
