@@ -31,7 +31,6 @@ HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
 def get_num_labels():
 	 return len(COLUMN_LABELS) - 1
 
-
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
 	return list(COLUMN_LABELS.values()).index(label)
