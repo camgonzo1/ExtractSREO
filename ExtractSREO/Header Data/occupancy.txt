@@ -1,7 +1,0 @@
-Occupancy
-Current Occupancy (%)
-Current Occupancy
-Occupancy Status
-% Occupied
-% Occupancy
-Occupancy %

@@ -1,0 +1,11 @@
+﻿Property Name,Address,City,State,Units,Acquisition Date,Amort Start Date,Maturity Date,Lender,Rate Type,N/A,Market Value,Current Balance,All-In Rate,N/A,NOI,Debt Service,N/A,DSCR,LTV
+Property Name,Street Address,City,State,Units,Date Acquired,Amort Start Date,Loan Matures,Mortgage Holder,Rate Type,Ownership,Market Value,Current Debt,All In Rate,Recourse,NOI,Debt Service,Cashflow,DSCR,LTV
+Arbors of Anderson,4037 Mt Carmel Tobasco Rd,Cincinnati,OH,438,2021,1/1/2024,7/1/2026,Associated Bank,Floating,21.00%,"$75,700,000 ","$50,400,000 ","$13,557,600 ",$0 ,"$4,690,059 ","$1,260,000 ","$3,195,386 ",3.72,66.58%
+Austin Springs,2991 Austin Springs Blvd,Miamisburg,OH,204,2014,8/1/2016,7/1/2024,Freddie Mac,Fixed,100.00%,"$42,500,000 ","$29,585,438 ",$0 ,$0 ,"$2,911,769 ","$2,103,117 ","$991,916 ",1.38,69.61%
+CityWalk at Woodbury,10300 City Walk Dr ,Woodbury,MN,453,2019,9/1/2022,7/1/2026,Freddie Mac,Fixed,33.88%,"$167,850,000 ","$86,162,000 ",$0 ,$0 ,"$6,448,393 ","$3,986,542 ","$2,582,676 ",1.62,51.33%
+Elliston 23 Apartments,2312 Elliston Pl,Nashville,TN,331,2014,6/1/2017,5/1/2024,Freddie Mac,Fixed,51.89%,"$156,000,000 ","$60,847,018 ",$0 ,$0 ,"$6,223,948 ","$3,874,777 ","$2,349,171 ",1.61,39.00%
+Hunters Chase,2550 Steeplechase Dr,Miamisburg ,OH,292,2015,1/1/2025,12/1/2026,Associated Bank,Floating,23.34%,"$50,000,000 ","$37,000,000 ",$0 ,"$2,158,950 ","$3,209,049 ","$795,500 ","$2,137,240 ",4.03,74.00%
+Reserve at Canyon Creek,12235 Vance Jackson Road,San Antonio,TX,314,2021,6/1/2023,6/1/2026,Associated Bank,Floating,8.26%,"$58,400,000 ","$38,800,000 ","$10,363,480 ",$0 ,"$2,812,360 ","$1,067,000 ","$1,628,646 ",2.64,66.44%
+Stonebridge Village,650 W Rand Rd,Arlington Heights,IL,600,2016,4/1/2021,3/1/2026,Freddie Mac,Fixed,25.64%,"$155,000,000 ","$77,423,316 ",$0 ,$0 ,"$6,483,632 ","$4,629,897 ","$1,853,735 ",1.4,49.95%
+Terracina,13620 Via Varra,Broomfield,CO,386,2018,N\A,12/9/2024,Blackstone,Floating,14.47%,"$186,000,000 ","$124,800,000 ",$0 ,$0 ,"$6,859,449 ","$3,742,419 ","$2,476,136 ",1.83,67.10%
+Wheaton 121,121 N. Cross St.,Wheaton,IL,307,2018,12/1/2020,11/1/2025,Freddie Mac,Floating,39.61%,"$100,000,000 ","$47,464,089 ",$0 ,$0 ,"$3,929,299 ","$3,393,301 ","$651,509 ",1.16,47.46%

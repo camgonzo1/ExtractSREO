@@ -1,8 +1,0 @@
-Loan Amount
-Outstanding Loan Amount
-Principal Balance
-OPB
-Outstanding Principal Balance
-O.P.B.
-Current Balance
-Balance

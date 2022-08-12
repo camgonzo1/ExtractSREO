@@ -1,0 +1,20 @@
+﻿Property Name,N/A,Lender,Maturity Date,Current Balance,Loan Amount,N/A,All-In Rate,Rate Type,N/A
+Debt Id,Debt Description,Lender,Maturity Date,Current Balance,Total Commitment,Currency,Interest Rate,Fixed / Floating,Debt Status
+7000 Wisconsin,Simpson Woodfield 7000 Wisconsin Construction Loan,"Wells Fargo Bank, National Association",15-Apr-25,0,"-58,983,300.00",USD,LIBOR + 2.75%,Floating,Active
+Bank of America Revolver,Bank of America Revolver,"Bank of America, N.A.",14-Oct-21,"-53,000,000.00","-175,000,000.00",USD,LIBOR + 2.10%,Floating,Active
+Bank of America Term Loan,Bank of America Term Loan,"Bank of America, N.A.",13-Oct-22,"-100,000,000.00","-100,000,000.00",USD,LIBOR + 2.10%,Floating,Active
+FNMA #7 - 2018 LT Pool,Wells Fargo/Fannie 2018 LT Pool (Fixed Advance),"Wells Fargo Bank, National Association",1-Jul-28,"-270,000,000.00","-270,000,000.00",USD,4.02%,Fixed,Active
+FNMA #7 - 2018 LT Pool,Wells Fargo/Fannie 2018 LT Pool (Variable Advance),"Wells Fargo Bank, National Association",1-Jul-28,"-7,573,026.00","-70,000,000.00",USD,LIBOR + 1.38%,Floating,Active
+FNMA #8 - 2020 LT Pool,NKF/Fannie 2020 LT Pool,Newmark Knight Frank,1-Oct-30,"-276,540,000.00","-276,540,000.00",USD,2.35%,Fixed,Active
+Lofts - Bonds,Lofts at Security Building - Bonds,The Community Redevelopment Agency of the City of Los Angeles California,15-Jul-25,"-10,245,000.00","-18,044,838.00",USD,SIFMA,Floating,Active
+Northwestern Mutual (2020),Northwestern Mutual (2020) Fixed 7yr,Northwestern Mutual Life Insurance Company,1-Apr-27,"-103,000,000.00","-103,000,000.00",USD,2.71%,Fixed,Active
+Northwestern Mutual (2020),Northwestern Mutual (2020) Fixed 10yr,Northwestern Mutual Life Insurance Company,1-Apr-30,"-103,000,000.00","-103,000,000.00",USD,2.82%,Fixed,Active
+Northwestern Mutual (2020),Northwestern Mutual (2020) Floating 7yr,Northwestern Mutual Life Insurance Company,1-Apr-27,"-75,000,000.00","-75,000,000.00",USD,LIBOR + 1.20%,Floating,Active
+Northwestern Mutual 2017,Northwestern Mutual (2017) Fixed,The Northwestern Mutual Life Insurance Company,15-Oct-24,"-191,000,000.00","-191,000,000.00",USD,3.36%,Fixed,Active
+Passport,Simpson Woodfield Passport Construction Loan,Regions Bank,20-Oct-23,"-21,883,228.41","-67,500,000.00",USD,LIBOR + 2.60%,Floating,Active
+Penterra Office 2020,Penterra Refinance 2020,U.S. Bank National Association,23-Oct-23,"-15,000,000.00","-15,000,000.00",USD,LIBOR + 1.75%,Floating,Active
+The Encore (Fannie Mae),The Encore Fannie Mae Fixed,Regions Bank,1-Mar-25,"-45,000,000.00","-45,000,000.00",USD,4.56%,Fixed,Active
+The ICON at Ross,The ICON at Ross,Teachers Insurance and Annuity Association of America,1-Jan-25,"-31,741,700.67","-37,865,230.82",USD,3.80%,Fixed,Active
+TREA FNMA,TREA FNMA Fixed,"Wells Fargo Bank, National Association",1-Dec-25,"-245,000,000.00","-245,000,000.00",USD,4.11%,Fixed,Active
+TREA FNMA,TREA FNMA Float,"Wells Fargo Bank, National Association",1-Dec-25,"-245,000,000.00","-245,000,000.00",USD,LIBOR + 1.02%,Floating,Active
+Overton,Overton Apartment Residences Construction Loan,"Wells Fargo Bank, National Association",2-Sep-25,0,"-59,150,000.00",USD,SOFR + 2.40%,Floating,Active

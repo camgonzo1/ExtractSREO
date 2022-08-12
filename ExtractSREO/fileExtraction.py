@@ -1,29 +1,23 @@
 # Authors: Ryan Dunn and Cameron Gonzalez
-
-#import csv
-#import camelot
-#from cmath import nan
-#from fileinput import filename
-#from lib2to3.pytree import convert
-#from numpy import dtype
+from io import IncrementalNewlineDecoder
 import os
 import sys
-#from pickle import FALSE
 import pandas as pd
+pd.options.mode.chained_assignment = None
 from prepareData import *
-#from re import L
-#import string
 from trainModel import *
-#from openpyxl import Workbook
 import warnings
-#import tkinter as tk
-#from tkinter import filedialog
-import tabula as tabula
-import logging
-import os.path
-from zipfile import ZipFile
 import json as json
+from docx import Document
+import openpyxl as pyxl
+import xlrd
+import csv
+import numpy as np
+import shutil
 
+#PDF extraction imports
+import logging
+from zipfile import ZipFile
 from adobe.pdfservices.operation.pdfops.options.extractpdf.extract_renditions_element_type import ExtractRenditionsElementType
 from adobe.pdfservices.operation.auth.credentials import Credentials
 from adobe.pdfservices.operation.exception.exceptions import ServiceApiException, ServiceUsageException, SdkException
@@ -34,100 +28,132 @@ from adobe.pdfservices.operation.io.file_ref import FileRef
 from adobe.pdfservices.operation.pdfops.extract_pdf_operation import ExtractPDFOperation
 from adobe.pdfservices.operation.pdfops.options.extractpdf.table_structure_type import TableStructureType
 
+
 logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 
-warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
+warnings.simplefilter(action='ignore', category=UserWarning)
 
-ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis'
-PERMITTED_FORMATS = ["csv", "xlsx", "pdf"]
-HEADER_MODEL = 'Model/headerTest'
-modelName = None
+f = open('columnHeaderData.json')
+columnHeaderData = json.load(f)
+ROW, COLUMN = 0, 1 # Values Indicating DataFrame Axis
+PERMITTED_FORMATS = ["csv", "xlsx", "xls", "docx", "pdf"]
+HEADER_MODEL = 'Model/headerTest.pt'
+modelFilePath = None
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
-def setModelName(name):
-	global modelName
-	modelName = name
-def getModelName():
-	return modelName
+def setModelFilePath(name):
+	global modelFilePath
+	modelFilePath = name
+def getModelFilePath():
+	return modelFilePath
 
-# Name: extractSREO()
-# Parameters: curFilePath (string) --> conatins the current path to the desired file for importation
-# Return: sreoData (pandas DataFrame) --> conatins data from file
-# Description: Pulls data from csv or excel sheet and stores in pandas dataframe
-def extractSREO(curFilePath):
-	# Determines File Type 
+#Extracts an SREO file into a pandas dataframe
+def extractSREO(curFilePath): 
 	splitPath = curFilePath.split(".")
 	fileType = splitPath[len(splitPath) - 1]
-
-	# Reads Data into Pandas DataFrame
+	sreoData = []
 	if fileType not in PERMITTED_FORMATS:
 		raise TypeError("Error: Please input compatible file type!")
 	elif fileType == "csv":
-		#sreoData = pd.read_csv(curFilePath, header=None)
-		sreoData = pd.read_csv(curFilePath, header=None, skiprows=1) # For Testing
+		sreoData = [pd.read_csv(curFilePath, header=None)]
+	#Converts xls pages to csv which can be read by pandas
+	elif fileType == "xls":
+		with xlrd.open_workbook(curFilePath) as workbook:
+			for worksheet in workbook.sheets():
+				with open('workbook.csv', 'w', newline="") as csv_file:
+					col = csv.writer(csv_file)
+					for row in range(worksheet.nrows):
+						col.writerow(worksheet.row_values(row))
+				df = pd.read_csv("workbook.csv", header=None)
+				sreoData.append(df)
+				os.remove("workbook.csv")
+	#Import xlsx file as openpyxl workbook and fills in merged rows before converting to pandas dataframe
 	elif fileType == "xlsx":
-		sreoData = pd.read_excel(curFilePath, header=None)
+		workbook = pyxl.load_workbook(curFilePath,data_only=True)
+		for worksheet in workbook.worksheets:
+			for mergedCells in list(worksheet.merged_cells.ranges):
+				min_col, min_row, max_col, max_row = pyxl.utils.range_boundaries(str(mergedCells))
+				top_left_cell_value = worksheet.cell(row=min_row, column=min_col).value
+				worksheet.unmerge_cells(str(mergedCells))
+				for row in worksheet.iter_rows(min_col=min_col, min_row=min_row, max_col=min_col, max_row=max_row):
+					for cell in row:
+						cell.value = top_left_cell_value
+			df = pd.DataFrame(worksheet.values)
+			df = df.fillna(value=np.nan)
+			sreoData.append(df)
+	elif fileType == "docx":
+		document = Document(curFilePath)
+		for table in document.tables:
+			df = [['' for i in range(len(table.columns))] for j in range(len(table.rows))]
+			for i, row in enumerate(table.rows):
+				for j, cell in enumerate(row.cells):
+					if cell.text:
+						df[i][j] = cell.text
+			df = pd.DataFrame(df)
+			sreoData.append(df)
 	elif fileType == "pdf":
-		sreoDataList = tabula.read_pdf(curFilePath,pages='all',guess=False)
-		if len(sreoDataList) < 1:
-			print("Table Not Recognized")
-			return
-		sreoData = sreoDataList[0]
-		for i in range(1, len(sreoDataList)):
-			sreoData = pd.concat([sreoData, sreoDataList[i]], index=False)
-		print(sreoData.to_string)
-
+		sreoData = extractFromPDF(curFilePath)
 	# Removes Uneccessary Information from DataFrame and Formats Correctly
-	sreoData.replace(to_replace='\n', value=' ', regex=True, inplace=True)
-	sreoData.replace(to_replace='  ', value=' ', regex=True, inplace=True)
-	sreoData.mask(sreoData == '', inplace=True)
-	sreoData.dropna(axis=ROW, how='all', inplace=True)
-	sreoData.dropna(axis=COLUMN, how='all', inplace=True)
-	sreoData = sreoData.reset_index(drop=True).rename_axis(None, axis=COLUMN)
-	sreoData = transposeVerticalRows(sreoData)
-	# Reformat DataFrame to Apply Header
-	index = getHeaderIndex(sreoData)
-	sreoData = mergeHeaderRows(sreoData, index)
-	if index == -1:
-		raise IndexError("Error Downloading File: Please retry download or use different file format!")
-	sreoData.columns = sreoData.iloc[index]
-	sreoData = sreoData[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
+	i = 0
+	while i < len(sreoData):
+		df = sreoData[i]
+		df.replace(to_replace='/n', value=' ', regex=True, inplace=True)
+		df.replace(to_replace='  ', value=' ', regex=True, inplace=True)
+		df.mask(df == '', inplace=True)
+		df.dropna(axis=ROW, how='all', inplace=True)
+		df.dropna(axis=COLUMN, how='all', inplace=True)
+		df = df.reset_index(drop=True).rename_axis(None, axis=COLUMN)
+		df = transposeVerticalRows(df)
+		# Reformat DataFrame to Apply Header
+		index = getHeaderIndex(df)
+		if index == -1:
+			del sreoData[i]
+		else:
+			df = mergeHeaderRows(df, index)
+			df.columns = df.iloc[index]
+			df = df[(index + 1):].reset_index(drop=True).rename_axis(None, axis=COLUMN)
+			sreoData[i] = df
+			i += 1
 	return sreoData
 
-def transposeVerticalRows(sreoData):
-	transposedSreoData = sreoData.T
-	transposedHeaderIndex = getHeaderIndex(transposedSreoData)
-	sreoDataHeaderIndex = getHeaderIndex(sreoData)
-	sreoDataCount = 0
+#Transposes the dataframe if each SREO is stored horizontally
+def transposeVerticalRows(df):
+	transposedDF = df.T
+	transposedHeaderIndex = getHeaderIndex(transposedDF)
+	dfHeaderIndex = getHeaderIndex(df)
+	if transposedHeaderIndex == -1:
+		return df
+	if dfHeaderIndex == -1:
+		return transposedDF
+	dfCount = 0
 	transposedCount = 0
-	#print(sreoData.to_string())
-	for cell in sreoData.iloc[sreoDataHeaderIndex]:
-		if validColumnHeader(str(cell)):
-			sreoDataCount += 1
-	for cell in transposedSreoData.iloc[transposedHeaderIndex]:
-		if validColumnHeader(str(cell)):
+	for cell in df.iloc[dfHeaderIndex]:
+		if isValidColumnHeader(str(cell)):
+			dfCount += 1
+	for cell in transposedDF.iloc[transposedHeaderIndex]:
+		if isValidColumnHeader(str(cell)):
 			transposedCount += 1
-	if transposedCount > sreoDataCount:
-		return transposedSreoData
+	if transposedCount > dfCount:
+		return transposedDF
 	else:
-		return sreoData
+		return df
 
-def mergeHeaderRows(sreoData, headerIndex):
-	row1 = sreoData.iloc[headerIndex]
-	row2 = sreoData.iloc[headerIndex + 1]
-	headers = open("headers.txt", "r")
-	lines = headers.readlines()
+#Checks if the header is contained on multiple rows. If it is, merges the rows
+def mergeHeaderRows(df, headerIndex):
+	row1 = df.iloc[headerIndex]
+	row2 = df.iloc[headerIndex + 1]
 	numCells = 0
 	numCellsContainingHeaders = 0
 	for cell in row2:
 		if str(cell) != "nan":
 			numCells += 1
-		for line in lines:
-			if str(cell) in line and len(str(cell)) > 1:
-				numCellsContainingHeaders += 1
-				continue
+		for headerList in columnHeaderData["headers"]:
+			for header in headerList:
+				if str(cell) in header and len(str(cell)) > 1:
+					numCellsContainingHeaders += 1
+					continue
 	if(float(numCellsContainingHeaders) / float(numCells)) > 0.8:
 		for i in range(len(row1)):
 			if(i in row2 and i < len(row2)):
@@ -138,159 +164,103 @@ def mergeHeaderRows(sreoData, headerIndex):
 						row1[i] = str(row1[i]) + " " + str(row2[i])
 					else:
 						row1[i] = str(row1[i]) + str(row2[i])
-		sreoData.iloc[headerIndex] = row1
-		return sreoData.drop(index=headerIndex+1)
+		df.iloc[headerIndex] = row1
+		return df.drop(index=headerIndex+1)
 	else:
-		return sreoData
+		return df
 
-	# Name: getHeaderIndex()
-# Parameters: searchData (pandas DataFrame) --> conatins unfiltered data from an SREO
-# Return: i (int) --> the index of the header row
-#         -1 (int) --> Error: No header row found
-# Description: Searches Data for Header Row
-def getHeaderIndex(searchData):
-	for i in range(len(searchData.index)):
-		rowString = ((searchData.iloc[i])).apply(str).str.cat(sep=' ')
+#Uses the header row classification model HEADER_MODEL to find the index of the header row
+def getHeaderIndex(df):
+	for row in range(df.shape[ROW]):
+		rowString = df.iloc[row].apply(str).str.cat(sep=' ')
 		confidence = outputConfidence(False,HEADER_MODEL,rowString)
 		if confidence[0] == "Valid":
-			return i
+			return row
 	return -1
 
-# Name: fillTemplate()
-# Parameters: sreoDataFrame (pandas DataFrame) --> conatins semi-filtered data from an SREO
-# Return: sreoTemplate.to_excel() (.xlsx) --> contains the populated SREO standard template
-# Description: Takes in a nonstandardized SREO and analyzes using a NLP model to restrusture 
-#              data in a standardized model which it exports in a .xlsx format fllowing a 
-#              notification to the abstraction team. 
-def fillTemplate(sreoDataFrame):
-	sreoTemplate = pd.DataFrame(columns=['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index', 'Loan Type'])
-	bestIndex = {'Property Name': [-1, 0],
-				 'Address': [-1, 0],
-				 'City': [-1, 0],
-				 'State':[-1, 0],
-				 'Property Type': [-1, 0],
-				 'Units': [-1, 0],
-				 'Square Feet': [-1, 0],
-				 'Occupancy': [-1, 0],
-				 'Acquisition Date': [-1, 0],
-				 'Lender': [-1, 0],
-				 'Maturity Date': [-1, 0],
-				 'Loan Amount': [-1, 0],
-				 'Current Balance': [-1, 0],
-				 'Debt Service': [-1, 0],
-				 'NOI': [-1, 0],
-				 'DSCR': [-1, 0],
-				 'Market Value': [-1, 0],
-				 'LTV': [-1, 0],
-				 'Amort Start Date': [-1, 0],
-				 'Rate Type': [-1, 0],
-				 'All-In Rate': [-1, 0],
-				 'Spread': [-1, 0],
-				 'Index': [-1, 0]}
-	for dataColumn in sreoDataFrame.columns:
-		if type(modelName) is str:
-			guess = outputConfidence(True, modelName, str(dataColumn))
-		else:
-			guess = outputConfidenceMultipleModels(True, modelName, str(dataColumn))
-		if guess[0] != "N/A" and guess[0] != "Invalid" and guess[1] > bestIndex[guess[0]][1]:
-			#print(dataColumn)
-			#print(guess)
-			#print()
-			bestIndex[guess[0]][0] = str(dataColumn)
-			bestIndex[guess[0]][1] = guess[1]
 
-	for entry in bestIndex:
-		if bestIndex[entry][0] != -1 and bestIndex[entry][0] in sreoDataFrame:
-			if(type(sreoDataFrame[bestIndex[entry][0]]) is pd.core.series.Series):
-				dataFrameColumn = sreoDataFrame[bestIndex[entry][0]]
-			elif(len(sreoDataFrame[bestIndex[entry][0]].columns) > 1):
-				dataFrameColumn = sreoDataFrame[bestIndex[entry][0]].iloc[:,0]	
+def fillTemplate(sreoData):
+	labels = []
+	highestConfidenceColumns = {}
+	for headerList in columnHeaderData["headers"]:
+		labels.append(headerList[0])
+		highestConfidenceColumns[headerList[0]] = 0
+	labels.append("Loan Type")
+
+	templates = []
+	for df in sreoData:
+		sreoTemplate = pd.DataFrame(columns=labels)
+		for dataColumn in df.columns:
+			if type(modelFilePath) is str:
+				output = outputConfidence(True, modelFilePath, str(dataColumn))
 			else:
-				dataFrameColumn = sreoDataFrame[bestIndex[entry][0]]
-			sreoTemplate[entry] = dataFrameColumn
+				output = outputConfidenceMultipleModels(True, modelFilePath, str(dataColumn))
+			outputLabel = output[0]
+			outputConfidenceVal = output[1]
+			if outputLabel != "N/A" and outputConfidenceVal > highestConfidenceColumns[outputLabel]:
+				highestConfidenceColumns[outputLabel] = outputConfidenceVal
+				if(type(df[dataColumn]) is pd.DataFrame):
+					if(len(df[dataColumn].columns) > 1):
+						dataFrameColumn = df[dataColumn].iloc[:,0]	
+				else:
+					dataFrameColumn = df[dataColumn]
+				sreoTemplate[outputLabel] = dataFrameColumn
 
-	for row in range(sreoDataFrame.shape[0]):
-		for column in sreoDataFrame.columns:
-			if "Fannie Mae" in str(sreoDataFrame.at[row, column]) or "fannie mae" in str(sreoDataFrame.at[row, column]):
-				sreoTemplate.at[row,'Loan Type'] = "Fannie Mae"
-			elif "Freddie Mac" in str(sreoDataFrame.at[row, column]) or "freddie mac" in str(sreoDataFrame.at[row, column]):
-				sreoTemplate.at[row,'Loan Type'] = "Freddie Mac"
-	#Workbook.save(filename = "Standardized-" + newName + ".xlsx")
+		for row in range(df.shape[ROW]):
+			for column in df.columns:
+				if "Fannie Mae" in str(df.at[row, column]) or "fannie mae" in str(df.at[row, column]):
+					sreoTemplate.at[row,'Loan Type'] = "Fannie Mae"
+				elif "Freddie Mac" in str(df.at[row, column]) or "freddie mac" in str(df.at[row, column]):
+					sreoTemplate.at[row,'Loan Type'] = "Freddie Mac"
+		templates.append(sreoTemplate)
 	
-	return sreoTemplate
+	return templates
 
-
+#Note: Adobe Extract API is not very reliable, should work to improve it
 def extractFromPDF(filePath):
 	logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 	try:
 		for f in os.listdir("pdfExtraction/"):
-			os.remove(os.path.join("pdfExtraction/", f))
-		#Initial setup, create credentials instance.
-		credentials = Credentials.service_account_credentials_builder().from_file("pdfservices-api-credentials.json").build()
+			if len(f.split(".")) < 2:
+				shutil.rmtree(os.path.join("pdfExtraction/", f))
+			else:
+				os.remove(os.path.join("pdfExtraction/", f))
 		
-		#Create an ExecutionContext using credentials and create a new operation instance.
+		credentials = Credentials.service_account_credentials_builder().from_file("Extract API Credentials/pdfservices-api-credentials.json").build()
+		
 		execution_context = ExecutionContext.create(credentials)
 		extract_pdf_operation = ExtractPDFOperation.create_new()
 		
-		#Set operation input from a source file.
 		source = FileRef.create_from_local_file(filePath)
 		extract_pdf_operation.set_input(source)
 		
-		#Build ExtractPDF options and set them into the operation
 		extract_pdf_options: ExtractPDFOptions = ExtractPDFOptions.builder().with_elements_to_extract([ExtractElementType.TEXT, ExtractElementType.TABLES]) \
-        .with_element_to_extract_renditions(ExtractRenditionsElementType.TABLES) \
-        .with_table_structure_format(TableStructureType.CSV) \
-        .build()
+		.with_element_to_extract_renditions(ExtractRenditionsElementType.TABLES) \
+		.with_table_structure_format(TableStructureType.CSV) \
+		.build()
 		extract_pdf_operation.set_options(extract_pdf_options)
-		#Execute the operation.
+		
 		result: FileRef = extract_pdf_operation.execute(execution_context)
-		#Save the result to the specified location.
-		zipFilePath = "pdfExtraction/extract" + str(filePath).split("/")[len(str(filePath).split("/"))-1].split(".")[0] + ".zip"
+		
+		zipFilePath = "pdfExtraction/extractedPDF.zip"
 		result.save_as(zipFilePath)
-
 		with ZipFile(zipFilePath, 'r') as zipObject:
-			for fileName in zipObject.namelist():
-				if fileName.endswith('.json'):
-					zipObject.extract(fileName, 'pdfExtraction')
+			zipObject.extractall("pdfExtraction")
 
-		f = open('pdfExtraction/structuredData.json')
-		data = json.load(f)
-		dataframe = pd.DataFrame()
-		if False:
-			if 'Text' in element and 'Table' in element['Path']:	
-				print(element['Text'])
-				path = element['Path']
-				print(path)
-				row = 1
-				column_names = []
-				if path.split('/')[6] not in column_names:
-					column_names.append(path.split('/')[6])
-				print(path.split("/")[6])
-				if '/P[' in path:
-					row += int(path.split('/P[')[1].split(']')[0])
-					print('/P[ ' + path.split('/P[')[1].split(']')[0])
-				if '/TR[' in path:
-					row += int(path.split('/TR[')[1].split(']')[0])
-					print("/TR[ " + str(path.split('/TR[')[1].split(']')[0]))
-				if 'TH' in path:
-					column += 1
-				if ']/P' in path:
-					column += int(path.split(']/P')[0].split('[')[len(path.split(']/P')[0].split('['))-1])
+		sreoData = []
+		for fileName in os.listdir("pdfExtraction/tables"):
+			if fileName.split(".")[len(fileName.split("."))-1] == "csv":
+				sreoData.append(pd.read_csv("pdfExtraction/tables/" + fileName,header=None))
+		
+		return sreoData
 
-				print("row: " + str(row))
-				print("col: " + str(column))
-				print()
-				dataframe.at[row,column] = element['Text']
 
-		print(dataframe.to_string())
 	except (ServiceApiException, ServiceUsageException, SdkException):
 		logging.exception("Exception encountered while executing operation")
 
-
-
-def outputConfidenceMultipleModels(testColumn, modelName, textInput):
+def outputConfidenceMultipleModels(testColumn, modelFilePath, textInput):
 	outputCounts = {}
-	for model in modelName:
+	for model in modelFilePath:
 		output = outputConfidence(testColumn, model, textInput)
 		if output[0] in outputCounts.keys():
 			outputCounts[output[0]] = outputCounts[output[0]] + 1
@@ -308,286 +278,47 @@ def outputConfidenceMultipleModels(testColumn, modelName, textInput):
 	else:
 		return "N/A", float(maxCount) / float(len(outputCounts))
 
-# Name: standardizeSREO()
-# Parameters: sreoFilePath (string) --> conatins the current path to the desired file for importation
-# Return: fillTemplate(extractSREO(sreoFilePath)) (.xlsx) --> contains the populated SREO standard template
-# Description: Takes in a file path, pulls and analyzes data and restrustures
-#              data in a standardized model which it exports in a .xlsx format following a 
-#              notification to the abstraction team.
+#Takes in a file path and returns a filled template of relevant data points
 def standardizeSREO(sreoFilePath):
 	return fillTemplate(extractSREO(sreoFilePath))
 
+def autoCreateModel(goal):
+	trainingData = pd.DataFrame(columns=['label','text'])
+	count = 1
+	errors = sys.maxsize
+	while errors > goal:
+		print("----------------------------------------------------------------------------------")
+		trainingData = pd.DataFrame(columns=['label','text'])
+		numReps = random.randint(35, 65) * 100
+		LR = float(random.randint(35,45)) / 10.0
+		print("Number of Repeats: " + str(numReps) + " Learning Rate: " + str(LR))
+		modelFilePath = "newTrial" + str(count) + "-" + str(numReps) + ".pt"
+		setModelFilePath(modelFilePath)
+		trainingData = pd.concat([trainingData, generateData(numReps)],ignore_index=True)
+		trainingData.to_csv("trainingData.csv",index=False)
+		trainModel(True,True,modelFilePath,"trainingData.csv", LR)
+		count += 1
+		errors = testOnSolvedCSV(goal)
+		if errors > goal:
+			os.remove(modelFilePath)
+			os.remove(modelFilePath.replace(".pt", "Vocab.pt"))
+	print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+	print("New Best Model = " + modelFilePath)
 
-######################## For Testing #################################
-FILES = ["SREOs/2022 Lawrence S Connor REO Schedule.csv", "SREOs/2022 Lawrence S Connor REO Schedule.xlsx", "SREOs/AP - REO excel 202112.csv", "SREOs/AP - REO excel 202112.xlsx", "SREOs/NorthBridge.csv", "SREOs/NorthBridge.xlsx", "SREOs/RPA REO Schedule - 01.31.2022.csv", "SREOs/RPA REO Schedule - 01.31.2022.xlsx", "SREOs/Simpson REO Schedule (12-31-21).csv", "SREOs/Simpson REO Schedule (12-31-21).xlsx", "SREOs/SREO Export Template v2 - final.csv", "SREOs/SREO Export Template v2 - final.xlsx"]
-CUR_FILE = "SREOs/2022 Lawrence S Connor REO Schedule.csv"
-
-# Name: testConfidence()
-# Parameters: data (pandas DataFrame) --> conatins data from SREO file
-# Return: None --> prints to screen and updates global variables directly
-# Description: This function test how well the data AI program would be categorizing into the template
-def testConfidence(trainColumn, data):
-	global modelName
-	totalCorrect, totalNum = 0, 0
-	compare = pd.read_excel("Header Data/DataGroups.xlsx")
-	correct = 0
-	COLUMN_LABELS = {1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
-					 7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount",
-					 12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
-					 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"}
-	confidences = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-	columnHeaders = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
-	for column in data.columns:
-		myString = str(column[0])
-		if type(modelName) is str:
-			guess = outputConfidence(trainColumn, modelName, myString)
-		else: 
-			guess = outputConfidenceMultipleModels(True, modelName, myString)
-		labelIndex = get_column_label(guess[0])
-		if confidences[labelIndex - 1] < guess[1]:
-			confidences[labelIndex - 1] = guess[1]
-			columnHeaders[labelIndex - 1] = str(column[0])
-		if guess[0] in compare.columns:
-			if str(column) in compare[guess[0]].apply(str).str.cat(sep=' '):
-				correct += 1
-		print(str(column) + ' --> ' + guess[0] + ' ' + str(guess[1]))
-	print("----------------- Highest Values --------------------")
-	for i in range(len(COLUMN_LABELS)):
-		print(columnHeaders[i] + " --> " + COLUMN_LABELS[i + 1] + " " + str(confidences[i]))
-	totalCorrect += correct
-	totalNum += get_num_labels()
-	print("Accuracy of Trained Categories = " + str("{:.2%}".format(correct/get_num_labels())))
-	print("Total Accuracy = " + str("{:.2%}".format(correct/len(data.columns))))
-
-COLUMN_CHECK = ['Property Name','Address','City','State','Property Type','Units','Square Feet','Occupancy', 'Acquisition Date', 'Lender', 'Maturity Date', 'Loan Amount', 'Current Balance', 'Debt Service', 'NOI', 'DSCR', 'Market Value', 'LTV', 'Amort Start Date', 'Rate Type', 'All-In Rate', 'Spread', 'Index', 'Loan Type']
-def testOnSolvedCSV(goal=sys.maxsize):
-	totalCorrect, totalNum = 0, 0
-	missingDict, noMatchDict, unnecessaryColDict = {}, {}, {}
-	for file in os.listdir("SREOs/CSVs/"):
-		testFrame = standardizeSREO("SREOs/CSVs/" + file)
-		testFrame.dropna(axis=COLUMN, how='all', inplace=True)
-
-		answerCSV = pd.read_csv("SREOs/CSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN).replace(to_replace='\n', value=' ', regex=True)
-		answerCSV.replace(to_replace='  ', value=' ', regex=True, inplace=True)
-		missing = []
-		for column in answerCSV.columns:
-			if column not in COLUMN_CHECK:
-				answerCSV.drop(columns=column, inplace=True)
-			else:
-				missing.append(column)
-
-		numerator, denominator = 0, 0
-		unnecessaryCol, noMatch = [], []
-		for column in testFrame:
-			if column in answerCSV.columns:
-				if (testFrame[column]).dropna().apply(str).str.cat(sep=' ') == (answerCSV[column]).dropna().apply(str).str.cat(sep=' '):
-					numerator += 1
-				else:
-					#print((testFrame[column]).dropna().apply(str).str.cat(sep=' '))
-					#print((answerCSV[column]).dropna().apply(str).str.cat(sep=' '))
-					noMatch.append(column)
-				missing.remove(column)
-			elif column != "Loan Type":
-				denominator += 1
-				unnecessaryCol.append(column)
-		denominator += len(answerCSV.columns)
-		
-		totalCorrect += numerator
-		totalNum += denominator
-		if totalNum - totalCorrect > goal:
-			print("Greater errors than goal, generating new model")
-			return totalNum - totalCorrect
-		print(file)
-		if denominator != 0:
-			print("Required Headers Accuracy --> " + str("{:.2%}".format(numerator/denominator)))
-		if len(missing) != 0:
-			print()
-			print("Headers Missing:")
-			for elem in missing:
-				print(elem)
-				if elem in missingDict:
-					missingDict[elem] += 1
-				else:
-					missingDict[elem] = 1
-		if len(noMatch) != 0:
-			print()
-			print("Correct Header w/ Incorrectly Matched Data:")
-			for elem in noMatch:
-				print(elem)
-				if elem in noMatchDict:
-					noMatchDict[elem] += 1
-				else:
-					noMatchDict[elem] = 1
-		if len(unnecessaryCol) != 0:
-			print()
-			print("Unnecessary Incorrect Header:")
-			for elem in unnecessaryCol:
-				print(elem)
-				if elem in unnecessaryColDict:
-					unnecessaryColDict[elem] += 1
-				else:
-					unnecessaryColDict[elem] = 1
-		print("----------------------------------------------------------------------------------------")
-	print("----------------------------------------------------------------------------------------")
-	totalErrors = 0
-	print("Headers Missing:")
-	for elem in missingDict:
-		print(elem + " = " + str(missingDict[elem]))
-		totalErrors += missingDict[elem]
-	print()
-	print("Correct Header w/ Incorrectly Matched Data:")
-	for elem in noMatchDict:
-		print(elem + " = " + str(noMatchDict[elem]))
-		totalErrors += noMatchDict[elem]
-	print()
-	print("Unnecessary Incorrect Header:")
-	for elem in unnecessaryColDict:
-		print(elem + " = " + str(unnecessaryColDict[elem]))
-		totalErrors += unnecessaryColDict[elem]
-	print()
-	print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
-	print("Total Errors --> " + str(totalErrors))
-	print("----------------------------------------------------------------------------------------")
-	return totalErrors
-	#return float(totalCorrect/totalNum)
-
-def testOnSolvedCSVMultiModel(numModels=None, models=None):
-	global modelName
-	totalCorrect, totalNum = 0, 0
-	missingDict, noMatchDict, unnecessaryColDict = {}, {}, {}
-	if numModels == None:
-		numModels = int(input("How many models: "))
-	if models == None:
-		models = []
-		for i in range(numModels):
-			models.append(input("Model Name: "))
-	for file in os.listdir("SREOs/CSVs/"):
-		testFrame = []
-		for model in models:
-			modelName = model
-			curFrame = standardizeSREO("SREOs/CSVs/" + file)
-			curFrame.dropna(axis=COLUMN, how='all', inplace=True)
-			testFrame.append(curFrame)
-
-		columnDict = {}
-		for dataFrame in testFrame:
-			for column in dataFrame.columns:
-				if column in columnDict:
-					if tuple(dataFrame[column]) in columnDict[column]:
-						columnDict[column][tuple(dataFrame[column])] += 1
-					else:
-						columnDict[column][tuple(dataFrame[column])] = 1
-				else:
-					columnDict[column] = {tuple(dataFrame[column]) : 1}
-
-		newDict = {}
-		for internalDict in columnDict:
-			for answer in columnDict[internalDict]:
-				if columnDict[internalDict][answer] > .5 * len(models):
-					newDict[internalDict] = answer
-		finalDF = pd.DataFrame(newDict)
-
-		answerCSV = pd.read_csv("SREOs/CSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN).replace(to_replace='\n', value=' ', regex=True)
-		answerCSV.replace(to_replace='  ', value=' ', regex=True, inplace=True)
-
-		missing = []
-		for column in answerCSV.columns:
-			if column not in COLUMN_CHECK:
-				answerCSV.drop(columns=column, inplace=True)
-			else:
-				missing.append(column)
-
-		numerator, denominator = 0, 0
-		unnecessaryCol, noMatch = [], []
-		for column in finalDF:
-			if column in answerCSV.columns:
-				if (finalDF[column]).dropna().apply(str).str.cat(sep=' ') == (answerCSV[column]).dropna().apply(str).str.cat(sep=' '):
-					numerator += 1
-				else:
-					#print((testFrame[column]).dropna().apply(str).str.cat(sep=' '))
-					#print((answerCSV[column]).dropna().apply(str).str.cat(sep=' '))
-					noMatch.append(column)
-				missing.remove(column)
-			elif column != "Loan Type":
-				denominator += 1
-				unnecessaryCol.append(column)
-		denominator += len(answerCSV.columns)
-		
-		totalCorrect += numerator
-		totalNum += denominator
-		
-		print(file)
-		if denominator != 0:
-			print("Required Headers Accuracy --> " + str("{:.2%}".format(numerator/denominator)))
-		if len(missing) != 0:
-			print()
-			print("Headers Missing:")
-			for elem in missing:
-				print(elem)
-				if elem in missingDict:
-					missingDict[elem] += 1
-				else:
-					missingDict[elem] = 1
-		if len(noMatch) != 0:
-			print()
-			print("Correct Header w/ Incorrectly Matched Data:")
-			for elem in noMatch:
-				print(elem)
-				if elem in noMatchDict:
-					noMatchDict[elem] += 1
-				else:
-					noMatchDict[elem] = 1
-		if len(unnecessaryCol) != 0:
-			print()
-			print("Unnecessary Incorrect Header:")
-			for elem in unnecessaryCol:
-				print(elem)
-				if elem in unnecessaryColDict:
-					unnecessaryColDict[elem] += 1
-				else:
-					unnecessaryColDict[elem] = 1
-		print("----------------------------------------------------------------------------------------")
-	print("----------------------------------------------------------------------------------------")
-	totalErrors = 0
-	print("Headers Missing:")
-	for elem in missingDict:
-		print(elem + " = " + str(missingDict[elem]))
-		totalErrors += missingDict[elem]
-	print()
-	print("Correct Header w/ Incorrectly Matched Data:")
-	for elem in noMatchDict:
-		print(elem + " = " + str(noMatchDict[elem]))
-		totalErrors += noMatchDict[elem]
-	print()
-	print("Unnecessary Incorrect Header:")
-	for elem in unnecessaryColDict:
-		print(elem + " = " + str(unnecessaryColDict[elem]))
-		totalErrors += unnecessaryColDict[elem]
-	print()
-	print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
-	print("Total Errors --> " + str(totalErrors))
-	print("----------------------------------------------------------------------------------------")
-	return totalCorrect
-
-def trainAgainstSolvedCSV(isNewModel, newModelName):
-	global modelName 
-	modelName = "Model/9errors"
+def trainAgainstSolvedCSV(isNewModel, modelFilePath):
 	trainingData = pd.DataFrame(columns=['label','text'])
 	if isNewModel:
-		for file in os.listdir("SREOs/CSVs/"):
-			testFrame = extractSREO("SREOs/CSVs/" + file)
-			answerRow = pd.read_csv("SREOs/CSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN).replace(to_replace='\n', value=' ', regex=True)
+		for file in os.listdir("solvedCSVs/"):
+			testFrame = extractSREO("solvedCSVs/" + file)[0]
+			answerRow = pd.read_csv("solvedCSVs/" + file, header=0).drop(index=0).reset_index(drop=True).rename_axis(None, axis=COLUMN).replace(to_replace='\n', value=' ', regex=True)
 			tempTrainingData = pd.DataFrame(columns=['label','text'])
 
 			for i in range(len(testFrame.columns)):
-				if "." in answerRow.columns[i]:
-					tempTrainingData.at[i,'label'] = str(answerRow.columns[i]).split(".")[0]
-				else:
+				if str(testFrame.columns[i]) != "nan":
 					tempTrainingData.at[i,'label'] = str(answerRow.columns[i])
-				if "." in testFrame.columns[i]:
-					tempTrainingData.at[i, 'text'] = str(testFrame.columns[i][0]).split(".")[0]
-				else:
-					tempTrainingData.at[i,'text'] = str(testFrame.columns[i][0])
+					tempTrainingData.at[i,'text'] = str(testFrame.columns[i])
+					if "." in tempTrainingData.at[i,'label']:
+						tempTrainingData.at[i,'label'] = str(tempTrainingData.at[i,'label']).split(".")[0]
 			tempTrainingData.dropna(axis=ROW, how='all', inplace=True)
 			tempTrainingData.dropna(axis=COLUMN, how='all', inplace=True)
 			trainingData = pd.concat([trainingData, tempTrainingData], ignore_index=True)
@@ -596,4 +327,165 @@ def trainAgainstSolvedCSV(isNewModel, newModelName):
 		trainingData = pd.read_csv("trainingData.csv")
 		trainingData = trainingData.sample(frac=1)
 		trainingData.to_csv("trainingData.csv",index=False)
-	trainModel(True, isNewModel, newModelName, "trainingData.csv", 1)
+	trainModel(True, isNewModel, modelFilePath, "trainingData.csv", 1)
+
+################################## Testing Functions ##########################################
+#Takes in a dataframe and prints out the results of inputting each column header into the model
+def testConfidence(trainColumn, df):
+	global modelFilePath
+	highestOutputs = {}
+	for column in df.columns:
+		if type(modelFilePath) is str:
+			output = outputConfidence(trainColumn, modelFilePath, str(column))
+		else: 
+			output = outputConfidenceMultipleModels(True, modelFilePath, str(column))
+
+		outputLabel = output[0]
+		outputConfidenceVal = output[1]
+
+		if outputLabel in highestOutputs:
+			if highestOutputs[outputLabel][1] < outputConfidenceVal:
+				highestOutputs[outputLabel] = column, outputConfidenceVal
+		elif outputLabel != "N/A":
+			highestOutputs[outputLabel] = column, outputConfidenceVal
+
+		print(str(column) + ' --> ' + outputLabel + ' ' + str(outputConfidenceVal))
+
+	print("----------------- Highest Values --------------------")
+	for output in highestOutputs.keys():
+		print(highestOutputs[output][0] + " --> " + output + " " + str(highestOutputs[output][1]))
+
+
+def testOnSolvedCSV(goal=sys.maxsize):
+	validLabels = []
+	startTime = time.perf_counter()
+	totalCorrect, totalNum = 0, 0
+	missingCounts, incorrectMatchCounts = {}, {}
+	trainedToRecognizeButNotUsed = ["Loan Type", "Loan Amount", "Spread", "Index"] #Loan Type is used, is not extracted by the model so it is excluded here
+	for headerList in columnHeaderData["headers"]:
+		if headerList[0] not in trainedToRecognizeButNotUsed:
+			validLabels.append(headerList[0])
+
+	for file in os.listdir("solvedCSVs/"):
+		CSVDataFrame = pd.read_csv("solvedCSVs/" + file,header=None)
+		CSVDataFrame.replace(to_replace='/n', value=' ', regex=True, inplace=True)
+		CSVDataFrame.replace(to_replace='  ', value=' ', regex=True, inplace=True)
+		
+		correct, numVals = 0, 0
+
+		missing, incorrectMatch = [], []
+		highestClassifications = {}
+		for columnIndex in range(CSVDataFrame.shape[COLUMN]):
+			columnLabel = str(CSVDataFrame.at[1, columnIndex])
+			output, confidence = outputConfidence(True, modelFilePath, columnLabel)
+			if output in highestClassifications:
+				if confidence > highestClassifications[output][1]:
+					highestClassifications[output] = columnLabel, confidence
+			else:
+				highestClassifications[output] = columnLabel, confidence
+
+		for columnIndex in range(CSVDataFrame.shape[COLUMN]):
+			correctLabel = str(CSVDataFrame.at[0,columnIndex])
+			if correctLabel not in trainedToRecognizeButNotUsed:
+				actualLabel = str(CSVDataFrame.at[1,columnIndex])
+				if correctLabel != "nan" and correctLabel != "N/A":
+					if correctLabel not in highestClassifications:
+						missing.append(correctLabel)
+						if correctLabel in missingCounts:
+							missingCounts[correctLabel] += 1
+						else:
+							missingCounts[correctLabel] = 1
+					elif highestClassifications[correctLabel][0] == actualLabel:
+						correct += 1
+						totalCorrect += 1
+					else:
+						incorrectMatch.append(correctLabel)
+						if correctLabel in incorrectMatchCounts:
+							missingCounts[correctLabel] += 1
+						else:
+							missingCounts[correctLabel] = 1
+					totalNum += 1
+					numVals += 1
+		print(file)
+		print("Required Headers Accuracy --> " + str("{:.2%}".format(correct/numVals)))
+		print()
+		if len(missing) != 0:
+			print("Missing: ")
+			for missed in missing:
+				print(missed)
+			print()
+		if len(incorrectMatch) != 0:
+			print("Incorrect Match: ")
+			for missed in incorrectMatch:
+				print(missed)
+			print()
+		print("----------------------------------------------------------------------------------------")
+		if totalNum - totalCorrect > goal:
+			print("Greater errors than goal, generating new model")
+			return totalNum - totalCorrect
+
+	print("----------------------------------------------------------------------------------------")
+	totalErrors = 0
+	print("Headers Missing:")
+	for missed in missingCounts:
+		print(missed + " = " + str(missingCounts[missed]))
+		totalErrors += missingCounts[missed]
+	print()
+	print("Incorrect Matches:")
+	for missed in incorrectMatchCounts:
+		print(missed + " = " + str(incorrectMatch[missed]))
+		totalErrors += incorrectMatchCounts[missed]
+
+	print()
+	print("Total Required Headers Accuracy --> " + str("{:.2%}".format(totalCorrect/totalNum)))
+	print("Total Errors --> " + str(totalErrors))
+	print("Total Processing Time: " + str(time.perf_counter() - startTime) + "s")
+	print("----------------------------------------------------------------------------------------")
+
+	return totalErrors
+	
+
+if __name__ == "__main__":
+	running = ""
+	setModelFilePath(input("Current model file path: "))
+	while running != "0":
+		running = input("1 for file extraction, 2 for test on solved csv, 3 for data generation, 4 for training, 5 for more, 0 to quit: ")
+		if running == "5":
+			running = input("5 to auto-generate model, 6 to train on solved csv, 7 to change model: ")
+		if running == "1":
+			filePath = input("Input file path: ")
+			sreoData = standardizeSREO(filePath)
+			exportPath = input("Export file name: ")
+			if len(sreoData) == 1:
+				sreoData[0].to_csv(exportPath + ".csv",index=False)
+				sreoData[0].to_json(exportPath + ".json")
+			else:
+				count = 0
+				for df in sreoData:
+					df.to_csv(str(count) + "-" + exportPath + ".csv", index=False)
+					df.to_json(str(count) + "-" + exportPath + ".json")
+					count += 1
+		elif running == "2":
+				testOnSolvedCSV()
+		elif running == "3":
+			numRepeats = int(input("Enter number of repeats: "))
+			trainColumn = input("1 for column model 2 for header model: ") == "1"
+			if trainColumn:
+				generateData(numRepeats).to_csv("trainingData.csv")
+			else:
+				generateHeaderData(numRepeats).to_csv("trainingData.csv")
+		elif running == "4":
+			modelName = input("Model File Path: ")
+			trainColumn = input("1 for column model 2 for header model: ") == "1"
+			newModel = input("1 for new model 2 for existing model: ") == "1"
+			trainModel(trainColumn, newModel, modelName, "trainingData.csv")
+		elif running == "5":
+			goal = int(input("Errors to beat: "))
+			autoCreateModel(goal)
+		elif running == "6":
+			newModel = input("1 for new model, 2 for existing model")
+			filePath = input("Model file path: ")
+			trainAgainstSolvedCSV(newModel, filePath)
+		elif running == "7":
+			setModelFilePath(input("Input File Path: "))
+		print()

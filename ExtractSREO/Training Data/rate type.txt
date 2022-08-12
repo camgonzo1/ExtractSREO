@@ -1,4 +1,0 @@
-Fixed
-Floating
-Other
-Variable

@@ -1,22 +1,21 @@
-#from pickle import TRUE
-#from re import A
 from PyQt5 import QtCore, QtGui, QtWidgets
 import fileExtraction as fileExtraction
 from prepareData import *
 import trainModel as trainModel
-import ctypes
 import tkinter as tk
 from tkinter import filedialog
-import random
-import os
+
+trainColumn = True
+modelFilePath = ""
+controller = None
 
 root = tk.Tk()
 root.withdraw()
-trainColumn = True
-modelName = ""
-controller = None
 
-BUTTON_STYLE_SHEET = "QPushButton { background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(0, 103, 254, 255), stop:1 rgba(0, 125, 255, 255)); color:rgb(240, 240, 240); border-style: outset; border-width: 2px; border-radius: 16px; border-color: rgba(0,0,0,0); font: bold 22px; padding: 6px; } QPushButton::pressed { background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(0, 113, 254, 255), stop:1 rgba(0, 135, 255, 255)); border-style: inset } QPushButton::disabled { background-color:rgb(185, 205, 255) }"
+BUTTON_STYLE_SHEET = "QPushButton { background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(0, 103, 254, 255), stop:1 rgba(0, 125, 255, 255)); \
+					  color:rgb(240, 240, 240); border-style: outset; border-width: 2px; border-radius: 16px; border-color: rgba(0,0,0,0); font: bold 22px; padding: 6px; } \
+					  QPushButton::pressed { background-color:qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(0, 113, 254, 255), stop:1 rgba(0, 135, 255, 255)); \
+					  border-style: inset } QPushButton::disabled { background-color:rgb(185, 205, 255) }"
 LINE_EDIT_STYLE_SHEET = "border-style: outset; border-width: 1px; border-radius: 8px; border-color: rgb(122,122,122)"
 
 class chooseModelWindow(QtWidgets.QWidget):
@@ -42,13 +41,10 @@ class chooseModelWindow(QtWidgets.QWidget):
 		self.popup.show()
 
 	def useOldModel(self):
-		global modelName
-		fileName = filedialog.askopenfilename()
-		modelName = fileName.split(".")[0]
-		#showConsole()
-		if trainColumn: trainingData = "trainingData.csv"
-		else: trainingData = "trainingHeaderData.csv"
-		trainModel.trainModel(trainColumn, False, modelName, trainingData)
+		global modelFilePath
+		modelFilePath = filedialog.askopenfilename()
+		trainingData = "trainingData.csv"
+		trainModel.trainModel(trainColumn, False, modelFilePath, trainingData)
 		controller.showTrainTestWindow()
 		self.close()
 
@@ -95,46 +91,22 @@ class createBetterModelPopup(QtWidgets.QWidget):
 
 	def generateButtonPressed(self):
 		self.goal = int(self.numberOfErrorsInput.text())
-		self.autoCreateModel()
+		self.generateModels()
 
 	def betterThanCurrentButtonPressed(self):
-		fileExtraction.setModelName(filedialog.askopenfilename().split(".")[0])
+		fileExtraction.setModelFilePath(filedialog.askopenfilename())
 		self.goal = fileExtraction.testOnSolvedCSV() - 1
-		self.autoCreateModel()
+		self.generateModels()
 
 	def trainAgainstSolvedCSVButtonPressed(self):
-		fakeframe = pd.read_csv("SREOs/CSVs/usethisone.csv")
-		print(fakeframe.to_string())
-		print(fakeframe)
-		fileExtraction.trainAgainstSolvedCSV(True, "Model/trainingWithSolved")
-		for i in range(100):
-			fileExtraction.trainAgainstSolvedCSV(False, "Model/trainingWithSolved")
+		fileExtraction.trainAgainstSolvedCSV(True, "Model/trainingWithSolved.pt")
+		for i in range(50):
+			fileExtraction.trainAgainstSolvedCSV(False, "Model/trainingWithSolved.pt")
 
-	def autoCreateModel(self):
-		trainingData = pd.DataFrame(columns=['label','text'])
-		count = 1
-		errors = sys.maxsize
-		while errors > self.goal:
-			print("----------------------------------------------------------------------------------")
-			trainingData = pd.DataFrame(columns=['label','text'])
-			numReps = random.randint(35, 55) * 100
-			LR = float(random.randint(35,50)) / 10.0
-			print("Number of Repeats: " + str(numReps) + " Learning Rate: " + str(LR))
-			modelName = "newTrial" + str(count) + "-" + str(numReps)
-			fileExtraction.setModelName(modelName)
-			trainingData = pd.concat([trainingData, generateData(numReps)],ignore_index=True)
-			trainingData.to_csv("trainingData.csv",index=False)
-			trainModel.trainModel(True,True,modelName,"trainingData.csv", LR)
-			count += 1
-			errors = fileExtraction.testOnSolvedCSV(self.goal)
-			if errors > self.goal:
-				os.remove(modelName + ".pt")
-				os.remove(modelName + "Vocab.pt")
-		print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-		print("New Best Model = " + modelName)
+	def generateModels(self):
+		fileExtraction.autoCreateModel(self.goal)
 
 class newModelPopup(QtWidgets.QWidget):
-	#closeWindows = QtCore.pyqtSignal()
 	def __init__(self):
 		super().__init__()
 		layout = QtWidgets.QVBoxLayout()
@@ -152,12 +124,10 @@ class newModelPopup(QtWidgets.QWidget):
 		self.setLayout(layout)
 
 	def createModel(self):
-		global modelName, controller
-		modelName = "Model/" + self.input.text()
-		#showConsole()
-		if trainColumn: trainingData = "trainingData.csv"
-		else: trainingData = "trainingHeaderData.csv"
-		trainModel.trainModel(trainColumn,True,modelName,trainingData)
+		global modelFilePath, controller
+		modelFilePath = "Model/" + self.input.text() + ".pt"
+		trainingData = "trainingData.csv"
+		trainModel.trainModel(trainColumn,True,modelFilePath,trainingData)
 		controller.showTrainTestWindow()
 		self.close()
 
@@ -273,17 +243,11 @@ class testTabUI(QtWidgets.QWidget):
 		self.chooseFilesRow.addWidget(self.singleFileButton)
 		self.singleFileButton.setDisabled(True)
 
-		self.allFilesButton = QtWidgets.QPushButton("Test All Files")
-		self.allFilesButton.setStyleSheet(BUTTON_STYLE_SHEET)
-		self.chooseFilesRow.addWidget(self.allFilesButton)
-		self.allFilesButton.setDisabled(True)
-		self.allFilesButton.clicked.connect(self.useAllFiles)
-
 		self.testOnSolvedCSVButton = QtWidgets.QPushButton("Test on Solved CSVs")
 		self.testOnSolvedCSVButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.chooseFilesRow.addWidget(self.testOnSolvedCSVButton)
 		self.testOnSolvedCSVButton.setDisabled(True)
-		self.testOnSolvedCSVButton.clicked.connect(self.testOnSolvedCSV)
+		self.testOnSolvedCSVButton.clicked.connect(lambda: fileExtraction.testOnSolvedCSV())
 
 		self.layout.addLayout(self.topRow)
 		self.layout.addWidget(self.testSREOs)
@@ -305,31 +269,16 @@ class testTabUI(QtWidgets.QWidget):
 				self.invalidFileTypeLabel.show()
 				return
 			else: 
-				fileName = fileName.split(".")[0]
-				modelName = fileName.split("/")[len(fileName.split("/")) - 1].split(".")[0]
+				modelName = fileName.split("/")[len(fileName.split("/")) - 1]
 				self.modelLabel.setText(modelName + " Selected")
 		else:
 			fileName = list(fileName)
-			for i in range(len(fileName)):
-				fileName[i] = fileName[i].split(".")[0]
 			self.modelLabel.setText("Multiple Models Selected")
 		self.invalidFileTypeLabel.hide()
-		fileExtraction.setModelName(fileName)
+		fileExtraction.setModelFilePath(fileName)
 		self.models = fileName
 		self.singleFileButton.setDisabled(False)
-		self.allFilesButton.setDisabled(False)
 		self.testOnSolvedCSVButton.setDisabled(False)
-
-	def useAllFiles(self):
-		#showConsole()
-		os.chdir(os.path.dirname(os.path.abspath(__file__)))
-		for fileName in os.listdir("SREOs/CSVs/"):
-			print(fileName)
-			print('------------------------------------------------------------')
-			data = fileExtraction.extractSREO("SREOs/CSVs/" + fileName)
-			print(data.to_string())
-			fileExtraction.testConfidence(True, data)
-			print('------------------------------------------------------------')
 	
 	def useSelectedFiles(self):
 		fileName = filedialog.askopenfilenames()
@@ -337,30 +286,16 @@ class testTabUI(QtWidgets.QWidget):
 			for file in fileName:
 				print(file)
 				fileType = file.split(".")[len(file.split(".")) - 1]
-				if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
+				validFileTypes = ["csv", "xlsx", "docx", "xls"]
+				if(fileType in validFileTypes):
 					self.invalidFileTypeLabel.hide()
-					data = fileExtraction.extractSREO(file)
-					fileExtraction.testConfidence(True, data)
-					print()
+					sreoData = fileExtraction.extractSREO(file)
+					for df in sreoData:
+						fileExtraction.testConfidence(True, df)
+						print()
 				else:
 					self.invalidFileTypeLabel.setText("Invalid File Type: " + file)
 					self.invalidFileTypeLabel.show()
-		else:
-			fileType = fileName.split(".")[len(fileName.split(".")) - 1]
-			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx"):
-				data = fileExtraction.extractSREO(fileName)
-				print(data.columns)
-				print()
-				fileExtraction.testConfidence(True, data)
-			else:
-				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName.split("/")[len(fileName.split("/")) - 1])
-				self.invalidFileTypeLabel.show()
-
-	def testOnSolvedCSV(self):
-		if type(self.models) is str:
-			fileExtraction.testOnSolvedCSV()
-		else:
-			fileExtraction.testOnSolvedCSVMultiModel(len(self.models), self.models)
 
 class extractTabUI(QtWidgets.QWidget):
 	maximize_window = QtCore.pyqtSignal()
@@ -376,9 +311,8 @@ class extractTabUI(QtWidgets.QWidget):
 		self.invalidFileTypeLabel = QtWidgets.QLabel("Invalid File Type")
 		self.invalidFileTypeLabel.hide()
 		self.table = QtWidgets.QTableWidget()
-		self.chooseModelButton = QtWidgets.QPushButton("Choose Model")
-		self.chooseModelButton.setStyleSheet(BUTTON_STYLE_SHEET)
-		self.chooseFileButton = QtWidgets.QPushButton("Choose File(s)")
+
+		self.chooseFileButton = QtWidgets.QPushButton("Choose File")
 		self.chooseFileButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.chooseFileButton.clicked.connect(self.validateFiles)
 
@@ -394,31 +328,30 @@ class extractTabUI(QtWidgets.QWidget):
 		self.setLayout(self.layout)
 
 	def validateFiles(self):
-		self.files = filedialog.askopenfilenames()
-		if len(self.files) == 0:
+		self.sreoData = None
+		self.fileName = filedialog.askopenfilename()
+		if len(self.fileName) == 0:
 			return
-		allValid = True
-		for fileName in self.files:
-			fileType = fileName.split(".")[len(fileName.split(".")) - 1]
-			if(fileType == "csv" or fileType == "pdf" or fileType == "xlsx" or fileType == "xls"):
-				self.invalidFileTypeLabel.hide()
-				print()
-			else:
-				self.invalidFileTypeLabel.setText("Invalid File Type: " + fileName)
-				self.invalidFileTypeLabel.show()
-				allValid = False
-		if allValid:
-			self.fileIndex = 0
+
+		fileType = self.fileName.split(".")[len(self.fileName.split(".")) - 1]
+		validFileTypes = ["csv", "pdf", "xlsx", "docx", "xls"]
+
+		if fileType in validFileTypes:
+			self.invalidFileTypeLabel.hide()
+			self.pageIndex = 0
+			self.sreoData = fileExtraction.extractSREO(self.fileName)
 			self.extractFile()
+			print()
+		else:
+			self.invalidFileTypeLabel.setText("Invalid File Type: " + self.fileName)
+			self.invalidFileTypeLabel.show()
 
 	def extractFile(self):
-		self.fileName = self.files[self.fileIndex]
-		self.dataframe = fileExtraction.extractSREO(self.fileName)
-		print(self.dataframe)
-		self.table.setColumnCount(len(self.dataframe.columns))
-		self.table.setRowCount(len(self.dataframe.index))
+		self.sreoDataIndex = 0
+		self.table.setColumnCount(len(self.sreoData[self.pageIndex].columns))
+		self.table.setRowCount(len(self.sreoData[self.pageIndex].index))
 		
-		for i, row in self.dataframe.iterrows():
+		for i, row in self.sreoData[self.pageIndex].iterrows():
 			j = 0
 			for columnName, cell in row.items():
 				if str(cell) == "nan": cell = ""
@@ -452,12 +385,12 @@ class extractTabUI(QtWidgets.QWidget):
 			self.maximize_window.emit()
 
 	def nextButtonPressed(self):
-		if self.fileIndex < len(self.files) - 1:
-			self.fileIndex += 1
+		if self.pageIndex < len(self.sreoData) - 1:
+			self.pageIndex += 1
 			self.extractFile()
 	def backButtonPressed(self):
-		if self.fileIndex > 0:
-			self.fileIndex -= 1
+		if self.pageIndex > 0:
+			self.pageIndex -= 1
 			self.extractFile()
 	def deleteRows(self):
 		rowsRemoved = 0
@@ -476,14 +409,16 @@ class extractTabUI(QtWidgets.QWidget):
 			for rowIndex in range(1,numRows):
 				item = self.table.item(rowIndex, columnIndex).text()
 				self.dataForExtraction.at[rowIndex - 1,self.table.item(0,columnIndex).text()] = item
-		fileExtraction.setModelName("Model/currentBest")
+		fileExtraction.setModelFilePath("Model/currentBest.pt")
 		newFileName = self.fileName.split("/")[len(self.fileName.split("/")) - 1].split(".")[0]
-		sreoTemplate = fileExtraction.fillTemplate(self.dataForExtraction)
-		fileTypes = [("Excel File", "*.xlsx"), ("CSV File", "*.csv")]
-		saveLocation = filedialog.asksaveasfile(initialfile = "Standardized-" + newFileName,filetypes = fileTypes, defaultextension = fileTypes)
+		sreoTemplate = fileExtraction.fillTemplate([self.dataForExtraction])[0]
+		fileTypes = [("CSV File", "*.csv")]
+		saveLocation = filedialog.asksaveasfile(initialfile = "Standardized-" + newFileName + "-Page " + str(self.pageIndex),filetypes = fileTypes, defaultextension = fileTypes)
 		if saveLocation is None:
 			return ""
-		sreoTemplate.to_excel(saveLocation.name, index=False)
+		sreoTemplate.to_csv(saveLocation.name, index=False)
+		sreoTemplate.to_json(saveLocation.name.replace(".csv",".json"))
+		
 		if saveLocation.name != "":
 			self.highlightRowsLabel.setText("Extracted data saved to " + saveLocation.name)
 			
@@ -504,7 +439,6 @@ class generateDataWindow(QtWidgets.QWidget):
 
 		self.bottomRows = QtWidgets.QVBoxLayout()
 
-		#-------------------------------Labels---------------------------------------
 		self.generateNewDataLabel = QtWidgets.QLabel("Generate New Data for Training")
 		self.generateNewDataLabel.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
 		self.topBar.addWidget(self.generateNewDataLabel)
@@ -512,7 +446,6 @@ class generateDataWindow(QtWidgets.QWidget):
 		self.numberOfDataPointsLabel = QtWidgets.QLabel("Total # of data points created: ")
 		self.textInputRow.addWidget(self.numberOfDataPointsLabel)
 
-		#-------------------------------Buttons---------------------------------------
 		self.generateDataButton = QtWidgets.QPushButton("Generate Data")
 		self.generateDataButton.setStyleSheet(BUTTON_STYLE_SHEET)
 
@@ -526,11 +459,12 @@ class generateDataWindow(QtWidgets.QWidget):
 		self.doneButton = QtWidgets.QPushButton("Done")
 		self.doneButton.setStyleSheet(BUTTON_STYLE_SHEET)
 		self.doneButton.clicked.connect(self.train)
-		#-------------------------------Misc---------------------------------------
+
 		self.numRepeatsInput = QtWidgets.QLineEdit()
 		self.numRepeatsInput.setStyleSheet(LINE_EDIT_STYLE_SHEET)
 		self.numRepeatsInput.setMaxLength(7)
 		self.numRepeatsInput.textEdited.connect(self.textInputted)
+
 		self.textInputRow.addWidget(self.numRepeatsInput)
 		self.textInputRow.addWidget(self.generateDataButton)
 
@@ -555,7 +489,6 @@ class generateDataWindow(QtWidgets.QWidget):
 	def train(self):
 		self.chooseModelPopup = chooseModelWindow()
 		self.chooseModelPopup.show()
-		#self.chooseModelPopup.switchWindow.connect(lambda:self.switch_window.emit())
 
 	def incrementProgressBar(self, val):
 		self.progressBar.setValue(self.progressBar.value() + val)
@@ -572,20 +505,14 @@ class generateDataWindow(QtWidgets.QWidget):
 	def generateDataButtonPressed(self):
 		self.progressBar.setValue(0)
 		self.doneButton.setDisabled(True)
-		if trainColumn:
-			fileName = "trainingData.csv"
-		else:
-			fileName = "trainingHeaderData.csv"
+		fileName = "trainingData.csv"
 		trainingData = pd.DataFrame(columns=['label','text'])
-		total = 0
-		for i in range(self.numRepeats):
+		for i in range(100):
 			if trainColumn:
-				trainingData = pd.concat([trainingData, generateData(1)],ignore_index=True)
+				trainingData = pd.concat([trainingData, generateData(int(self.numRepeats / 100))],ignore_index=True)
 			else:
-				trainingData = pd.concat([trainingData, generateHeaderData(1)],ignore_index=True)
-			total += 1
-			if total % (self.numRepeats / 100) == 0:
-				self.incrementProgressBar(1)
+				trainingData = pd.concat([trainingData, generateHeaderData(int(self.numRepeats / 100))],ignore_index=True)
+			self.incrementProgressBar(1)
 		trainingData.to_csv(fileName, index=False)
 		self.doneButton.setDisabled(False)
 
@@ -606,13 +533,8 @@ class Controller:
 		self.generateData.show()
 		self.generateData.switch_window.connect(self.showTrainTestWindow)
 
-def showConsole():
-	ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 4)
-
 if __name__ == "__main__":
 	import sys
-	#fileExtraction.extractFromPDF("SREOs/James P. Knell - Certified RE Schedule 12.31.19.pdf")
-	#ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 	app = QtWidgets.QApplication(sys.argv)
 	controller = Controller()
 	controller.showTrainTestWindow()

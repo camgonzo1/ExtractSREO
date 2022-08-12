@@ -1,0 +1,27 @@
+{
+  "headers": [
+    [ "Property Name", "Name", "Property", "Property Number", "Debt ID", "Property ID", "Building", "Building Number", "Building Name/Number", "Building Name", "Legal Name" ],
+    [ "Address", "Property Location", "Location", "Street Location", "Street Address", "Property Address", "Street", "Full Property Address", "Property Street Address" ],
+    [ "City", "Town", "Property City", "Location" ],
+    [ "State", "Province", "Territory", "Location", "Property State", "ST" ],
+    [ "Property Type", "Type of Property", "Type", "Asset Type", "Property Description", "Prop. Type", "Description", "Type of Community" ],
+    [ "Units", "#units", "# of Units", "Number of Units", "Unit Count", "Multifamily Units (#)", "Multifamily Units", "Units / Sq. Ft.", "# Units / SF", "Units/ Sq. Ft." ],
+    [ "Square Feet", "Square Footage", "Sq. Feet", "Sq. Ft.", "Feet", "Sq. Footage", "SF / # of Units", "SF/Units", "SF" ],
+    [ "Occupancy", "Current Occupancy", "Occupancy Status", "Current Occupancy (%)", "% Occupied", "% Occupancy", "Occupancy %", "Occupancy at end of quarter", "Occ. %", "Occupancy at end of quarter", "Physical Occupancy" ],
+    [ "Acquisition Date", "Purchase Date", "Date of Acquisition", "Acquistion", "Acquired", "Year Acquired", "Date Acquired", "Origination Date", "Origination", "Year Originated", "Acquisition Date (yr)", "Year of Initial Ownership", "Owned Since", "Acq. Date Cost", "Acquisiton Year" ],
+    [ "Lender", "Mortgage Holder", "Mortgage Lender", "Lender Name", "Lender Name (Confirm if Fannie or Freddie, where applicable)", "Lender (Servicer)", "Lender(s)" ],
+    [ "Maturity Date", "Maturity", "Loan Matures", "Matures", "Date of Maturity", "Date Matures", "Maturation Date", "Loan Maturity Date", "Final Maturity", "Maturity Date(s)", "Due Date (year)", "Due Date" ],
+    [ "Loan Amount", "Orig. Loan Amount", "Original Loan Amount", "OG Loan Amount", "Total Loan Amount", "Origional Balance", "Orig. Loan Amt.", "Total Loan", "Total Loan(s)", "Total Commitment" ],
+    [ "Current Balance", "Current Loan Balance", "Current Debt", "Outstanding Loan Amount", "Principal Balance", "OPB", "Outstanding Principal Balance", "Balance", "Current Debt", "Loan Balance", "Current Amount", "Outstanding", "Outstanding Loan(s)", "Outstanding Loans", "Outstanding Debt (YE)", "Outstanding Debt", "Balance of Mortgages", "Mortgage Outstanding", "Mortgage Liens as of ", "OPB (1/31/2022)", "Balance as of *", "Principal Balance as of 12/31/21", "Outstanding Principal" ],
+    [ "Debt Service", "Debt Service Value", "Total Debt Service", "Annual Debt Service", "Debt Service Total", "Debt Service Calculation", "2022 Total Debt Service (Projected)", "Combined Annual Debt Service" ],
+    [ "NOI", "Net Operating Income", "Net Income", "Current NOI", "N.O.I.", "Current N.O.I.", "Current Net Operating Income", "Net Rental Income", "NOI", "NOI  (Period Ending YTD)", "NOI (12/31/2021)", "2022 Net Operating Income (Projected)", "12/31/2020 NOI", "12/31/2020 NOI (Per Collier's Valuation), NOI  (Period Ending YTD 2022)" ],
+    [ "DSCR", "Debt Service Coverage", "Total DCR", "DCR", "Total DSCR", "Debt Coverage Ratio", "Debt Service Ratio", "Debt Coverage", "DSC" ],
+    [ "Market Value", "MV", "Value", "Internal Valuation", "PWC Value", "Market Total Value", "Borrower Started Value", "Full Market Value", "Value/Unit", "Valuation Dec-2020" ],
+    [ "LTV", "LTV", "Loan-To-Value", "Loan To Value" ],
+    [ "Amort Start Date", "Amortization Start Date", "Amort Date", "Amortization Date", "Amort Start", "Amortization Start", "Commence Date", "Amort." ],
+    [ "Rate Type", "Loan Type", "Type of Loan", "Fixed or Floating", "Type", "Type of Rate", "Interest Rate Type", "Type of Interest Rate", "Fixed / Variable", "Fixed/Variable", "Floating (Y/N)", "Structure" ],
+    [ "All-In Rate", "All-In", "Rate", "All In", "All In Rate", "All-in", "Interest", "Interest Rate", "Current Rate", "Interest Rate (at 12/31/21)" ],
+    [ "Spread", "Credit Spread" ],
+    [ "Index", "Interest Rate Index", "Rate Index" ]
+  ]
+}

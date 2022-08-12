@@ -1,7 +1,5 @@
 from collections import Counter
-#from tkinter.tix import COLUMN
 import pandas as pd
-#import numpy as np
 import time
 from sklearn.model_selection import train_test_split
 import torch
@@ -15,17 +13,17 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu") #Defines w
 tokenizer = get_tokenizer('basic_english') #Defines a inital tokenizer
 emsize = 128
 EPOCHS = 5
-LR = 1 #The learning rate of the model
+LR = 4 #The learning rate of the model
 BATCH_SIZE = 16 #Number of data points in each batch
 vocab = None
 text_pipeline = None
 label_pipeline = None
 model = None
-COLUMN_LABELS = {0: "N/A", 1: "Units", 2: "City", 3: "State", 4: "Address", 5: "Rate Type", 6: "Acquisition Date", 
-				 7: "Maturity Date", 8: "Property Name", 9: "Square Feet", 10: "Occupancy", 11: "Loan Amount", 
-				 12: "Debt Service", 13: "NOI", 14: "DSCR", 15: "Market Value", 16: "LTV", 17: "Amort Start Date", 
-				 18: "Property Type", 19: "Current Balance", 20: "All-In Rate", 21: "Lender", 22: "Spread", 23: "Index"} #loan type
-HEADER_LABELS = {0: "N/A", 1: "Invalid", 2: "Valid"}
+HEADER_LABELS = ["N/A", "Invalid", "Valid"]
+COLUMN_LABELS = ["N/A", "Units", "City", "State", "Address", "Rate Type", "Acquisition Date", 
+				 "Maturity Date", "Property Name", "Square Feet", "Occupancy", "Loan Amount", 
+				 "Debt Service", "NOI", "DSCR", "Market Value", "LTV", "Amort Start Date", 
+				 "Property Type", "Current Balance", "All-In Rate", "Lender", "Spread", "Index"]
 
 # Gets Number of Labels
 def get_num_labels():
@@ -33,7 +31,7 @@ def get_num_labels():
 
 # Converts labels to numeric values able to be processed by the model
 def get_column_label(label):
-	return list(COLUMN_LABELS.values()).index(label)
+	return COLUMN_LABELS.index(label)
 
 def get_header_label(label):
 	if label == "Valid": return 2
@@ -88,6 +86,7 @@ class TextClassificationModel(nn.Module):
 
 	#Applies the model to inputted text to achieve a result
 	def forward(self, text, offsets):
+		text = torch.tensor(text).to(torch.int64)
 		embedded = self.embedding(text, offsets)
 		#x = F.relu(self.fc1(embedded))
 		#x = F.relu(self.fc2(embedded))
@@ -137,7 +136,7 @@ def predict(text, text_pipeline):
 		output = model(text, torch.tensor([0]))
 		return output
 	
-def trainModel(trainColumn, createNewModel, modelName, trainingFilePath, learningRate=1):
+def trainModel(trainColumn, createNewModel, modelName, trainingFilePath, learningRate=4):
 	global LR
 	LR = learningRate
 	if not createNewModel:
@@ -156,7 +155,8 @@ def trainModel(trainColumn, createNewModel, modelName, trainingFilePath, learnin
 	print('--------Training Data---------')
 	print(trainingFile['label'].value_counts())
 	#Splits the training dataset into training and validation sets
-	train_text, valid_text, train_label, valid_label = train_test_split(trainingFile['text'].to_list(), trainingFile['labelNum'].to_list(), test_size = 0.2, stratify = trainingFile['labelNum'].to_list(), random_state=0)
+	train_text, valid_text, train_label, valid_label = train_test_split(trainingFile['text'].to_list(), trainingFile['labelNum'].to_list(), 
+																	 test_size = 0.2, stratify = trainingFile['labelNum'].to_list(), random_state=0)
 	#Converts the data into a zipped list able to be read by the model
 	train_data = list(zip(train_label, train_text))
 	valid_data = list(zip(valid_label, valid_text))
@@ -169,10 +169,7 @@ def trainModel(trainColumn, createNewModel, modelName, trainingFilePath, learnin
 
 	#Pipelines are lists of tokenized verions of either text or labels which get read by the model
 	if createNewModel:
-		global vocab
-		global text_pipeline
-		global label_pipeline
-		global model
+		global vocab, text_pipeline, label_pipeline, model
 		vocab = build_vocab_from_iterator(yield_tokens(train_data), specials = ["<unk>"]) #Builds a vocab set from training data
 		vocab.set_default_index(vocab["<unk>"])
 		text_pipeline = lambda x: vocab(tokenizer(x))
@@ -206,18 +203,14 @@ def trainModel(trainColumn, createNewModel, modelName, trainingFilePath, learnin
 		print('-' * 59)
 		print('| end of epoch {:3d} | time: {:5.2f}s | ' 'valid accuracy {:8.3f} '.format(epoch, time.time() - epoch_start_time, accu_val))
 		print('-' * 59)
-
-	torch.save(model, modelName + ".pt")
-	torch.save(vocab, modelName + "Vocab.pt")
-	print("Saved to path: " + modelName + ".pt")
+	torch.save(model, modelName)
+	torch.save(vocab, modelName.replace(".pt", "Vocab.pt"))
+	print("Saved to path: " + modelName)
 
 def loadModel(modelName):
-	global model
-	global vocab
-	global text_pipeline
-	global label_pipeline
-	vocab = torch.load(modelName + "Vocab.pt")
-	model = torch.load(modelName + ".pt")
+	global model, vocab, text_pipeline, label_pipeline
+	vocab = torch.load(modelName.replace(".pt", "Vocab.pt"))
+	model = torch.load(modelName)
 	model.eval()
 	text_pipeline = lambda x: vocab(tokenizer(x))
 	label_pipeline = lambda x: int(x)
